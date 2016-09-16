@@ -7,6 +7,8 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
@@ -39,11 +41,41 @@ public class HalloServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HalloServlet</title>");            
+            out.println("<title>Servlet HalloServlet</title>");
+            out.println("<style>table {\n"
+                    + "    border-collapse: collapse;\n"
+                    + "}\n"
+                    + "\n"
+                    + "table, th, td {\n"
+                    + "    border: 1px solid black;\n"
+                    + "}</style>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet HalloServlet at " + request.getContextPath() + "</h1>");
             out.println("<h2>Developed by " + this.getInitParameter("myname") + "</h2>");
+            Enumeration<String> headerNames = request.getHeaderNames();
+            out.println("<h3>Alle Headerdaten</h3>");
+            out.print("<table><tr><th>Name</th><th>Value</th></tr>");
+            while (headerNames.hasMoreElements()) {
+                String name = headerNames.nextElement();
+                out.append("<tr>");
+                out.append("<td>").append(name).append("</td>");
+                out.append("<td>").append(request.getHeader(name)).append("</td>");
+                out.append("</tr>");
+            }
+            out.print("</table>");
+            out.println("<h3>Alle Parameter</h3>");
+            out.print("<table><tr><th>Name</th><th>Value</th></tr>");
+            request.getParameterMap().forEach((name, value) -> {
+                out.append("<tr>");
+                out.append("<td>").append(name).append("</td>");
+                out.append("<td>");
+                out.append(Arrays.toString(value));
+                out.append("</td>");
+                out.append("</tr>");
+
+            });
+            out.print("</table>");
             out.println("</body>");
             out.println("</html>");
         }
