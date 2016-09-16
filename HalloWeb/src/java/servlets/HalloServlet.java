@@ -7,8 +7,11 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
@@ -54,31 +57,62 @@ public class HalloServlet extends HttpServlet {
             out.println("<h1>Servlet HalloServlet at " + request.getContextPath() + "</h1>");
             out.println("<h2>Developed by " + this.getInitParameter("myname") + "</h2>");
             Enumeration<String> headerNames = request.getHeaderNames();
+            
             out.println("<h3>Alle Headerdaten</h3>");
-            out.print("<table><tr><th>Name</th><th>Value</th></tr>");
-            while (headerNames.hasMoreElements()) {
-                String name = headerNames.nextElement();
-                out.append("<tr>");
-                out.append("<td>").append(name).append("</td>");
-                out.append("<td>").append(request.getHeader(name)).append("</td>");
-                out.append("</tr>");
-            }
-            out.print("</table>");
+            out.println(buildTable(extractHeaderData(request)));
+            
             out.println("<h3>Alle Parameter</h3>");
-            out.print("<table><tr><th>Name</th><th>Value</th></tr>");
-            request.getParameterMap().forEach((name, value) -> {
-                out.append("<tr>");
-                out.append("<td>").append(name).append("</td>");
-                out.append("<td>");
-                out.append(Arrays.toString(value));
-                out.append("</td>");
-                out.append("</tr>");
-
-            });
-            out.print("</table>");
+            out.println(buildTable(extractParameterData(request)));
+            
             out.println("</body>");
             out.println("</html>");
         }
+    }
+    public String[][] extractParameterData(HttpServletRequest request) {
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"Name","Value"});
+        request.getParameterMap().forEach((key,value)-> {
+            data.add(new String[]{
+                key,
+                Arrays.toString(value)
+            });
+        });
+        return data.toArray(new String[data.size()][]);
+    }
+    
+    public String[][] extractHeaderData(HttpServletRequest request) {
+        Enumeration<String> names = request.getHeaderNames();
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"Name","Value"});
+        while(names.hasMoreElements()) {
+            String name = names.nextElement();
+            data.add(new String[] {
+                name,
+                request.getHeader(name)
+            });
+        }
+        return data.toArray(new String[data.size()][]);
+    }
+
+    public String buildTable( String data[][]) {
+        StringBuilder out = new StringBuilder();
+        out.append("<table>");
+        for (String val : data[0]) {
+            out.append("<th>");
+            out.append(val);
+            out.append("</th>");
+        }
+        for (int i = 1; i < data.length; i++) {
+            out.append("<tr>");
+            for (String val : data[i]) {
+                out.append("<td>");
+                out.append(val);
+                out.append("</td>");
+            }
+            out.append("</tr>");
+        }
+        out.append("</table>");
+        return out.toString();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
