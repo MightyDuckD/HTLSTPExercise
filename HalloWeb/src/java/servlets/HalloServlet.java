@@ -45,15 +45,10 @@ public class HalloServlet extends HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet HalloServlet</title>");
-            out.println("<style>table {\n"
-                    + "    border-collapse: collapse;\n"
-                    + "}\n"
-                    + "\n"
-                    + "table, th, td {\n"
-                    + "    border: 1px solid black;\n"
-                    + "}</style>");
+            out.println("<link rel=\"stylesheet\" href=\"css/default.css\">"); 
             out.println("</head>");
             out.println("<body>");
+            out.println("<div class=\"bs-component col-lg-12\">");
             out.println("<h1>Servlet HalloServlet at " + request.getContextPath() + "</h1>");
             out.println("<h2>Developed by " + this.getInitParameter("myname") + "</h2>");
             Enumeration<String> headerNames = request.getHeaderNames();
@@ -63,8 +58,11 @@ public class HalloServlet extends HttpServlet {
             
             out.println("<h3>Alle Parameter</h3>");
             out.println(buildTable(extractParameterData(request)));
-            
+            out.println("<a href=\".\">Zurück zur Startseite</a>");
+            out.println("</div>");
             out.println("</body>");
+            
+            
             out.println("</html>");
         }
     }
@@ -96,7 +94,7 @@ public class HalloServlet extends HttpServlet {
 
     public String buildTable( String data[][]) {
         StringBuilder out = new StringBuilder();
-        out.append("<table>");
+        out.append("<table class=\"table table-striped table-hover \">");
         for (String val : data[0]) {
             out.append("<th>");
             out.append(val);
