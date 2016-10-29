@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import model.Action;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -44,13 +45,40 @@ public class DAOImpl implements DAO {
     @Override
     public List<Action> getAllActions() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        return session.createCriteria(Action.class).list();
+        try {
+            return session.createCriteria(Action.class).list();
+        } catch (Exception exx) {
+            return null;
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public List<Action> getAllActionsSorted(int limit) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        return session.createCriteria(Action.class).addOrder(Order.asc("createDate")).setMaxResults(limit).list();
+        try {
+            return session.createCriteria(Action.class).addOrder(Order.desc("createDate")).setMaxResults(limit).list();
+        } catch (Exception exx) {
+            return null;
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public boolean dropAll() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            String hql = String.format("delete from %s", Action.class.getName());
+            Query query = session.createQuery(hql);
+            query.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            session.close();
+        }
     }
 
     @Override

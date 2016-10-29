@@ -27,20 +27,20 @@ public class HibernateServletContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         DAO dao = new DAOImpl();
         dao.open();
-        dao.saveAction(new Action(new Timestamp(System.currentTimeMillis()),"contextInitialized"));
         sce.getServletContext().setAttribute("dao", dao);
+        LoggingUtil.log(sce, "contextInitialized");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        DAO dao = (DAO) sce.getServletContext().getAttribute("dao");
-        dao.saveAction(new Action(new Timestamp(System.currentTimeMillis()),"contextDestroyed"));
+        LoggingUtil.log(sce, "contextDestroyed");
         try {
+            DAO dao = (DAO) sce.getServletContext().getAttribute("dao");
             dao.close();
         } catch (Exception ex) {
             Logger.getLogger(HibernateServletContextListener.class.getName()).log(Level.SEVERE, null, ex);
         }
         HibernateUtil.close();
     }
-    
+
 }

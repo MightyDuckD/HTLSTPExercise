@@ -14,11 +14,15 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.LoggingUtil;
 
 /**
  *
@@ -62,4 +66,25 @@ public class ImageServlet extends HttpServlet {
         return "Short description";
     }
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        try {
+            super.init(config); //To change body of generated methods, choose Tools | Templates.
+        } catch (Exception e) {
+            LoggingUtil.log(config, this.getClass().getName() + ".init() threw execption " + e);
+            throw e;
+        }
+        LoggingUtil.log(config, this.getClass().getName() + ".init() called");
+    }
+
+    @Override
+    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+        try {
+            super.service(req, res);
+        } catch (Exception e) {
+            LoggingUtil.log(req, this.getClass().getName() + ".service() threw execption " + e);
+            throw e;
+        }
+        LoggingUtil.log(req, this.getClass().getName() + ".service() called");
+    }
 }

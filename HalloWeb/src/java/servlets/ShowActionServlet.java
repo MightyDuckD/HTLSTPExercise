@@ -25,8 +25,6 @@ import model.Action;
 @WebServlet(name = "ShowActionServlet", urlPatterns = {"/ShowActionServlet"})
 public class ShowActionServlet extends HttpServlet {
 
-    
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,30 +32,38 @@ public class ShowActionServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         dis.include(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = (DAO) request.getServletContext().getAttribute("dao");
         PrintWriter writer = response.getWriter();
-        writer.append("<table>");
-        List<Action> actions = dao.getAllActions();
-        actions.sort(Action.COMPARE_BY_TIMESTAMP);
+        if (request.getParameter("dropall") != null) {
+            if (!dao.dropAll()) {
+                response.sendError(500);
+            }
+            return;
+        }
         int input = 10;
         try {
             input = Integer.parseInt(request.getParameter("count"));
-        } catch(NumberFormatException ex ) {
-            //no log
+        } catch (NumberFormatException ex) {
+            //no log/no error
         }
-        int max = Math.max(0,Math.min(actions.size(),input));
-        for(Action a : dao.getAllActionsSorted(max)) {
-            writer.append("<tr>");
+        int max = Math.max(0, input);
+        List<Action> actions = dao.getAllActionsSorted(max);
+        if (actions == null) {
+            response.sendError(500);
+            return;
+        }
+        for (Action a : actions) {
+            writer.append("<tr class=\"" + a.getDecoration() + "\">");
             writer.append("<td>").append(Integer.toString(a.getId())).append("</td>");
             writer.append("<td>").append(Timestamp.calendarFormatter1.format(a.getCreateDate())).append("</td>");
             writer.append("<td>").append(a.getText()).append("</td>");
             writer.append("</tr>");
         }
-        writer.append("</table>");
-        
+
     }
 
     @Override

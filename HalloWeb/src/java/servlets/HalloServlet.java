@@ -12,12 +12,16 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.LoggingUtil;
 
 /**
  *
@@ -152,4 +156,25 @@ public class HalloServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        try {
+            super.init(config); //To change body of generated methods, choose Tools | Templates.
+        } catch (Exception e) {
+            LoggingUtil.log(config, this.getClass().getName() + ".init() threw execption " + e);
+            throw e;
+        }
+        LoggingUtil.log(config, this.getClass().getName() + ".init() called");
+    }
+
+    @Override
+    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+        try {
+            super.service(req, res);
+        } catch (Exception e) {
+            LoggingUtil.log(req, this.getClass().getName() + ".service() threw execption " + e);
+            throw e;
+        }
+        LoggingUtil.log(req, this.getClass().getName() + ".service() called");
+    }
 }

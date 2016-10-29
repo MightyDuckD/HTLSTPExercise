@@ -4,10 +4,11 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://if-remote.htlstp.ac.at:54322/postgres</property>
+    <!-- <property name="hibernate.connection.url">jdbc:postgresql://if-remote.htlstp.ac.at:54322/postgres</property> -->
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/5A_10_Lab2</property>
     <property name="hibernate.connection.username">5AHIF_16</property>
     <property name="hibernate.connection.password">jeke18</property>
-    <property name="hibernate.hbm2ddl.auto">create-drop</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="model.Action"/>
   </session-factory>
 </hibernate-configuration>

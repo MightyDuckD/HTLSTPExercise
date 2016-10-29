@@ -1,16 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-    <head>
-        <link rel="stylesheet" href="/HalloWeb/css/default.css"> 
+    <head>   
+        <title>GetPost</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+        <!-- Latest compiled and minified jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- Optional Theme -->
+        <link rel="stylesheet" href="/HalloWeb/css/default.css">
+
     </head>
     <body>
-        <form method="post" action="../GetPostServlet">
-            <input type="submit" value="SubmitPost">
-        </form>
-        <br />
-        <form method="get" action="../GetPostServlet">
-            <input type="submit" value="SubmitGet">
-        </form>
-        <a href="/HalloWeb">Zurück zur Startseite</a>
+
+        <div class="bs-component col-lg-12">
+            <h1>Test Get and Post</h1>
+            <form method="post" action="../GetPostServlet">
+                <input type="submit" value="SubmitPost">
+            </form>
+            <form method="get" action="../GetPostServlet">
+                <input type="submit" value="SubmitGet">
+            </form>
+            <a href="/HalloWeb">Zurück zur Startseite</a>
+        </div>
     </body>
 </html>

@@ -18,5 +18,6 @@ public interface DAO extends AutoCloseable {
     boolean saveAction(Action a);
     List<Action> getAllActions();
     List<Action> getAllActionsSorted(int limit);
+    boolean dropAll();
     void open();
 }

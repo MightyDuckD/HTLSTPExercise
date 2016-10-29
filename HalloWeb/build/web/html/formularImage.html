@@ -9,15 +9,27 @@ and open the template in the editor.
         <title>Bilder</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+        <!-- Latest compiled and minified jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- Optional Theme -->
+        <link rel="stylesheet" href="/HalloWeb/css/default.css">
+
     </head>
     <body>
-        <div>Wähle ein Bild aus</div>
-        <form method="post" target="_blank">
-            <input type="radio" name="file" value="cat.jpg"> Cat<br>
-            <input type="radio" name="file" value="chihuahua.jpg"> Chihuahua<br>
-            <input type="radio" name="file" value="stoned-dog.jpg"> Stoned Chihuahua<br>
-            <input type="radio" name="file" value="toasted-dog.png"> Toasted Dog<br>
-            <input type="submit" value="Los geht's!">
-        </form>
+        <div class="bs-component col-lg-12">
+            <h1>Image</h1>
+            <h2>Wähle ein Bild aus</h2>
+            <form method="post" target="_blank">
+                <input type="radio" name="file" value="cat.jpg"> Cat Ball<br>
+                <input type="radio" name="file" value="chihuahua.jpg"> Stoned Chihuahua<br>
+                <input type="radio" name="file" value="stoned-dog.jpg"> Stoned Dog<br>
+                <input type="radio" name="file" value="toasted-dog.png"> Toasted Dog<br>
+                <input type="submit" value="Los geht's!">
+            </form>
+        </div>
     </body>
 </html>
