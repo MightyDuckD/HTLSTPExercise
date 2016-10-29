@@ -19,16 +19,16 @@ import javax.servlet.http.HttpServlet;
 @WebServlet(name = "TimeServlet", urlPatterns = {"/TimeServlet"})
 public class TimeServlet extends HttpServlet {
 
+    @Override
     public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
         this.log("Beginn von service()");
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
         DateFormat df = DateFormat.getDateInstance();
         String date = df.format(new Date());
-        out.println("\n" +
-"        <link rel=\"stylesheet\" href=\"/HalloWeb/css/default.css\"> ");
-        out.println("<h1>"+date+"</h1>"
-                + "");
+        out.println("<link rel=\"stylesheet\" href=\"/HalloWeb/css/default.css\"> ");
+        out.println("<h1>" + date + "</h1>");
+        out.println("<a href=\".\">Zurück zur Startseite</a>");
         this.log("Ende von service()");
     }
 }

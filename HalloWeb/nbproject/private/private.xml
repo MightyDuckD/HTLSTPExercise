@@ -4,14 +4,18 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/servlets/DispatcherServlet.java</file>
+            <file>file:/H:/HTLSTPExercise/HalloWeb/nbproject/build-impl.xml</file>
+            <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/model/Action.java</file>
+            <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/servlets/ImageServlet.java</file>
+            <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/servlets/GetPostServlet.java</file>
+            <file>file:/H:/HTLSTPExercise/HalloWeb/web/WEB-INF/web.xml</file>
             <file>file:/H:/HTLSTPExercise/HalloWeb/web/html/testGetPost.html</file>
             <file>file:/H:/HTLSTPExercise/HalloWeb/web/index.html</file>
             <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/servlets/HalloServlet.java</file>
             <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/servlets/TimeServlet.java</file>
-            <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/servlets/GetPostServlet.java</file>
+            <file>file:/H:/HTLSTPExercise/HalloWeb/src/java/servlets/ShowActionServlet.java</file>
             <file>file:/H:/HTLSTPExercise/HalloWeb/web/css/default.css</file>
             <file>file:/H:/HTLSTPExercise/HalloWeb/web/html/formularIncludeForward.html</file>
-            <file>file:/H:/HTLSTPExercise/HalloWeb/web/WEB-INF/web.xml</file>
             <file>file:/H:/HTLSTPExercise/HalloWeb/web/html/errorDispatcher.html</file>
         </group>
     </open-files>

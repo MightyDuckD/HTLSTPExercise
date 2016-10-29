@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Show Action</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/HalloWeb/css/default.css">
+    </head>
+    <body>
+        <h1>Action Formular</h1>
+        <div id="settings"><input id="count" type="text" value="10"></div>
+        <div id="content"></div>
+        <script>
+            
+            var loadTable = function () {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/HalloWeb/ShowActionServlet?count=' + count.value);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        content.innerHTML = xhr.responseText;
+                    }
+                    else {
+                        alert('Request failed.  Returned status of ' + xhr.status);
+                    }
+                };
+                xhr.send();
+            }
+            count.oninput = loadTable;
+            loadTable();
+        </script>
+    </body>
+</html>
