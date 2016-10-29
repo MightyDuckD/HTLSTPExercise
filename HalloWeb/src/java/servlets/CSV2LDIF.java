@@ -17,10 +17,19 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author 20120093
  */
-@WebServlet(name = "GetPostServlet", urlPatterns = {"/GetPostServlet"})
-public class GetPostServlet extends HttpServlet {
+@WebServlet(name = "CSV2LDIF", urlPatterns = {"/CSV2LDIF"})
+public class CSV2LDIF extends HttpServlet {
 
-    protected void reportType(String typ, HttpServletResponse response)
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -28,13 +37,10 @@ public class GetPostServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GetPostServlet</title>");
-            out.println("<link rel=\"stylesheet\" href=\"css/default.css\">");       
+            out.println("<title>Servlet CSV2LDIF</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GetPostServlet</h1>");
-            out.println("<h2>Abfragetype: " + typ + "</h2>");
-            out.println("<a href=\"/HalloWeb/html/testGetPost.html\"> go back </a>");
+            out.println("<h1>Servlet CSV2LDIF at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -52,7 +58,7 @@ public class GetPostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reportType("GET", response);
+        processRequest(request, response);
     }
 
     /**
@@ -66,7 +72,7 @@ public class GetPostServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reportType("POST", response);
+        processRequest(request, response);
     }
 
     /**
