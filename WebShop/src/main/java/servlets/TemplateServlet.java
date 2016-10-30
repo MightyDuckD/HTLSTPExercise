@@ -7,9 +7,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +17,12 @@ import util.TemplateUtil;
  *
  * @author Simon
  */
-@WebServlet(name = "ArtikelServlet", urlPatterns = {"/ArtikelServlet"})
-public class ArtikelServlet extends HttpServlet {
-
+public class TemplateServlet extends HttpServlet {
+    
+    protected void doContentGet(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,7 +32,7 @@ public class ArtikelServlet extends HttpServlet {
         writer.append(template[TemplateUtil.MID]);
         request.getRequestDispatcher("/HeaderServlet").include(request, response);
         //PRE
-        writer.append("Hallo auf der Haupseite");
+        doContentGet(request, response);
         //POST
         writer.append(template[TemplateUtil.POST]);
     }
@@ -48,10 +49,5 @@ public class ArtikelServlet extends HttpServlet {
         writer.append("Hallo auf der Haupseite");
         //POST
         writer.append(template[TemplateUtil.POST]);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Artikel";
     }
 }

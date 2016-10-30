@@ -27,6 +27,7 @@ public class HeaderServlet extends HttpServlet {
         out.println("<h1>WebShop</h1>");
         out.println("<nav><ul>");
         out.println("<li><a href=\"/WebShop/\">Home</a></li>");
+        out.println("<li><a href=\"/WebShop/WarenkorbServlet\">Warenkorb</a></li>");
         if (request.getSession().getAttribute("user") != null) {
             out.println("<li> <a href=\"/WebShop/LoginServlet?logout\">Logout</a></li>");
         } else {

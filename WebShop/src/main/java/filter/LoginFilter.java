@@ -36,19 +36,14 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
-
-//        String loginURI = request.getContextPath() + "/LoginServlet";
-//        String artikelURI = request.getContextPath() + "/ArtikelServlet";
-        String servlets[] = {"LoginServlet", "ArtikelServlet"};
+        String publicServlets[] = {"/", "/LoginServlet", "/ArtikelServlet"};
 
         boolean loggedIn = session != null && session.getAttribute("user") != null;
-        //boolean loginRequest = request.getRequestURI().startsWith(loginURI);
         boolean loginNotNeeded = false;
-        for(String servlet : servlets) {
-            loginNotNeeded |= request.getRequestURI().startsWith(request.getContextPath() + servlet);
+        for (String servlet : publicServlets) {
+            loginNotNeeded |= request.getRequestURI().equals(request.getContextPath() + servlet);
         }
-        
-        if (loggedIn /*|| loginRequest*/ || loginNotNeeded) {
+        if (loggedIn || loginNotNeeded) {
             chain.doFilter(request, response);
         } else {
             RequestDispatcher headerDispatcher = request.getRequestDispatcher("/LoginServlet");
