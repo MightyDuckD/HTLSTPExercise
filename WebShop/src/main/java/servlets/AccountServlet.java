@@ -5,27 +5,45 @@
  */
 package servlets;
 
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import util.TemplateUtil;
+import model.User;
+import util.AttributeUtil;
 
 /**
  *
  * @author Simon
  */
-@WebServlet(name = "WarenkorbServlet", urlPatterns = {"/Warenkorb"})
-public class WarenkorbServlet extends HttpServlet {
+@WebServlet(name = "AccountServlet", urlPatterns = {"/Account"})
+public class AccountServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter writer = response.getWriter();
-        writer.append("Hallo auf der Warenkorb Seite");
+        DAO dao = (DAO) request.getServletContext().getAttribute(AttributeUtil.DAO);
+        User user = dao.getUserByUsername((String) request.getSession().getAttribute(AttributeUtil.USER));
+
+        PrintWriter out = response.getWriter();
+        out.println("<div>");
+        out.println("<h1 class=\"\">");
+        out.println(user.getUsername());
+        out.println("</h1>");
+        out.println("</div>");
+        out.println("<a href=\"/WebShop/Login?logout\">logout</a>");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

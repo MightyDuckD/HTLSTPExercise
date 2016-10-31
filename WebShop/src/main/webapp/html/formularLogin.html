@@ -1,14 +1,60 @@
-<form method="post">
-    <h3>Login</h3>
-    <div>
-        <label for="user">Username</label>
-        <input id="user" name="user" type="text"><br>
+
+<script>
+    function sha256_hash(message) {
+        var bitArray = sjcl.hash.sha256.hash(message);  
+        var digest_sha256 = sjcl.codec.hex.fromBits(bitArray); 
+        return digest_sha256;
+    }
+    
+    function hashOnSubmit(aForm) {
+        //Getting the two input objects
+        var inputUsername = aForm['username'];
+        var inputPassword = aForm['password'];
+        
+        //Hashing the password before submitting
+        inputPassword.value = sha256_hash(inputUsername.value + inputPassword.value);
+        
+        //Submitting
+        return true;
+    }
+
+</script>
+
+<div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="panel-title">Login</div>
+            <div class="panel-body">
+                <fieldset>
+                    <form name="preform" class="form-horizontal" action='' method="POST" onsubmit="return hashOnSubmit(this);">
+                        <style>
+                            .nomarginifempty:empty {
+                                display: none;
+                            }
+                        </style>
+                        <div class="form-group nomarginifempty"><!--MESSAGE--></div>
+                        <div class="form-group">
+                            <!-- Username -->
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" id="username" name="username" placeholder="username" class="form-control input-sm ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- Password-->
+                            <div class="input-group">
+                                <span class="input-group-addon input-sm"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="password" id="password" name="password" placeholder="password" class="form-control input-sm">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-success">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="pass">Password</label>
-        <input id="pass" name="pass" type="password"><br>
-    </div>
-    <div>
-    <input type="submit" value="submit"> 
-    </div>
-</form>

@@ -4,9 +4,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    
     <welcome-file-list>
-        <welcome-file>ArtikelServlet</welcome-file>
+        <welcome-file>Home</welcome-file>
     </welcome-file-list>
+    
     <session-config>
         <session-timeout>
             1
@@ -15,4 +17,32 @@
     <error-page>
         <location>/html/errorDispatcher.html</location>
     </error-page>
+    
+    
+    <servlet>
+        <servlet-name>About</servlet-name>
+        <jsp-file>/html/about.html</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>About</servlet-name>
+        <url-pattern>/About</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Services</servlet-name>
+        <jsp-file>/html/services.html</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Services</servlet-name>
+        <url-pattern>/Services</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>Contact</servlet-name>
+        <jsp-file>/html/contact.html</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Contact</servlet-name>
+        <url-pattern>/Contact</url-pattern>
+    </servlet-mapping>
 </web-app>

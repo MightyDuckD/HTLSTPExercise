@@ -18,7 +18,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import util.SessionUtil;
+import util.AttributeUtil;
 
 /**
  *
@@ -38,11 +38,11 @@ public class LoginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession();
 
-        boolean loggedIn = session != null && session.getAttribute("user") != null;
+        boolean loggedIn = session != null && session.getAttribute(AttributeUtil.USER) != null;
         if (!loggedIn) {
             if (session != null) {
                 //remember the requested page so that the site can redirect to it after an successfull login
-                session.setAttribute(SessionUtil.LOGIN_URI, request.getRequestURI());
+                session.setAttribute(AttributeUtil.LOGIN_URI, request.getRequestURI());
             }
             response.sendRedirect("Login");
         } else {
