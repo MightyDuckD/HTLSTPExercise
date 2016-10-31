@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import util.SessionUtil;
 
 /**
  *
@@ -35,19 +36,23 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession(false);
-        String publicServlets[] = {"/", "/LoginServlet", "/ArtikelServlet"};
+        HttpSession session = request.getSession();
+        String privateServlets[] = {"/Warenkorb"};
 
         boolean loggedIn = session != null && session.getAttribute("user") != null;
-        boolean loginNotNeeded = false;
-        for (String servlet : publicServlets) {
-            loginNotNeeded |= request.getRequestURI().equals(request.getContextPath() + servlet);
+        boolean loginNeeded = false;
+
+        for (String servlet : privateServlets) {
+            loginNeeded |= request.getRequestURI().equals(request.getContextPath() + servlet);
         }
-        if (loggedIn || loginNotNeeded) {
-            chain.doFilter(request, response);
+        System.out.println(loggedIn + " " + loginNeeded);
+        if (!loggedIn && loginNeeded) {
+            if (session != null) {
+                session.setAttribute(SessionUtil.LOGIN_URI, request.getRequestURI());//remember the requested page so that the site can redirect to it after an successfull login
+            }
+            response.sendRedirect("Login");
         } else {
-            RequestDispatcher headerDispatcher = request.getRequestDispatcher("/LoginServlet");
-            headerDispatcher.forward(req, res);
+            chain.doFilter(request, response);
         }
     }
 
