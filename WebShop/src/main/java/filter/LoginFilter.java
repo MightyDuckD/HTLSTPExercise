@@ -24,7 +24,7 @@ import util.SessionUtil;
  *
  * @author Simon
  */
-@WebFilter("/*")
+@WebFilter(servletNames = {"WarenkorbServlet"})
 public class LoginFilter implements Filter {
 
     @Override
@@ -37,18 +37,12 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession();
-        String privateServlets[] = {"/Warenkorb"};
 
         boolean loggedIn = session != null && session.getAttribute("user") != null;
-        boolean loginNeeded = false;
-
-        for (String servlet : privateServlets) {
-            loginNeeded |= request.getRequestURI().equals(request.getContextPath() + servlet);
-        }
-        System.out.println(loggedIn + " " + loginNeeded);
-        if (!loggedIn && loginNeeded) {
+        if (!loggedIn) {
             if (session != null) {
-                session.setAttribute(SessionUtil.LOGIN_URI, request.getRequestURI());//remember the requested page so that the site can redirect to it after an successfull login
+                //remember the requested page so that the site can redirect to it after an successfull login
+                session.setAttribute(SessionUtil.LOGIN_URI, request.getRequestURI());
             }
             response.sendRedirect("Login");
         } else {
