@@ -20,7 +20,12 @@ import util.TemplateUtil;
  *
  * @author Simon
  */
-@WebFilter("/*")
+@WebFilter(
+    servletNames = {
+        "About","Contact","Services",
+        "AccountServlet","HomeServlet","LoginServlet","ShopServlet","WarenkorbServlet"
+    }
+)
 public class TemplateFilter implements Filter {
 
     @Override
@@ -34,11 +39,13 @@ public class TemplateFilter implements Filter {
         PrintWriter writer = response.getWriter();
         writer.append(template[TemplateUtil.PRE]);
         writer.append(template[TemplateUtil.MID]);
-        request.getRequestDispatcher("/HeaderServlet").include(request, response);
-        //PRE
+        request.getRequestDispatcher("/Header").include(request, response);
+        //include the content of the page
+        writer.append("<div class=\"container\">");
         fc.doFilter(request, response);
-        //POST
+        writer.append("</div>");
         writer.append(template[TemplateUtil.POST]);
+        
         
     }
 
