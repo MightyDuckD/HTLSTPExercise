@@ -15,7 +15,11 @@
         </session-timeout>
     </session-config>
     <error-page>
-        <location>/html/errorDispatcher.html</location>
+        <error-code>404</error-code>
+        <location>/Error</location>
+    </error-page>
+    <error-page>
+        <location>/html/empty.html</location>
     </error-page>
     
     
@@ -44,5 +48,15 @@
     <servlet-mapping>
         <servlet-name>Contact</servlet-name>
         <url-pattern>/Contact</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>Error</servlet-name>
+        <jsp-file>/html/error404.html</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Error</servlet-name>
+        <url-pattern>/Error</url-pattern>
     </servlet-mapping>
 </web-app>

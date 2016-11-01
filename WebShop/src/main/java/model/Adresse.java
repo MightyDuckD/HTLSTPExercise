@@ -5,11 +5,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Simon
  */
-public class Adresse {
+public class Adresse implements  Serializable {
     
     private String street,town;
     private int postalcode;

@@ -24,7 +24,7 @@ import util.AttributeUtil;
  *
  * @author Simon
  */
-@WebFilter(servletNames = {"WarenkorbServlet"})
+@WebFilter(servletNames = {"CheckoutServlet"})
 public class LoginFilter implements Filter {
 
     @Override

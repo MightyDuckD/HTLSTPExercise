@@ -5,11 +5,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Simon
  */
-public class User {
+public class User implements  Serializable {
 
     private String username;
     private String password;
@@ -19,6 +21,7 @@ public class User {
     private String nachname;
 
     private Adresse home;
+    private Warenkorb warenkorb;
 
     public User(String name, String salt, String password, Adresse home) {
         this.username = name;
@@ -50,5 +53,15 @@ public class User {
     public String getVorname() {
         return vorname;
     }
+
+    public Warenkorb getWarenkorb() {
+        return warenkorb;
+    }
+
+    public void setWarenkorb(Warenkorb warenkorb) {
+        this.warenkorb = warenkorb;
+    }
+
+    
 
 }

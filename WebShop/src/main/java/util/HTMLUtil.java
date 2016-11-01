@@ -27,19 +27,23 @@ public class HTMLUtil {
 //                + "    });\n"
 //                + "</script>");
 //        builder.append("</div>");
-
+        builder.append("<form action=\"/WebShop/Warenkorb\" method=\"POST\" >"
+                + ""
+                + "<input type=\"hidden\" name=\"do\" value=\"add\">"
+                + "<input type=\"hidden\" name=\"id\" value=\"" + id + "\">"
+                + "");
         builder.append("<div class=\"input-group col-sm-12\">\n"
-                + "            <input id=\"").append(id).append("\" type=\"text\" value=\"1\" name=\"").append(id).append("\" class=\"form-control\">\n"
-                        + "<div class=\"input-group-btn\"><button type=\"button\" onclick=\"addToWarenkorb(").append(id).append(");\" class=\"btn btn-default\">Add to Warenkorb</button></div>"
+                + "            <input id=\"spinner").append(id).append("\" type=\"text\" value=\"1\" name=\"spinner").append(id).append("\" class=\"form-control\">\n"
+                        + "<div class=\"input-group-btn\"><button type=\"submit\"  class=\"btn btn-default\">Add</button></div>"
                         + "        </div>\n"
                         + "        <script>\n"
-                        + "            $(\"input[name='").append(id).append("']\").TouchSpin({\n"
+                        + "            $(\"input[name='spinner").append(id).append("']\").TouchSpin({\n"
                         //                        + "                prefix: \"\" ,"
                         //                        + "                postfix: \"Add to Warenkorb\",\n"
                         //                        + "                postfix_extraclass: \"btn btn-info\"\n"
                         + "            });\n"
                         + "        </script>");
-
+        builder.append("</form>");
         return builder.toString();//
     }
 

@@ -28,6 +28,7 @@ import static util.AttributeUtil.DAO;
 import util.TemplateUtil;
 import util.UserUtil;
 import static util.UserUtil.byteArrayToHex;
+import util.WarenkorbUtil;
 
 /**
  *
@@ -93,6 +94,8 @@ public class LoginServlet extends HttpServlet {
                     session.removeAttribute(AttributeUtil.LOGIN_URI);
                     session.setAttribute(AttributeUtil.USER, user);
                     response.sendRedirect(uri != null ? uri : "");
+                    
+                    WarenkorbUtil.moveWarenkorbFromSession(request);
                 } else {
                     //failed
                     request.getSession().setAttribute(AttributeUtil.LOGIN_MSG, "<span class=\"text-danger\">Username or Password not correct.</span>");
@@ -109,6 +112,8 @@ public class LoginServlet extends HttpServlet {
             switch ((String) attr) {
                 case "/WebShop/Warenkorb":
                     return "<span class=\"text-danger\">You have to be logged in to access the Warenkorb</span>";
+                case "/WebShop/Checkout":
+                    return "<span class=\"text-danger\">You have to be logged in to access the Checkout Area</span>";
             }
         }
         Object mess = request.getSession().getAttribute(AttributeUtil.LOGIN_MSG);

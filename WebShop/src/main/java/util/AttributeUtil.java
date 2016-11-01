@@ -15,4 +15,5 @@ public class AttributeUtil {
     public static final String LOGIN_MSG ="session.login_msg";
     
     public static final String DAO = "dao";
+    public static final String WARENKORB = "warenkorb";
 }

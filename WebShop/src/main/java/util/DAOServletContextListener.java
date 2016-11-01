@@ -21,7 +21,7 @@ public class DAOServletContextListener implements ServletContextListener{
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         DAO dao = new StaticDAO();
-        dao.open();
+        dao.open(sce.getServletContext());
         sce.getServletContext().setAttribute(AttributeUtil.DAO, dao);
     }
 

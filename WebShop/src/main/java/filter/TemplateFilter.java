@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.DispatcherType;
 import util.TemplateUtil;
 
 /**
@@ -21,16 +22,17 @@ import util.TemplateUtil;
  * @author Simon
  */
 @WebFilter(
-    servletNames = {
-        "About","Contact","Services",
-        "AccountServlet","HomeServlet","LoginServlet","ShopServlet","WarenkorbServlet"
-    }
+        dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.ERROR},
+        servletNames = {
+            "About", "Contact", "Services", "Error",
+            "AccountServlet", "HomeServlet", "LoginServlet", "ShopServlet", "WarenkorbServlet", "CheckoutServlet"
+        }
 )
 public class TemplateFilter implements Filter {
 
     @Override
     public void init(FilterConfig fc) throws ServletException {
-        
+
     }
 
     @Override
@@ -45,13 +47,12 @@ public class TemplateFilter implements Filter {
         fc.doFilter(request, response);
         writer.append("</div>");
         writer.append(template[TemplateUtil.POST]);
-        
-        
+
     }
 
     @Override
     public void destroy() {
-        
+
     }
-    
+
 }
