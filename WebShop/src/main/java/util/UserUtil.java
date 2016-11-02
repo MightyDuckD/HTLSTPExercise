@@ -12,7 +12,7 @@ import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Adresse;
-import model.User;
+import model.Users;
 
 /**
  *
@@ -30,7 +30,7 @@ public class UserUtil {
         }
     }
 
-    public static boolean authenticateUser(User user, String subittedUsername, String submittedPassword) {
+    public static boolean authenticateUser(Users user, String subittedUsername, String submittedPassword) {
         String dbUsername = user != null ? user.getUsername() : null;
         String salt = user != null ? user.getSalt() : "";
         String dbPassword = user != null ? user.getPassword() : null;
@@ -39,6 +39,7 @@ public class UserUtil {
         String saltedPassword = submittedPassword + salt;
         String hashedPassword = sha256(saltedPassword);
         
+        System.out.println(user + " " + hashedPassword + " " + dbPassword);
 
         //check if password matches the db password
         if (user != null && subittedUsername.equals(dbUsername) && hashedPassword.equals(dbPassword)) {
@@ -59,11 +60,11 @@ public class UserUtil {
      * Salt is generated via the generateSalt() method.
      * @return 
      */
-    public static User create(String username, String password) {
+    public static Users create(String username, String password) {
         String submittedPassword = sha256(username + password);
         String salt = generateSalt();
         String hashedPassword = sha256(submittedPassword + salt);
-        return new User(username, salt, hashedPassword, new Adresse("", "", 0));
+        return new Users(username, salt, hashedPassword, new Adresse("", "", 0));
     }
 
     public static String sha256(String str) {

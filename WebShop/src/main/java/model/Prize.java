@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import javax.persistence.Entity;
 
 
 /**
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
  * @author Simon
  */
 public class Prize implements  Serializable {
+    
     private Timestamp time;
     private int cent;
     private double discount;

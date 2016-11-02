@@ -22,7 +22,7 @@ import util.AttributeUtil;
 public class HeaderServlet extends HttpServlet {
 
     private static enum HeaderItem {
-
+ 
         HOME("Home", "/WebShop/", true, true,""),
         ABOUT("About", "/WebShop/About", true, true,""),
         SERVICES("Services", "/WebShop/Services", true, true,""),

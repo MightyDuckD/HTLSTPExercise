@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.crypto.dsig.DigestMethod;
-import model.User;
+import model.Users;
 import util.AttributeUtil;
 import static util.AttributeUtil.DAO;
 import util.TemplateUtil;
@@ -83,21 +83,30 @@ public class LoginServlet extends HttpServlet {
         if (session.getAttribute(AttributeUtil.USER) == null) {
             String user = request.getParameter("username");
             String pass = request.getParameter("password");
+            System.out.println("doin the fucking login " + user + " " + pass);
             if (user != null && pass != null) {
                 DAO dao = (DAO) request.getServletContext().getAttribute(AttributeUtil.DAO);
-                User u = dao.getUserByUsername(user);
+                System.out.println(dao);
+                Users u = dao.getUserByUsername(user);
+                try {
+                    System.out.println(dao.getClass().getMethod("getUserByUsername", String.class));
+                } catch (NoSuchMethodException | SecurityException ex) {
+                    Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 //check if password matches the db password
                 if (UserUtil.authenticateUser(u, user, pass)) {
+                    System.out.println("success");
                     //successfully logged in
                     String uri = (String) session.getAttribute(AttributeUtil.LOGIN_URI);
                     session.removeAttribute(AttributeUtil.LOGIN_URI);
                     session.setAttribute(AttributeUtil.USER, user);
                     response.sendRedirect(uri != null ? uri : "");
-                    
+
                     WarenkorbUtil.moveWarenkorbFromSession(request);
                 } else {
                     //failed
+                    System.out.println("failed");
                     request.getSession().setAttribute(AttributeUtil.LOGIN_MSG, "<span class=\"text-danger\">Username or Password not correct.</span>");
                 }
             }

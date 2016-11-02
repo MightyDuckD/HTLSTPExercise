@@ -8,19 +8,14 @@ package servlets;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
 import model.Warenkorb;
+import model.WarenkorbItem;
 import util.AttributeUtil;
-import util.TemplateUtil;
 import util.WarenkorbUtil;
 
 /**
@@ -52,13 +47,13 @@ public class WarenkorbServlet extends HttpServlet {
         out.println("<th class=\"col-sm-1 text-right\"></th>");
         int total = 0;
         out.println("</tr>");
-        for (Warenkorb.WarenkorbItem item : warenkorb.getItems()) {
+        for (WarenkorbItem item : warenkorb.getItems()) {
             printItem(out, item);
             int cent = item.getArtikel().getPrize().getCent();
             total += cent * item.getAmount();
         }
         out.println("</table>");
-//        out.println("</div>");
+//        out.println("</div>"); 
         out.println("<div class=\"panel-footer\" style=\"\n"
                 + "    padding-left: 0px;\n"
                 + "    padding-right: 0px;\n"
@@ -68,6 +63,7 @@ public class WarenkorbServlet extends HttpServlet {
         out.println(String.format("%.2f&euro;", total / 100.0));
         out.println("</div>");
         out.println("</div>");
+        
 
         out.println("</div>");
         out.println("</div>");
@@ -99,7 +95,7 @@ public class WarenkorbServlet extends HttpServlet {
                 case "add": {
                     int id = Integer.parseInt(request.getParameter("id"));
                     int amount = Integer.parseInt(request.getParameter("spinner" + id));
-                    warenkorb.addItem(new Warenkorb.WarenkorbItem((int) (Math.random() * 100000), amount, dao.getArtikelById(id)));//TODO: id generation
+                    warenkorb.addItem(new WarenkorbItem((int) (Math.random() * 100000), amount, dao.getArtikelById(id)));//TODO: id generation
                     break;
                 }
                 case "remove": {
@@ -107,9 +103,10 @@ public class WarenkorbServlet extends HttpServlet {
                     warenkorb.removeItemById(id);
                     break;
                 }
+                
             }
         }
-
+        dao.persist(warenkorb);
         processRequest(request, response);
     }
 
@@ -118,14 +115,14 @@ public class WarenkorbServlet extends HttpServlet {
         return "Short description";
     }
 
-    private void printItem(PrintWriter out, Warenkorb.WarenkorbItem item) {
+    private void printItem(PrintWriter out, WarenkorbItem item) {
         out.println("<tr>");
         out.println("<td class=\"col-sm-1 text-right\">");
         out.println(item.getAmount());
         out.println("</td>");
 
         out.println("<td>");
-        out.println(item.getArtikel().getName());
+        out.println(item.getArtikel().getBezeichnung());
         out.println("</td>");
 
         int cent = item.getArtikel().getPrize().getCent();

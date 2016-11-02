@@ -1,1 +1,230 @@
-{"user":[{"username":"user01","password":"7518e385f8950d5a800c11c9ab87e231f6d5a7a4bf655db0f194117069875c3a","salt":"ac50fe0e15ae4e547f7092dd2c374553fb5ec49be2954a93e4c844ebd2354a23","home":{"street":"","town":"","postalcode":0}},{"username":"user02","password":"69eb3fc0801153804ae7c475ce13850f712953099719f6500d2a73d55459aac0","salt":"a61527439087bb7395d95659e1201be6c6336af51190ac2b21865f81db57369c","home":{"street":"","town":"","postalcode":0}},{"username":"user03","password":"a112cd346527355d7d899fc81b344e42611a4460afbfd13fe756e1566d8601f3","salt":"749f0332723a17a7c5dd18286582f926306b20029ce6b9f59b8463fea104a3f7","home":{"street":"","town":"","postalcode":0}},{"username":"user04","password":"cfb7bfd7aa2b9cb19f6b27e719f7304c92b979ed66582e71873d3b76e7b7d24e","salt":"9753024505cf74da4fc240448c25a05a1a2202fb306698dfd4e70c9357094756","home":{"street":"","town":"","postalcode":0}},{"username":"user05","password":"c2545a6ee346db83514a2f417f1104aa18740a3d0012831bc67e0461278f833f","salt":"f7e51ea0c2e3adf5d4cd863cbf232cb72b784df8e1380a2ce45ffa62d8835812","home":{"street":"","town":"","postalcode":0}}],"artikel":[{"id":1,"name":"Caffeine Mug","htmlTextShort":"","htmlTextLong":"","urlImageIcon":"no_img_avail.svg","urlImageLarge":"no_img_avail.svg","kategorie":[{"parent":{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},"id":32,"name":"Coffee Mugs \u0026amp; Travel Mugs","path":"HomeOffice/CoffeeMugsTravelMugs"}],"prize":[{"time":"Nov 1, 2016 2:22:26 AM","cent":799,"discount":0.5}]},{"id":2,"name":"Caffeine Mug","htmlTextShort":"","htmlTextLong":"","urlImageIcon":"no_img_avail.svg","urlImageLarge":"no_img_avail.svg","kategorie":[{"parent":{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},"id":32,"name":"Coffee Mugs \u0026amp; Travel Mugs","path":"HomeOffice/CoffeeMugsTravelMugs"}],"prize":[{"time":"Nov 1, 2016 2:22:26 AM","cent":799,"discount":0.5}]},{"id":3,"name":"Caffeine Mug","htmlTextShort":"","htmlTextLong":"","urlImageIcon":"no_img_avail.svg","urlImageLarge":"no_img_avail.svg","kategorie":[{"parent":{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},"id":32,"name":"Coffee Mugs \u0026amp; Travel Mugs","path":"HomeOffice/CoffeeMugsTravelMugs"}],"prize":[{"time":"Nov 1, 2016 2:22:26 AM","cent":799,"discount":0.5}]},{"id":4,"name":"Caffeine Mug","htmlTextShort":"short","htmlTextLong":"long","urlImageIcon":"icon","urlImageLarge":"image","kategorie":[{"parent":{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},"id":32,"name":"Coffee Mugs \u0026amp; Travel Mugs","path":"HomeOffice/CoffeeMugsTravelMugs"}],"prize":[{"time":"Nov 1, 2016 2:22:26 AM","cent":799,"discount":0.5}]}],"kategorien":[{"id":0,"name":"New","path":""},{"id":1,"name":"Clothing","path":"Clothing"},{"parent":{"id":1,"name":"Clothing","path":"Clothing"},"id":11,"name":"T-Shirts","path":"Clothing/TShirt"},{"parent":{"id":1,"name":"Clothing","path":"Clothing"},"id":12,"name":"Hoodies","path":"Clothing/Hoodies"},{"parent":{"id":1,"name":"Clothing","path":"Clothing"},"id":13,"name":"Jackets \u0026amp Outerwear","path":"Clothing/JacketsOuterwear"},{"id":2,"name":"Toys \u0026amp; Games","path":"ToysGames"},{"parent":{"id":2,"name":"Toys \u0026amp; Games","path":"ToysGames"},"id":21,"name":"Puzzles","path":"ToysGames/Puzzles"},{"parent":{"id":2,"name":"Toys \u0026amp; Games","path":"ToysGames"},"id":22,"name":"DIY \u0026amp; Sciencce Toys","path":"ToysGames/DIYScienceToys"},{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},{"parent":{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},"id":31,"name":"Blankets, Rugs \u0026amp; Towels","path":"HomeOffice/BlanketsRugsTowels"},{"parent":{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},"id":32,"name":"Coffee Mugs \u0026amp; Travel Mugs","path":"HomeOffice/CoffeeMugsTravelMugs"},{"parent":{"id":3,"name":"Home \u0026amp; Office","path":"HomeOffice"},"id":33,"name":"Glassware \u0026amp; Drinkware","path":"HomeOffice/GlasswareDrinkware"},{"id":4,"name":"On Sale","path":"Sale"}]}
+{
+    "user": [{
+            "username": "user01",
+            "password": "7518e385f8950d5a800c11c9ab87e231f6d5a7a4bf655db0f194117069875c3a",
+            "salt": "ac50fe0e15ae4e547f7092dd2c374553fb5ec49be2954a93e4c844ebd2354a23",
+            "home": {
+                "street": "",
+                "town": "",
+                "postalcode": 0
+            }
+        }, {
+            "username": "user02",
+            "password": "69eb3fc0801153804ae7c475ce13850f712953099719f6500d2a73d55459aac0",
+            "salt": "a61527439087bb7395d95659e1201be6c6336af51190ac2b21865f81db57369c",
+            "home": {
+                "street": "",
+                "town": "",
+                "postalcode": 0
+            }
+        }, {
+            "username": "user03",
+            "password": "a112cd346527355d7d899fc81b344e42611a4460afbfd13fe756e1566d8601f3",
+            "salt": "749f0332723a17a7c5dd18286582f926306b20029ce6b9f59b8463fea104a3f7",
+            "home": {
+                "street": "",
+                "town": "",
+                "postalcode": 0
+            }
+        }, {
+            "username": "user04",
+            "password": "cfb7bfd7aa2b9cb19f6b27e719f7304c92b979ed66582e71873d3b76e7b7d24e",
+            "salt": "9753024505cf74da4fc240448c25a05a1a2202fb306698dfd4e70c9357094756",
+            "home": {
+                "street": "",
+                "town": "",
+                "postalcode": 0
+            }
+        }, {
+            "username": "user05",
+            "password": "c2545a6ee346db83514a2f417f1104aa18740a3d0012831bc67e0461278f833f",
+            "salt": "f7e51ea0c2e3adf5d4cd863cbf232cb72b784df8e1380a2ce45ffa62d8835812",
+            "home": {
+                "street": "",
+                "town": "",
+                "postalcode": 0
+            }
+        }],
+    "artikel": [{
+            "id": 1,
+            "name": "Caffeine Mug",
+            "htmlTextShort": "",
+            "htmlTextLong": "",
+            "urlImageIcon": "no_img_avail.svg",
+            "urlImageLarge": "no_img_avail.svg",
+            "kategorie": [{
+                    "parent": {
+                        "id": 3,
+                        "name": "Home \u0026amp; Office",
+                        "path": "HomeOffice"
+                    },
+                    "id": 32,
+                    "name": "Coffee Mugs \u0026amp; Travel Mugs",
+                    "path": "HomeOffice/CoffeeMugsTravelMugs"
+                }],
+            "prize": [{
+                    "time": "Nov 1, 2016 2:22:26 AM",
+                    "cent": 799,
+                    "discount": 0.5
+                }]
+        }, {
+            "id": 2,
+            "name": "Caffeine Mug",
+            "htmlTextShort": "",
+            "htmlTextLong": "",
+            "urlImageIcon": "no_img_avail.svg",
+            "urlImageLarge": "no_img_avail.svg",
+            "kategorie": [{
+                    "parent": {
+                        "id": 3,
+                        "name": "Home \u0026amp; Office",
+                        "path": "HomeOffice"
+                    },
+                    "id": 32,
+                    "name": "Coffee Mugs \u0026amp; Travel Mugs",
+                    "path": "HomeOffice/CoffeeMugsTravelMugs"
+                }],
+            "prize": [{
+                    "time": "Nov 1, 2016 2:22:26 AM",
+                    "cent": 799,
+                    "discount": 0.5
+                }]
+        }, {
+            "id": 3,
+            "name": "Caffeine Mug",
+            "htmlTextShort": "",
+            "htmlTextLong": "",
+            "urlImageIcon": "no_img_avail.svg",
+            "urlImageLarge": "no_img_avail.svg",
+            "kategorie": [{
+                    "parent": {
+                        "id": 3,
+                        "name": "Home \u0026amp; Office",
+                        "path": "HomeOffice"
+                    },
+                    "id": 32,
+                    "name": "Coffee Mugs \u0026amp; Travel Mugs",
+                    "path": "HomeOffice/CoffeeMugsTravelMugs"
+                }],
+            "prize": [{
+                    "time": "Nov 1, 2016 2:22:26 AM",
+                    "cent": 799,
+                    "discount": 0.5
+                }]
+        }, {
+            "id": 4,
+            "name": "Caffeine Mug",
+            "htmlTextShort": "short",
+            "htmlTextLong": "long",
+            "urlImageIcon": "icon",
+            "urlImageLarge": "image",
+            "kategorie": [{
+                    "parent": {
+                        "id": 3,
+                        "name": "Home \u0026amp; Office",
+                        "path": "HomeOffice"
+                    },
+                    "id": 32,
+                    "name": "Coffee Mugs \u0026amp; Travel Mugs",
+                    "path": "HomeOffice/CoffeeMugsTravelMugs"
+                }],
+            "prize": [{
+                    "time": "Nov 1, 2016 2:22:26 AM",
+                    "cent": 799,
+                    "discount": 0.5
+                }]
+        }],
+    "kategorien": [{
+            "id": 0,
+            "name": "New",
+            "path": ""
+        }, {
+            "id": 1,
+            "name": "Clothing",
+            "path": "Clothing"
+        }, {
+            "parent": {
+                "id": 1,
+                "name": "Clothing",
+                "path": "Clothing"
+            },
+            "id": 11,
+            "name": "T-Shirts",
+            "path": "Clothing/TShirt"
+        }, {
+            "parent": {
+                "id": 1,
+                "name": "Clothing",
+                "path": "Clothing"
+            },
+            "id": 12,
+            "name": "Hoodies",
+            "path": "Clothing/Hoodies"
+        }, {
+            "parent": {
+                "id": 1,
+                "name": "Clothing",
+                "path": "Clothing"
+            },
+            "id": 13,
+            "name": "Jackets \u0026amp Outerwear",
+            "path": "Clothing/JacketsOuterwear"
+        }, {
+            "id": 2,
+            "name": "Toys \u0026amp; Games",
+            "path": "ToysGames"
+        }, {
+            "parent": {
+                "id": 2,
+                "name": "Toys \u0026amp; Games",
+                "path": "ToysGames"
+            },
+            "id": 21,
+            "name": "Puzzles",
+            "path": "ToysGames/Puzzles"
+        }, {
+            "parent": {
+                "id": 2,
+                "name": "Toys \u0026amp; Games",
+                "path": "ToysGames"
+            },
+            "id": 22,
+            "name": "DIY \u0026amp; Sciencce Toys",
+            "path": "ToysGames/DIYScienceToys"
+        }, {
+            "id": 3,
+            "name": "Home \u0026amp; Office",
+            "path": "HomeOffice"
+        }, {
+            "parent": {
+                "id": 3,
+                "name": "Home \u0026amp; Office",
+                "path": "HomeOffice"
+            },
+            "id": 31,
+            "name": "Blankets, Rugs \u0026amp; Towels",
+            "path": "HomeOffice/BlanketsRugsTowels"
+        }, {
+            "parent": {
+                "id": 3,
+                "name": "Home \u0026amp; Office",
+                "path": "HomeOffice"
+            },
+            "id": 32,
+            "name": "Coffee Mugs \u0026amp; Travel Mugs",
+            "path": "HomeOffice/CoffeeMugsTravelMugs"
+        }, {
+            "parent": {
+                "id": 3,
+                "name": "Home \u0026amp; Office",
+                "path": "HomeOffice"
+            },
+            "id": 33,
+            "name": "Glassware \u0026amp; Drinkware",
+            "path": "HomeOffice/GlasswareDrinkware"
+        }, {
+            "id": 4,
+            "name": "On Sale",
+            "path": "Sale"
+        }]
+}

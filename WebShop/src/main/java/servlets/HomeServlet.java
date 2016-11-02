@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import util.AttributeUtil;
 
 /**
  *
@@ -32,7 +33,8 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        out.println("Products copied from here <a href=\"http://www.thinkgeek.com/homeoffice/mugs-travel/\">http://www.thinkgeek.com/</a>");
+        out.println("Products copied from here <a href=\"http://www.thinkgeek.com/homeoffice/mugs-travel/\">http://www.thinkgeek.com/</a><br>");
+        out.println("" + request.getServletContext().getAttribute(AttributeUtil.DAO));
         
 
     }

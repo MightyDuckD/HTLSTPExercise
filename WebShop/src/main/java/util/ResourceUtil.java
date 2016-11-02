@@ -12,5 +12,5 @@ package util;
 public class ResourceUtil {
     public static String getImageResource(String name) {
         return "/WebShop/res/" + name;
-    }
+    } 
 }

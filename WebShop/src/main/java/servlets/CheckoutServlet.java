@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "CheckoutServlet", urlPatterns = {"/Checkout"})
 public class CheckoutServlet extends HttpServlet {
-
+ 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,13 +35,13 @@ public class CheckoutServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
-            out.println("<html>");
+            out.println("<html>"); 
             out.println("<head>");
             out.println("<title>Servlet CheckoutServlet</title>");            
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body>"); 
             out.println("<h1>Servlet CheckoutServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
+            out.println("</body>");  
             out.println("</html>");
         }
     }

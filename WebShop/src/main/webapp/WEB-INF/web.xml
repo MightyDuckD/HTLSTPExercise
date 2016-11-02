@@ -16,7 +16,7 @@
     </session-config>
     <error-page>
         <error-code>404</error-code>
-        <location>/Error</location>
+        <location>/html/error404.html</location>
     </error-page>
     <error-page>
         <location>/html/empty.html</location>

@@ -7,7 +7,7 @@ package util;
 
 import dao.DAO;
 import javax.servlet.http.HttpServletRequest;
-import model.User;
+import model.Users;
 import model.Warenkorb;
 
 /**
@@ -26,11 +26,12 @@ public class WarenkorbUtil {
         DAO dao = (DAO) request.getServletContext().getAttribute(AttributeUtil.DAO);
         String username = (String) request.getSession().getAttribute(AttributeUtil.USER);
         if (username != null) {
-            User user = dao.getUserByUsername(username);
+            Users user = dao.getUserByUsername(username);
             Warenkorb korb = user.getWarenkorb();
             if (korb == null) {
                 korb = new Warenkorb();
                 user.setWarenkorb(korb);
+                dao.persist(user);
             }
             return korb;
         }
@@ -53,10 +54,10 @@ public class WarenkorbUtil {
         DAO dao = (DAO) request.getServletContext().getAttribute(AttributeUtil.DAO);
         String username = (String) request.getSession().getAttribute(AttributeUtil.USER);
         Warenkorb korb = (Warenkorb) request.getSession().getAttribute(AttributeUtil.WARENKORB);
-        User user = dao.getUserByUsername(username);
-        if(korb != null && user.getWarenkorb() == null) {
+        Users user = dao.getUserByUsername(username);
+        if(korb != null /**&& user.getWarenkorb() == null*/) {
             user.setWarenkorb(korb);
-            request.getSession().removeAttribute(AttributeUtil.WARENKORB);
+            dao.persist(user);
         }
     }
 }

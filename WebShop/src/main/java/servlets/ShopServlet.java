@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Artikel;
-import model.Kategorie;
+import model.Category;
 import model.Prize;
 import util.AttributeUtil;
 import util.HTMLUtil;
@@ -35,7 +35,7 @@ public class ShopServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         DAO dao = (DAO) request.getServletContext().getAttribute(AttributeUtil.DAO);
-
+        System.out.println("shop");
         out.println("<script src=\"/WebShop/js/warenkorb.js\"></script>");
         out.println("<style>.row.extra-bottom-padding{\n"
                 + "   margin-bottom: 20px;\n"
@@ -132,23 +132,23 @@ public class ShopServlet extends HttpServlet {
             uri += "/";
         }
 
-        for (Kategorie g : dao.getAllKategorien()) {
+        for (Category g : dao.getAllCategorien()) {
             if (g.getParent() == null) {
-                List<Kategorie> childs = dao.getChildrenById(g.getId());
+                List<Category> childs = dao.getChildrenById(g.getId());
                 String extra = uri.endsWith("/Shop/" + g.getPath()) ? "selected" : "";
-                for (Kategorie k : childs) {
+                for (Category k : childs) {
                     if (uri.endsWith("/Shop/" + k.getPath())) {
                         extra = "selected";
                     }
                 }
 
-                out.println("<a  href=\"/WebShop/Shop/" + g.getPath() + "\"  class=\"text-success list-group-item " + extra + "\">" + g.getName() + "</a>");
+                out.println("<a  href=\"/WebShop/Shop/" + g.getPath() + "\"  class=\"text-success list-group-item " + extra + "\">" + g.getBezeichnung() + "</a>");
                 if (!"".equals(extra)) {
                     if (!childs.isEmpty()) {
                         out.println("<div class=\"list-group\">");
-                        for (Kategorie k : childs) {
+                        for (Category k : childs) {
                             String childextra = uri.endsWith("/Shop/" + k.getPath()) ? "selected" : "";
-                            out.println("<a href=\"/WebShop/Shop/" + k.getPath() + "\" class=\"list-group-item " + childextra + "\">" + k.getName() + "</a>");
+                            out.println("<a href=\"/WebShop/Shop/" + k.getPath() + "\" class=\"list-group-item " + childextra + "\">" + k.getBezeichnung() + "</a>");
                         }
                         out.println("</div>");
                     }
@@ -179,7 +179,7 @@ public class ShopServlet extends HttpServlet {
         if(path.endsWith("/Shop"))
             path += "/";
         path = path.substring(path.indexOf("/Shop") + 6);
-        Kategorie k = dao.getKategorieByPath(path);
+        Category k = dao.getKategorieByPath(path);
         for (Artikel a : dao.getAllArtikelByKategorie(k)) {
             col = (col + 1) % cols;
 //            if (col == 0) {
@@ -190,7 +190,7 @@ public class ShopServlet extends HttpServlet {
             out.println("<div class=\"panel panel-extra-margin  panel-default\">");
 
             out.println("<div class=\"panel-heading\">");
-            out.println(a.getName());
+            out.println(a.getBezeichnung());
             out.println("<span>" + p.getCent() / 100 + "." + p.getCent() % 100 + " -" + String.format("%.0f", p.getDiscount() * 100) + "%</span>");
             out.println("</div>");
 

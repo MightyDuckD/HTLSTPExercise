@@ -7,42 +7,78 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Simon
  */
-public class Artikel  implements  Serializable{
+@Entity
+@Table(name = "artikel")
+public class Artikel implements Serializable {
 
-    private int id;
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "artikelId")
+    private Integer id;
+
+    @Column(name = "bezeichnung")
+    private String bezeichnung;
+    @Column(name = "htmlTextShort")
     private String htmlTextShort;
+    @Column(name = "htmlTextLong")
     private String htmlTextLong;
+    @Column(name = "urlImageIcon")
     private String urlImageIcon;
+    @Column(name = "urlImageLarge")
     private String urlImageLarge;
 
-    private List<Kategorie> kategorie;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "artikel_category", joinColumns = {
+        @JoinColumn(name = "artikelId", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "categoryId",
+                        nullable = false, updatable = false)})
+    private Set<Category> categories;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "prize")
+    @JoinColumn(name = "artikelId")
     private List<Prize> prize;
 
     public Artikel() {
+        this(null, "", new Prize(0, 0));
     }
 
-    public Artikel(int id, String name, Prize start, Kategorie... k) {
+    public Artikel(Integer id, String name, Prize start, Category... k) {
         this(id, name, "", "", "no_img_avail.svg", "no_img_avail.svg", start, k);
     }
 
-    public Artikel(int id, String name, String htmlTextShort, String htmlTextLong, String urlImageIcon, String urlImageLarge, Prize start, Kategorie... kategories) {
+    public Artikel(Integer id, String name, String htmlTextShort, String htmlTextLong, String urlImageIcon, String urlImageLarge, Prize start, Category... categories) {
         this.id = id;
-        this.name = name;
+        this.bezeichnung = name;
         this.htmlTextShort = htmlTextShort;
         this.htmlTextLong = htmlTextLong;
         this.urlImageIcon = urlImageIcon;
         this.urlImageLarge = urlImageLarge;
         this.prize = new ArrayList<>();
-        this.kategorie = new ArrayList<>();
-        for (Kategorie k : kategories) {
-            kategorie.add(k);
+        this.categories = new HashSet<>();
+        for (Category k : categories) {
+            this.categories.add(k);
         }
         this.prize.add(start);
     }
@@ -67,8 +103,8 @@ public class Artikel  implements  Serializable{
         return urlImageLarge;
     }
 
-    public String getName() {
-        return name;
+    public String getBezeichnung() {
+        return bezeichnung;
     }
 
     public Prize getCurrentPrize() {
@@ -79,8 +115,8 @@ public class Artikel  implements  Serializable{
         return prize;
     }
 
-    public List<Kategorie> getAllKategorie() {
-        return kategorie;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
     public Prize getPrize() {

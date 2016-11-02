@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.User;
+import model.Users;
 import util.AttributeUtil;
 
 /**
@@ -35,7 +35,7 @@ public class AccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = (DAO) request.getServletContext().getAttribute(AttributeUtil.DAO);
-        User user = dao.getUserByUsername((String) request.getSession().getAttribute(AttributeUtil.USER));
+        Users user = dao.getUserByUsername((String) request.getSession().getAttribute(AttributeUtil.USER));
 
         PrintWriter out = response.getWriter();
         out.println("<div>");
@@ -73,7 +73,7 @@ public class AccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
     /**
      * Returns a short description of the servlet.

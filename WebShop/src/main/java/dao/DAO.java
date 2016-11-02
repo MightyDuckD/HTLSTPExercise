@@ -10,36 +10,50 @@ import java.io.OutputStream;
 import java.util.List;
 import javax.servlet.ServletContext;
 import model.Artikel;
-import model.Kategorie;
-import model.User;
+import model.Category;
+import model.Users;
+import model.Warenkorb;
 
 /**
  * Public
+ *
  * @author Simon
  */
 public interface DAO {
-    
+
     //USER
-    User getUserByUsername(String name);
-    
-    
+    void addUser(Users user);
+
+    Users getUserByUsername(String name);
+
     //ARTIKEL
+    void addArtikel(Artikel artikel);
+
     List<Artikel> getAllArtikel();
-    List<Artikel> getAllArtikelByKategorie(Kategorie k);
+
+    List<Artikel> getAllArtikelByKategorie(Category k);
+
     Artikel getArtikelById(int id);
-    
+
     //KAT
-    List<Kategorie> getAllKategorien();
-    Kategorie getKategorieById(int id);
-    List<Kategorie> getChildrenById(int id);
-    
+    void addCategory(Category category);
+
+    List<Category> getAllCategorien();
+
+    Category getCategoryById(int id);
+
+    List<Category> getChildrenById(int id);
+
     void close();
+
     void open(ServletContext servletContext);
 
-    public Kategorie getKategorieByPath(String path);
-    
+    public Category getKategorieByPath(String path);
+
     void dumpToJson(OutputStream output);
+
     void readFromJson(InputStream input);
 
-    
+    void persist(Object o);
+
 }
