@@ -1,0 +1,76 @@
+<div>
+
+    <h2 class="text-info">Labor03 - Ein kleiner Webshop von Simon Lehner-D.</h2>
+    <h3><a href="/WebShop/Warenkorb">Der Warenkorb</a></h3>
+    <p>
+        Jeder kann Produkte zu seinem Warenkorb hinzuf&uuml;gen, auch ohne angemeldet zu sein.
+        Erst die <a href="/WebShop/Checkout">Checkout Area</a> verlang nach einer Anmeldung.
+        Der Warenkorb wird bei erfolgreicher Anmeldung von der Session in den persistenten User-Context &uuml;bertragen. 
+        Dadurch bleibt er auch nach einer Abmeldung f&uuml;r den User erhalten. Er wird jedoch &uuml;berschrieben, 
+        wenn ein User einen Warenkorb ohne Anmeldung erstellt und sich dann anmeldet. 
+        Das ist ein Punkt den ich noch verbessern kann.
+    </p>
+    <p>
+        Die &Uuml;berpr&uuml;fung ob eine g&uuml;ltige, angemeldete Session existiert erfolgt in der Klasse <kbd>filter.LoginFilter</kbd>.
+        Diese &uuml;berpf&uuml;ft ob eine g&uuml;ltige Session existiert und ob in dieser das 
+        Attribut <kbd>util.AttributeUtil.USER</kbd> gesetzt wurde.
+        Wenn das nicht der Fall ist speichert der Filter die URI f&uuml;r die 
+        der Zugriff verweigert wurde in der Session unter <kbd>util.AttributeUtil.LOGIN_URI</kbd> 
+        und leitet die Seite weiter auf das LoginServlet. 
+        Wenn sich der User auf dieser Seite dann erfolgreich authentifiziert,
+        leitet das LoginServlet den User auf den Pfad unter <kbd>util.AttributeUtil.LOGIN_URI</kbd> um.
+    </p>
+    <p>
+        Der LoginFilter wurde so implementiert, das ich nicht innerhalb der <kbd>doFilter</kbd>
+        &uuml;berpr&uuml;ft wird ob die aufgerufene URI auch wirklich ein Login ben&ouml;tigt.
+        Hier wird wirklich nur geschaut ob der User angemeldet ist und wenn nicht auf das LoginServlet weitergeleitet.
+        Die Auswahl welche Seiten gesch&uuml;tzt werden sollten passiert &uuml;ber die WebFilter Annotation,
+        mit der man Filter nur f&uuml;r bestimmte Servlets ausf&uuml;hren kann. 
+        Beispielsweise f&uuml;r den LoginFilter schaut die Annotation so aus:
+        <kbd>@WebFilter(servletNames = {"CheckoutServlet"})</kbd>
+    </p>
+
+    <h3><a href="/WebShop/">Das Template System</a></h3>
+    <p>
+        Damit ich nicht bei jedem Servlet wieder die gleichen Header hineinkopieren muss habe ich ein sehr kleines, schnelles Template System geschrieben.
+        Der Code daf&uuml;r befindet sich in <kbd>util.TemplateUtil</kbd> und <kbd>filter.TemplateFilter</kbd>.
+        Die TemplateUtil bietet Hilfsfunktionen zum Laden und zerteilen von Template Dateien.
+        Diese Templates k&ouml;nnen &uuml;ber selbst definierte Hilfs-Tags wie zum Beispiel <kbd>&lt;!--CONTENT--&gt;</kbd> geteilt und geladen werden.
+        Die Tags geben an auf welcher Stelle bestimmte Inhalte hineinkopiert werden sollen.
+    </p>
+    <p>
+        Um die Logik von dem Design zu trennen wird das Template &uuml;ber den TemplateFilter geladen.
+        Dieser Filter wird &uuml;ber die WebFilter-Annotation f&uuml;r Servlets welche dekoriert werden sollen ausgef&uuml;hrt.
+        Er f&uuml;gt teile der Datei <kbd>/html/template.html</kbd> vor und nach dem eigentlichen Inhalt ein.
+        Au&szlig;erdem k&uuml;mmert er sich darum das bei jeder Seite der Navigationsheader mit den verschiedenen Links hineinkopiert wird.
+    </p>
+    <p>
+        Die Tags für die Template-Dateien können frei gewählt werden. Es wird 
+        jedoch empfohlen nur Tags in Form von HTML-Kommentaren zu verwenden. 
+        Dadurch bleibt die Template-Datei auch ohne TemplateFilter eine gültige
+        HTML-Datei.
+    </p>
+    <h3><a href="/WebShop/Checkout">Der Checkout</a></h3>
+    <p>
+        Diese Seite wurde nicht implementiert.
+        Hier w&uuml;rde man dann zum Beispiel die Zahlungsmethode, die Adresse, Gutscheincodes oder Mengenrabatte angeben und ausw&auml;hlen k&ouml;nnen.
+    </p>
+
+    <h3> <a href="http://getbootstrap.com/">Bootstrap</a></h3>
+    <p>
+        Dadurch das ich f&uuml;r das Design Bootstrap
+        verwende sollte die Website gr&ouml;&szlig;ten Teils auch f&uuml;r kleinere Bildschirme funktionieren,
+        zum Beispiel auf Handys.
+    </p>
+
+
+
+
+
+
+
+
+    <p class="small text-muted">
+        Products copied from <a href="http://www.thinkgeek.com/homeoffice/mugs-travel/">http://www.thinkgeek.com/</a><br>
+    </p>
+</div>

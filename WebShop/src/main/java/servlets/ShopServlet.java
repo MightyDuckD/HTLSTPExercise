@@ -163,9 +163,6 @@ public class ShopServlet extends HttpServlet {
         Category k = dao.getKategorieByPath(path);
         for (Artikel a : dao.getAllArtikelByKategorie(k)) {
             col = (col + 1) % cols;
-//            if (col == 0) {
-//                out.println("<div class=\"row extra-bottom-padding\">");
-//            }
             Prize p = a.getCurrentPrize();
             out.println("<div class=\"col-sm-" + (12 / cols) + "\">");
             out.println("<div class=\"panel panel-extra-margin  panel-default\">");
@@ -183,27 +180,14 @@ public class ShopServlet extends HttpServlet {
 
             out.println("<div class=\"row\">");
 
-//            out.println("<div class=\"col-sm-8\">");
             out.println(HTMLUtil.generateSpinner("" + a.getId()));
-//            out.println("</div>");
-
-//            out.println("<div class=\"col-sm-4\">");
-//            out.println("<input class=\"btn col-sm-4\" type=\"button\" value=\"Add\">");
-//            out.println("</div>");
             out.println("</div>");
 
             out.println("</div>");
 
             out.println("</div>");
             out.println("</div>");
-
-//            if (col == cols - 1) {
-//                out.println("</div>");
-//            }
         }
-//        if (col != cols - 1) {
-//            out.println("</div>");
-//        }
         out.println("</div>");
     }
 }

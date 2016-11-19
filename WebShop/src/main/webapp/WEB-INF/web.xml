@@ -24,6 +24,15 @@
     
     
     <servlet>
+        <servlet-name>Home</servlet-name>
+        <jsp-file>/html/home.html</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>About</servlet-name>
         <jsp-file>/html/about.html</jsp-file>
     </servlet>

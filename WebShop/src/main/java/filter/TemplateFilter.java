@@ -24,8 +24,8 @@ import util.TemplateUtil;
 @WebFilter(
         dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.ERROR},
         servletNames = {
-            "About", "Contact", "Services", "Error",
-            "AccountServlet", "HomeServlet", "LoginServlet", "ShopServlet", "WarenkorbServlet", "CheckoutServlet"
+            "About", "Contact", "Services", "Error", "Home",
+            "AccountServlet", "LoginServlet", "ShopServlet", "WarenkorbServlet", "CheckoutServlet"
         }
 )
 public class TemplateFilter implements Filter {
@@ -42,7 +42,6 @@ public class TemplateFilter implements Filter {
         writer.append(template[TemplateUtil.PRE]);
         writer.append(template[TemplateUtil.MID]);
         request.getRequestDispatcher("/Header").include(request, response);
-        //include the content of the page
         writer.append("<div class=\"container\">");
         fc.doFilter(request, response);
         writer.append("</div>");
