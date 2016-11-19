@@ -35,7 +35,9 @@ public class LoginFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession();
-
+        if (session != null) {
+            session.setMaxInactiveInterval(40);
+        }
         boolean loggedIn = session != null && session.getAttribute(AttributeUtil.USER) != null;
         if (!loggedIn) {
             if (session != null) {

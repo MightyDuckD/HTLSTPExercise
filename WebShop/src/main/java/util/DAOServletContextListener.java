@@ -25,8 +25,8 @@ public class DAOServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         DAO dao = new StaticDAO();
-        if(HibernateUtil.isConnected())
-            dao = new HibernateDAO();
+//        if(HibernateUtil.isConnected())
+//            dao = new HibernateDAO();
         dao.open(sce.getServletContext());
         sce.getServletContext().setAttribute(AttributeUtil.DAO, dao);
 
@@ -54,10 +54,16 @@ public class DAOServletContextListener implements ServletContextListener {
 
         dao.addCategory(new Category(4, "On Sale", "Sale", null));
 
-        dao.addArtikel(new Artikel(1, "Caffeine Mug", new Prize(799, 0.5), dao.getCategoryById(32)));
-        dao.addArtikel(new Artikel(2, "Caffeine Mug", new Prize(799, 0.5), dao.getCategoryById(32)));
-        dao.addArtikel(new Artikel(3, "Caffeine Mug", new Prize(799, 0.5), dao.getCategoryById(32)));
-        dao.addArtikel(new Artikel(4, "Caffeine Mug", "short", "long", "icon", "image", new Prize(799, 0.5), dao.getCategoryById(32)));
+        dao.addArtikel(new Artikel(1, "Caffeine Mug 1", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(2, "Caffeine Mug 2", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(3, "Caffeine Mug 3", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(1, "Caffeine Mug 4", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(2, "Caffeine Mug 5", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(3, "Caffeine Mug 6", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(1, "Caffeine Mug 7", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(2, "Caffeine Mug 8", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(3, "Caffeine Mug 9", new Prize(799, 0.5), dao.getCategoryById(32), dao.getCategoryById(0)));
+        dao.addArtikel(new Artikel(4, "Caffeine Mug 0", "short", "long", "icon", "image", new Prize(799, 0.5), dao.getCategoryById(32)));
 
     }
 

@@ -1,0 +1,290 @@
+\documentclass[a4paper, 12pt]{report}
+
+\usepackage{longtable}
+\usepackage{lipsum}					% Als Platzhalter für gewisse Stellen
+\usepackage{ngerman}					%Deutsche Silbentrennung etc.
+\usepackage[latin1]{inputenc}	% Umlaute in .tex Files normal schreibbar
+% Unter texnic-center alle Quelldateien unter Codierung ANSI abspeichern
+% Auf Unixsystemen ISO 8859-15
+\usepackage{helvet}						%Helvetic als Schriftart
+\usepackage{courier}					%Courier als Schriftart für Listings
+\usepackage{fancyhdr}					%Kopf- und Fußzeilen ändern
+\usepackage{a4}								%A4 Randeinstellungen
+\usepackage{makeidx}					%Indexkommandos
+\usepackage{listings}					%Für zeilennummerierte Listings mit Hintergrund
+\usepackage{color}					%Für grauen Hintergrund in Listings
+\usepackage{setspace}					%Größerer Zeilenabstand
+\usepackage{graphicx}					%Grafiken einbinden
+\usepackage{sectsty}					%Format der Überschriften umändern
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{pdfpages}					%Fremde pdfs einbinden
+\usepackage[font={scriptsize}]{caption}
+
+
+%Dokumentationen zu den Paketen finden sich im Installationsordner 
+%(normalerweise C:\Programme\texmf) unter docs und dort auch im Unterverzeichnis latex.
+
+%Das Kompilieren des Dokuments benötigt bis zu 3 Durchläufe im alle Referenzen und
+%Literatureinträge korrekt einzubinden.
+
+%----------------------------------------------------------------------------------
+% Listings 
+%----------------------------------------------------------------------------------
+
+%Definition des Aussehens der externen Listings
+\def\source#1#2#3{     %  Sprache, Caption, Dateiname 
+  %\global\advance\Sourcenummer by 1 
+  %\index{Listing #1 #2}
+  %\textbf{Listing-\the\Sourcenummer: #2}
+  \lstinputlisting[language=#1,caption=#2]{#3} 
+}
+
+% Beispiele für eine Verwendung
+%--------------------------------------------------------------------------------
+% \source{xml}{\texttt{faces-config.xml}}{sources/faces-config.xml}
+%
+% \source{java}{\texttt{beans.UserBean.java}}{sources/jsf/user/UserBean.java}
+%---------------------------------------------------------------------------------
+
+
+%Definition des Aussehens der internen Listings
+\definecolor{listinggray}{gray}{1.0}
+
+%-------------------------------------------------------------------------
+% Neues Listingformat
+% --- kleine Schrift
+% --- Keywords färbig
+%-------------------------------------------------------------------------
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{orange}{RGB}{240, 105, 12}
+
+\lstset{ %
+  language=Java,                  % the language of the code
+  basicstyle=\footnotesize\ttfamily\bfseries,       % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\footnozesize,      % the size of the fonts that are used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  numberstyle=\tiny\color{gray},  % line number style
+  keywordstyle=\color{blue},      % keyword style
+  commentstyle=\color{dkgreen},   % comment style
+  stringstyle=\color{mauve},      % string literal style
+  escapeinside={\%*}{*)},         % if you want to add a comment within your code
+  morekeywords={*,...}            % if you want to add more keywords to the set
+}
+
+%-------------------------------------------------------------------------
+% Listings aus der ersten Version: Grosse Schrift, Schwartz-weiss
+%-------------------------------------------------------------------------
+
+
+% \lstset{
+% 	language=Java,
+% 	frame=ltrb
+% 	backgroundcolor=\color{listinggray},
+% 	%basicstyle=\linespread{1.0}\ttfamily\small,
+% 	basicstyle=\linespread{1.0}\ttfamily\small,
+% 	commentstyle=\textit,
+% 	tabsize=2,
+% 	float=ph,
+% 	extendedchars,
+% 	breaklines,
+% 	prebreak={\space\hbox{\ensuremath\hookleftarrow}},,
+% 	numbers=left,
+% 	numberstyle=\small,
+% 	stringstyle=\textsl,
+% 	showstringspaces=false,
+% 	captionpos=b,
+% 	aboveskip=16pt
+% }
+
+
+%Eigene Kommandos
+\newcommand{\zb}{z.B.\ }				%z.B.
+\newcommand{\tm}{\texttrademark \ }			%TM - Zeichen
+\newcommand{\sk}[1]{\emph{siehe Kapitel \ref{#1}}}	%siehe Kapitel <Referenz>
+\newcommand{\lil}[1]{\emph{Listing \ref{#1}}}		%Listing <Referenz>
+\newcommand{\slil}[1]{\emph{siehe Listing \ref{#1}}}	%siehe Listing <Referenz>
+\newcommand{\pr}{$\rightarrow\ $}			%Pfeil nach rechts
+
+
+%-------------------------------------------------------------------------------
+% Uebersichten i Anhang richtig formatieren
+%-------------------------------------------------------------------------------
+
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{2}{3.8em}{4em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{3.8em}{4em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{2}{3.8em}{4em}}
+\renewcommand*\l@figure{\@dottedtocline{1}{2.8em}{3em}}
+\renewcommand*\l@lstlisting{\@dottedtocline{1}{2.8em}{3em}}
+\makeatother
+
+%Es soll ein Index für diese Diplomarbeit erzeugt werden
+%\makeindex
+
+%Längen- und Absatzeinstellungen
+\parindent=0pt		%Kein Einrücken der ersten Zeile eines Absatzes
+\parskip=12pt			%12pt Abstand zwischen 2 Absätzen
+%\doublespacing 	 %Doppelter Zeilenabstand
+\onehalfspacing	  %Eineinhalbfacher Zeilenabstand
+
+\setlength{\headheight}{15pt}		%Kopfzeile vergrößern (wegen 12pt Schriftgröße)	
+\addtolength{\textwidth}{1.5cm}	%Rechten Rand verkleinern
+
+
+%--------------------------------------------------------------------------
+% Beginn Dokument
+%--------------------------------------------------------------------------
+
+
+\begin{document}
+	\sffamily											%Schriftart setzen
+	\allsectionsfont{\sffamily}		%Schrift für Überschrift setzen
+	
+	\input{textparts/titel}									%Externe .tex Datei für Titel einbinden
+	\clearpage										%Neue Seite beginnen
+
+	
+%-----------------------------------------------------------------
+% Vorwort
+%-----------------------------------------------------------------
+	
+	\pagestyle{plain}							%Nur Fußzeile mit Seitennummer anzeigen lassen
+	\pagenumbering{roman}					%Römische Nummerierung vor der eigentlichen Diplomarbeit
+	\setcounter{page}{1}					%Bei 1 mit Nummerierung beginnen
+
+  \addcontentsline{toc}{chapter}{Vorwort}
+	\addcontentsline{toc1}{section}{Erklärung}	%Erklärung händisch ins Inhaltsverzeichnis einfügen
+	\input{textparts/erklaerung}												%Externe .tex Datei für Erklärung einfügen
+	\newpage																  %Neue Seite beginnen
+	\phantomsection
+	
+	\addcontentsline{toc}{section}{Diplomandenvorstellung}
+	\input{textparts/diplomandenvorstellung}
+	\newpage
+	\phantomsection
+	
+	\addcontentsline{toc}{section}{Danksagungen}
+	\input{textparts/danksagungen}
+	\newpage
+	\phantomsection
+	
+
+	\addcontentsline{toc}{section}{Zusammenfassung}
+	\input{textparts/zusammenfassung}
+	\newpage
+	\phantomsection
+	
+	\addcontentsline{toc}{section}{Abstract}
+	\input{textparts/abstract}
+	\newpage
+	\phantomsection
+	
+	\normalsize
+
+	\markright{INHALTSVERZEICHNIS}
+	\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}
+	\tableofcontents
+	\newpage
+	\phantomsection
+	
+		
+%-----------------------------------------------------------------
+% Kopfzeilen definieren
+%-----------------------------------------------------------------
+	\pagestyle{fancyplain}
+
+	\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+	\renewcommand{\chaptermark}[1]{\markright{\thechapter\ #1}}
+	\lhead[\fancyplain{}{\sffamily\sl\thepage}]{\fancyplain{}{\sffamily\sl\rightmark}}
+	\rhead[\fancyplain{}{\sffamily\sl\leftmark}]{\fancyplain{}{\sffamily\sl\thepage}}
+	\cfoot{}
+
+	\pagenumbering{arabic}	%Seiten wieder normal nummerieren
+	\setcounter{page}{1}		%Bei 1 beginnen
+
+%--------------------------------------------------------------------------
+% Kapitel einfügen
+%--------------------------------------------------------------------------
+
+	\clearpage
+	\input{textparts/uebersicht}
+	\clearpage
+	
+%--------------------------------------------------------------------------
+% Anhang
+%--------------------------------------------------------------------------
+
+  \phantomsection
+  \addcontentsline{toc}{chapter}{Anhang}
+	\addcontentsline{toc1}{section}{Abbildungsverzeichnis}
+	\listoffigures
+	\newpage
+	\phantomsection
+	
+	\addcontentsline{toc}{section}{Tabellenverzeichnis}
+	\listoftables
+	\newpage
+	\phantomsection
+
+	\addcontentsline{toc}{section}{Verzeichnis der Listings}
+	\lstlistoflistings
+	\newpage
+	\phantomsection
+	
+	%\addcontentsline{toc}{section}{Index}
+  \printindex
+  \newpage
+  \phantomsection
+  
+	\addcontentsline{toc}{section}{Literaturverzeichnis}
+	%\bibliographystyle{alpha} 		 %Standardstyle
+	%\bibliographystyle{dinat}		 %Style und Layout nach DIN 1502
+	%\bibliography{tiger}					 %Literaturverzeichnis einfügen
+	
+	
+	%So kann zitiert werden (sollte in einer der Unterdateien sein)
+	%\citep[vgl. Seite 22]{kopka1:00}
+	
+	\begin{thebibliography}{999}
+		\include{textparts/bibliography_lehner}
+		
+		\bibitem[Kopka1]{kopka1:00} 
+		Helmut Kopka:
+		  \emph{Latex Band 1, Einführung} \\ 
+		  Addison-Wesley, 2000  \\
+		  ISBN: 3-8273-7038-8
+		\bibitem[Demmig 1]{demig:04}
+		  Demmig, Thomas: \\
+			\emph{jetzt lerne ich Latex 2} \\
+			Markt+Technik, 2004 \\
+			ISBN 3-8272-6517-7
+		\bibitem[Web 1]{Web:01}
+		\href{http://www.meta-x.de/faq/LaTeX-Einfuehrung.html}{http://www.meta-x.de/faq/LaTeX-Einfuehrung.html}\\
+		Latex-Einf"uhrung\\
+		28.September 2012
+		\bibitem[JavaDoc05]{JavaDoc:05}
+		\href{http://docs.oracle.com/cd/E12839\_01/core.1111/e10043/introjps.htm}{http://docs.oracle.com/cd/E12839\_01/core.1111/e10043/introjps.htm}\\
+		Oracle Security Guide über das Java Sicherheits Model\\
+		13.11.2014
+	\end{thebibliography} 
+	\newpage
+	\phantomsection
+\end{document}

@@ -1,0 +1,205 @@
+\chapter{Generische Datentypen}
+
+\section{Definition}
+
+		
+\subsection{Was sind Generische Datentypen?}
+   
+			Die Einführun generischer Datentypen, so genannter \emph{''Generics''}, stellt wohl die gr"o"ste Änderung für Programmierer seit Einführung der J2SE\footnote{Java 2 Standard Edition} dar.
+			
+			Die grundlegende Funktion generischer Datentypen lässt sich am besten mittels eines Beispiels erklären: Angenommen man würde eine einfache Klasse implementieren wollen, welche einen String kapselt. Diese Klasse könnte cirka so aussehen:
+
+\begin{lstlisting}[caption=Kapselung eines Strings,label=lst:generics:stringwrapper]
+
+// Test Umlaute in Listings: öäüÖÄÜß
+
+public class StringWrapper
+{
+	private String value;
+	
+	public StringWrapper() {}
+	
+	public StringWrapper(String value)
+	{
+		this.value=value;
+	}
+	
+	public void setValue(String value)
+	{
+		this.value=value;
+	}
+	
+	public String getValue()
+	{
+		return this.value;
+	}
+}
+			\end{lstlisting}
+			
+			Würde man nun dieselbe Klasse für den Typ Integer implementieren wollen, so würde sie so aussehen:
+			
+			\begin{lstlisting}[caption=Kapselung eines Integers,label=lst:generics:integerwrapper]
+public class IntegerWrapper
+{
+	private Integer value;
+	
+	public IntegerWrapper() {}
+	
+	public IntegerWrapper(Integer value)
+	{
+		this.value=value;
+	}
+	
+	public void setValue(Integer value)
+	{
+		this.value=value;
+	}
+	
+	public Integer getValue()
+	{
+		return this.value;
+	}
+}
+			\end{lstlisting}
+		
+		Wie man sieht braucht man für die Kapselung eines anderen Datentyps eine neue Klasse. Diese beeinhaltet dieselbe Logik wie die Originalklasse, allerdings mit dem neuen Datentyp in den entsprechenden Methodendefinitionen. \\
+		Die angewandte Logik und die vorkommenden Algorithmen sind also \emph{generisch}\footnote{vom Datentyp unabhängig}. 
+		
+		Um das Erstellen mehrerer Klassen für verschiedene Datentypen umgehen zu können wird in Java 1.5 das Konzept der Generics eingeführt. Sie erlauben es bestimmte Datentypen erst im Anwendungsfall festzulegen und ermöglichen die Definition in nur einer generischen Klasse.
+		
+\subsection{Umsetzung generische Datentypen}
+		
+		
+			Es gibt zwei Realisierungsmöglichkeiten von generischen Datentypen:
+					
+\begin{itemize}
+\item Heterogene Variante: Für jeden Typ (\zb String, Integer) wird individueller Code erzeugt, also \zb zwei Klassen.
+\item Homogene Übersetzung: Für jede parametrisierte Klasse wird eine Klasse erzeugt, die statt des generischen Typs Object verwendet. Für einen konkreten Typ werden Typcasts in die Anweisungen eingebaut.
+\end{itemize}
+			
+			Beide Realisierungsmöglichkeiten werden durch die Compiler oder Interpreter der entsprechenden Sprachen durchgeführt und bleiben dem Programmierer einer generischen Klasse verborgen. \\
+			Java benutzt die homogene Übersetzung. Die generischen Klassen lassen sich außerdem weiterhin unter dem Typ Object benutzen.
+
+\section{Deklaration}
+	
+\subsection{Klassenschablonen}
+
+			Um eine generische Klasse aus den oben vorgestellten Klassen zu erzeugen, genügt es alle Vorkommnisse des entsprechenden Datentyps durch einen speziellen Bezeichner zu ersetzen. Dieser muss in der Klassendefinition in spitzen Klammern angegeben werden und wird meist \texttt{T} (für Typ) genannt.
+
+%------------------------------------------------------------------------
+% Listing aus Datei
+%------------------------------------------------------------------------
+
+\source{Java}{\texttt{GenericWrapper.java}}{sources/GenericWrapper.java}
+
+
+
+\begin{lstlisting}[caption=Kapselung eines generischen Datentyps]
+public class GenericWrapper<T>
+{
+	private T value;
+
+	public GenericWrapper() {}
+
+	public GenericWrapper(T value)
+	{
+		this.value=value;
+	}
+	
+	public void setValue(T value)
+	{
+		this.value=value;
+	}
+	
+	public T getValue()
+	{
+		return this.value;
+	}
+}
+\end{lstlisting}
+			
+Diese Art eine generische Klasse zu definieren nennt sich Klassenschablone. Um die Klasse nun für bestimmte Datentypen nutzen zu können muss sie für den entsprechenden Typ parametrisiert werden: 
+			
+\begin{lstlisting}[caption=Benutzen einer generischen Klasse]
+GenericWrapper<String>	stringWrapper		= new GenericWrapper<String>();
+GenericWrapper<Integer>	integerWrapper	= new GenericWrapper<Integer>();
+GenericWrapper<Double>	doubleWrapper		= new GenericWrapper<Double>;
+\end{lstlisting}
+		
+Der Vorteil dieser Parametrisierung liegt in der Möglichkeit schon während des Kompiliervorgangs prüfen zu können ob eine Zuweisung bzw. ein entsprechender Aufruf korrekt ist.\\
+Außerdem wird es dem Programmierer ermöglicht Daten ohne Typcasts zu verwenden, da der Inhalt der parametrisierten Klasse von vorne herein bekannt ist:
+		
+\begin{lstlisting}[caption=Benutzen einer generischen Klasse,
+			 name=Benutzen einer generischen Klasse]
+//Folgendes Statement produziert einen Kompilierfehler:
+GenericWrapper<String>	stringWrapper = 
+	new GenericWrapper<Integer>();
+
+//Dieser Methodenaufruf ebenfalls:
+doubleWrapper.setValue("Test");
+
+//Folgende Aufrufe sind hingegen erfolgreich:
+integerWrapper.setValue(new Integer(10));
+stringWrapper.setValue("Erfolgreich!");
+
+//Das nachfolgende Statement kommt ohne Typecast aus:
+int t=integerWrapper.getValue().intValue()+200;
+			\end{lstlisting}
+			
+Würde man obige Zeile ohne generische Datentypen programmieren so würde sich, wie bisher, folgender Code ergeben:
+			
+\begin{lstlisting}[caption=Benutzen der nicht generischen Integer Klasse,
+			 label=lst:generics:useofintegerwrapper]
+IntegerWrapper integerWrapper = new IntegerWrapper(new Integer(10));
+
+int t=((Integer) integerWrapper.getValue()).intValue()+200;
+\end{lstlisting}
+			
+Angenommen man würde dieselbe Wrapper-Klasse ohne Generics für die Klasse Number implementieren, so könnte man in ihr wie oben Integers speichern. Es wäre aber auch möglich \lstinline{numberWrapper.setValue(new Double(10.5))} auszuführen, da sowohl Integer als auch Double von Number erben.\\
+Dieses Vorgehen würde aber zur Laufzeit des Programmes zu einer \emph{ClassCastException} in Zeile 3 führen, da ein Double Objekt nicht zu einem Integer Objekt gecastet werden kann.
+			
+
+
+			
+Befindet sich dieser Cast nun in selten genutzten Programmteilen und innerhalb eines komplexeren Anwendungsfalles, in dem \zb die Werte der Klasse in unterschiedlichen Methoden geschrieben und gelesen werden, so kann es vorkommen, dass dieser Fehler von den Programmieren übersehen wird. \\
+Dies wäre \zb der Fall, wenn nur in bestimmten Programmsituationen ein Double in die Klasse geschrieben würde, aber immer ein Integer für die Berechnung der Zeile 3 verwendet werden würde.
+			
+Durch den Einsatz generischer Datentypen, Klassenschablonen und parametrisierter Klassen lassen sich diese Fehler bereits zum Zeitpunkt der Kompilierung feststellen und vermeiden. Entwickler können so wertvolle Zeit sparen und das Auftreten von \emph{Runtime Exceptions} wird vermindert.
+			
+\subsubsection{Parametrisierte Typen}
+Ein Bild, das nicht zum Thema passt.	
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.20]{images/Norwegen_04_116.jpg}
+	\caption{Norwegen - Wegweiser}
+	\label{fig:Norwegen_04_002}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+		\includegraphics{images/HTL_IF.png}
+	\caption{Informatik - Logo}
+	\label{fig:edvo-logo}
+\end{figure}
+			
+\subsection{Richtiges zitieren}
+Dies ist ein wörtliches Zitat:
+\begin{quote}
+\textit{Textverarbeitung durch einen Rechner mit dem Ergebnis des Ausdrucks in Buchqualität ist durch die Entwicklung geeigneter Programme in den letzten jahren möglich geworden.}\cite[Seite 3]{kopka1:00}
+\end{quote}
+
+
+Bezug auf eine bestimmte Quelle in einem Buch:\\
+Dieser Sachverhalt wird in \cite[Seite 17ff]{demig:04} genauer beschrieben.\\
+
+Eine gute Einführung zu \LaTeX findet man unter \cite{Web:01}
+
+\subsection{Einbinden von PDF - Seiten}
+
+Hier wird eine andere PDF eingefügt
+
+
+
+			
+
+		
