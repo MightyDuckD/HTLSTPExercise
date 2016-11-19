@@ -43,17 +43,12 @@ public interface DAO {
     Category getCategoryById(int id);
 
     List<Category> getChildrenById(int id);
+    
+    Category getKategorieByPath(String path);
 
     void close();
 
     void open(ServletContext servletContext);
 
-    public Category getKategorieByPath(String path);
-
-    void dumpToJson(OutputStream output);
-
-    void readFromJson(InputStream input);
-
-    void persist(Object o);
 
 }

@@ -31,7 +31,6 @@ public class WarenkorbUtil {
             if (korb == null) {
                 korb = new Warenkorb();
                 user.setWarenkorb(korb);
-                dao.persist(user);
             }
             return korb;
         }
@@ -57,7 +56,8 @@ public class WarenkorbUtil {
         Users user = dao.getUserByUsername(username);
         if(korb != null /**&& user.getWarenkorb() == null*/) {
             user.setWarenkorb(korb);
-            dao.persist(user);
+            request.getSession().removeAttribute(AttributeUtil.WARENKORB);
+            System.out.println("removed warenkorb from session");
         }
     }
 }

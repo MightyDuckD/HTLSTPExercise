@@ -8,26 +8,18 @@ package servlets;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.dsig.DigestMethod;
 import model.Users;
 import util.AttributeUtil;
-import static util.AttributeUtil.DAO;
 import util.TemplateUtil;
 import util.UserUtil;
-import static util.UserUtil.byteArrayToHex;
 import util.WarenkorbUtil;
 
 /**
@@ -40,7 +32,6 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter writer = response.getWriter();
-//        writer.append((CharSequence) request.getSession().getAttribute("user"));
 
         String logout = request.getParameter("logout");
         if (logout != null) {
@@ -50,9 +41,6 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-//        if (message != null && !"".equals(message)) {
-//            writer.append("<p>").append(message).append("</p>");
-//        }
         String message = getCustomLoginMessage(request, response);
         if (request.getSession().getAttribute(AttributeUtil.USER) == null) {
             String[] parts = TemplateUtil.getTemplateParts(request.getServletContext(), "/html/formularLogin.html", "<!--MESSAGE-->");

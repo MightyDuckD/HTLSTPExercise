@@ -43,25 +43,6 @@ public class ShopServlet extends HttpServlet {
 
         out.println("<div class=\"col-lg-3\">");
         printNavbar(request, response);
-//        out.println("<ul class=\"list-group\">\n"
-//                + "  <li class=\"list-group-item\">First item<ul><li>sub item 1</li></ul></li>\n"
-//                + "  <li class=\"list-group-item\">Second item</li>\n"
-//                + "  <li class=\"list-group-item\">Third item</li>\n"
-//                + "</ul>");
-//        out.println("<div class=\"list-group list-group-root well\">");
-//        out.println("<a  href=\"/WebShop/Shop\"  class=\"text-success list-group-item\">List Item 1</a>");
-//        out.println("<a  href=\"#Item2\"  class=\"list-group-item\">List Item 2</a>");
-//        out.println("<a  href=\"#Item3\"  class=\"list-group-item\">List Item 3</a>");
-//        out.println("<a  href=\"#Item4\"  class=\"list-group-item\">List Item 4</a>");
-//        out.println(" <a href=\"#\" class=\"list-group-item\">Item 1.2</a>\n"
-//                + "    <div class=\"list-group\">\n"
-//                + "      <a href=\"#\" class=\"list-group-item\">Item 1.2.1</a>\n"
-//                + "      <a href=\"#\" class=\"list-group-item\">Item 1.2.2</a>\n"
-//                + "      <a href=\"#\" class=\"list-group-item\">Item 1.2.3</a>\n"
-//                + "    </div>\n"
-//                + "    ");
-//        out.println("</div>");
-
         out.println("</div>");
         out.println("<div class=\"col-lg-9\">");
         printShop(request, response);

@@ -20,28 +20,18 @@ import javax.persistence.Transient;
  *
  * @author Simon
  */
-@Entity
-@Table(name = "users")
 public class Users implements Serializable {
 
-    @Id
-    @Column(name = "username")
+    
     private String username;
-    @Column
     private String password;
-    @Column
     private String salt;
 
-    @Column
     private String vorname;
-    @Column
     private String nachname;
 
-    @Embedded
     private Adresse home;
 
-    @OneToOne(optional = true)
-    @PrimaryKeyJoinColumn
     private Warenkorb warenkorb;
 
     public Users() {

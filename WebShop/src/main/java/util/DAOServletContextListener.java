@@ -6,7 +6,6 @@
 package util;
 
 import dao.DAO;
-import dao.HibernateDAO;
 import dao.StaticDAO;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -25,8 +24,6 @@ public class DAOServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         DAO dao = new StaticDAO();
-//        if(HibernateUtil.isConnected())
-//            dao = new HibernateDAO();
         dao.open(sce.getServletContext());
         sce.getServletContext().setAttribute(AttributeUtil.DAO, dao);
 

@@ -27,37 +27,19 @@ import javax.persistence.Table;
  *
  * @author Simon
  */
-@Entity
-@Table(name = "artikel")
 public class Artikel implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "artikelId")
+    
     private Integer id;
 
-    @Column(name = "bezeichnung")
     private String bezeichnung;
-    @Column(name = "htmlTextShort")
     private String htmlTextShort;
-    @Column(name = "htmlTextLong")
     private String htmlTextLong;
-    @Column(name = "urlImageIcon")
     private String urlImageIcon;
-    @Column(name = "urlImageLarge")
     private String urlImageLarge;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "artikel_category", joinColumns = {
-        @JoinColumn(name = "artikelId", nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                @JoinColumn(name = "categoryId",
-                        nullable = false, updatable = false)})
+    
     private Set<Category> categories;
     
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "prize")
-    @JoinColumn(name = "artikelId")
     private List<Prize> prize;
 
     public Artikel() {

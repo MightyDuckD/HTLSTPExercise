@@ -53,47 +53,13 @@ public class StaticDAO implements DAO {
     }
 
     @Override
+    public void open(ServletContext servletContext) {
+    }
+    @Override
     public void close() {
 
     }
 
-    @Override
-    public void open(ServletContext servletContext) {
-
-//        dumpToJson(System.out);
-//        readFromJson(getClass().getClassLoader().getResourceAsStream("/data.json"));
-    }
-
-    @Override
-    public void dumpToJson(OutputStream output) {
-//        try {
-//            Writer writer = new OutputStreamWriter(output);
-//            Gson gson = new Gson();
-//            String out = gson.toJson(this);
-//            writer.append(out);
-//            writer.flush();
-//        } catch (IOException ex) {
-//            Logger.getLogger(StaticDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }
-
-    @Override
-    public void readFromJson(InputStream input) {
-//        kategorien.clear();
-//        artikel.clear();
-//        user.clear();
-//        System.out.println("cleared all things");
-//        if (input == null) {
-//            return;
-//        }
-//        System.out.println("loading json file");
-//        Gson gson = new Gson();
-//
-//        StaticDAO oo = gson.fromJson(new InputStreamReader(input), StaticDAO.class);
-//        user = (List<User>) oo.user;
-//        artikel = (List<Artikel>) oo.artikel;
-//        kategorien = (List<Kategorie>) oo.kategorien;
-    }
 
     @Override
     public List<Category> getAllCategorien() {
@@ -167,9 +133,5 @@ public class StaticDAO implements DAO {
         this.user.add(user);
     }
 
-    @Override
-    public void persist(Object o) {
-        
-    }
     
 }

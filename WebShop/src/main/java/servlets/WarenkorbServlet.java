@@ -37,7 +37,6 @@ public class WarenkorbServlet extends HttpServlet {
 
         out.println("<div class=\"panel-heading\">Warenkorb</div>");
 
-//        out.println("<div class=\"panel-body\">");
         out.println("<table class=\"table\" style=\"margin-bottom: 0px;\">");
         out.println("<tr>");
         out.println("<th class=\"col-sm-1 text-right\">Quantity</th>");
@@ -53,7 +52,6 @@ public class WarenkorbServlet extends HttpServlet {
             total += cent * item.getAmount();
         }
         out.println("</table>");
-//        out.println("</div>"); 
         out.println("<div class=\"panel-footer\" style=\"\n"
                 + "    padding-left: 0px;\n"
                 + "    padding-right: 0px;\n"
@@ -63,7 +61,6 @@ public class WarenkorbServlet extends HttpServlet {
         out.println(String.format("%.2f&euro;", total / 100.0));
         out.println("</div>");
         out.println("</div>");
-        
 
         out.println("</div>");
         out.println("</div>");
@@ -71,9 +68,6 @@ public class WarenkorbServlet extends HttpServlet {
         out.println("<a href=\"/WebShop/Shop\" class=\"col-sm-2 btn btn-default\">Back to the Shop</a>");
         out.println("<a href=\"/WebShop/Checkout\" class=\"col-sm-2 col-sm-offset-8 btn btn-success\">Go to Checkout</a>");
 
-//        for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-//            System.out.println(entry.getKey() + " " + Arrays.toString(entry.getValue()));
-//        }
     }
 
     @Override
@@ -103,10 +97,9 @@ public class WarenkorbServlet extends HttpServlet {
                     warenkorb.removeItemById(id);
                     break;
                 }
-                
+
             }
         }
-        dao.persist(warenkorb);
         processRequest(request, response);
     }
 

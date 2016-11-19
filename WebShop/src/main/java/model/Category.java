@@ -22,26 +22,16 @@ import javax.persistence.Table;
  *
  * @author Simon
  */
-@Entity
-@Table(name = "category")
 public class Category implements Serializable {
 
-    @Id
-    @Column(name = "categoryId")
     private int id;
-    @Column(name = "bezeichnung")
     private String bezeichnung;
-    @Column(name = "path")
     private String path;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "parent")
     private Category parent;
     
-    @OneToMany(mappedBy="parent")
     private Set<Category> childs;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private Set<Artikel> artikel = new HashSet<>();
 
     public Category() {

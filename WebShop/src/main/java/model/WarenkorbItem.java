@@ -17,18 +17,12 @@ import javax.persistence.Table;
  *
  * @author Simon
  */
-@Entity
-@Table(name = "warenkorbitem")
 public class WarenkorbItem implements Serializable {
-    @Id
-    @Column
+    
     private Integer id;
     
-    @Column
     private Integer amount;
     
-    @ManyToOne
-    @JoinColumn(name = "artikelId")
     private Artikel artikel;
 
     public WarenkorbItem() {

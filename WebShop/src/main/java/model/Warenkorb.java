@@ -25,23 +25,14 @@ import javax.persistence.Table;
  *
  * @author Simon
  */
-@Entity
-@Table(name = "warenkorb")
-//ignore netbeans error here - if the Users object has an id hibernate throws a nullpointer exception
 public class Warenkorb implements Serializable {
 
-    @Id
     private String username;
 
-    @MapsId
-    @OneToOne(mappedBy = "warenkorb", cascade = CascadeType.ALL)
-    @JoinColumn(name = "username") 
     private Users users;
 
-    @Column
     private Timestamp created;
 
-    @OneToMany()
     private List<WarenkorbItem> items;
 
     public Warenkorb() {

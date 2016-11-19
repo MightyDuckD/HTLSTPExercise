@@ -6,12 +6,8 @@
 package util;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletContext;
 
 /**
@@ -80,16 +76,6 @@ public class TemplateUtil {
      * @throws IOException
      */
     public static String[] getTemplateParts(ServletContext context) throws IOException {
-//        String template = getTemplate(context);
-//        String[] partsA = template.split(head);
-//        if (partsA.length != 2) {
-//            throw new RuntimeException("error parsing template file " + templateFile);
-//        }
-//        String[] partsB = partsA[1].split(body);
-//        if (partsB.length != 2) {
-//            throw new RuntimeException("error parsing template file " + templateFile);
-//        }
-//        return new String[]{partsA[0], partsB[0], partsB[1]};
         return getTemplateParts(context, templateFile, new String[]{head,body});
     }
 }
