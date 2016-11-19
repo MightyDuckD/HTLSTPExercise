@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Zahlenraten</title>
+    </h:head>
+    <h:body>
+        <h3>Raten Sie eine Zahl zwischen 1 und 1000</h3>
+        <h:form id="raten">
+            <h:inputText id="versuch"
+                         value="#{raten.aktVersuch}"
+                         required="true"
+                         validatorMessage="Zahl von 1 bis 1000 eingeben"
+                         requiredMessage="Zahl eingeben"
+                         converterMessage="Zahl (1 - 1000) eingeben">
+                <f:validateLongRange minimum="1" maximum="1000" />
+            </h:inputText>
+            <h:message for="versuch" /><br />
+            <p />
+            <h:commandButton actionListener="#{raten.neuerVersuch}"
+                             value="Neuer Versuch"
+                             disabled="#{raten.ende}"/>
+        </h:form>
+        <p />
+        <h:dataTable border="1"
+                     value="#{raten.msg}"
+                     var="line"
+                     rendered="#{not empty raten.msg}">
+            <h:column>
+                <h:outputText value="#{line}" />
+            </h:column>
+        </h:dataTable>
+        <p />
+        <h:form id="neuesSpiel">
+            <h:commandButton value="Neues Spiel"
+                             actionListener="#{raten.neuesSpiel}"
+                             disabled="#{not raten.ende}" />
+        </h:form>
+    </h:body>
+</html>
+
