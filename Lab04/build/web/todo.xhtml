@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>ToDo List</title>
+    </h:head>
+    <h:body>
+        <h1>Create new Todo</h1>
+        <h:form id="newTodo">
+            <h:panelGrid columns="4">
+                <h:inputText id="descrNew" 
+                             value="#{toDoCon.newToDo.description}">
+                </h:inputText>
+                <h:inputText id="dateNew" 
+                             value="#{toDoCon.newToDo.date}"
+                             converterMessage="Ungültiges Datum">
+                    <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Vienna"></f:convertDateTime>
+                </h:inputText>
+                <h:inputText id="priNew" 
+                             value="#{toDoCon.newToDo.priority}"
+                             style="background-color: ${toDoCon.getPriortiyColor(toDoCon.newToDo)}">
+                    <f:validateLongRange minimum="1" maximum="3"/>
+                    <f:passThroughAttribute name="type" value="number"/>
+                    <f:passThroughAttribute name="min" value="1"/>
+                    <f:passThroughAttribute name="max" value="3"/>
+                    <f:ajax render="priNew"/>
+                </h:inputText>
+                <h:message id="msgNew" for="dateNew" style="color: red;"/>
+            </h:panelGrid>
+            <h:commandButton value="Save new ToDo"
+                             actionListener="#{toDoCon.saveNewTodo}"/>
+        </h:form>
+        <h1>Todo List</h1>
+        <h:form id="todolist">
+            <h:dataTable value="#{toDoCon.todos}" var="aktTodo">
+                <h:column>
+                    <h:inputText id="descr" 
+                                 value="#{aktTodo.description}"
+                                 disabled="#{aktTodo.done}">
+                        <f:ajax render="descr"/>
+                    </h:inputText>
+                </h:column>
+                <h:column>
+                    <h:inputText id="date" 
+                                 value="#{aktTodo.date}"
+                                 converterMessage="Ungültiges Datum"
+                                 disabled="#{aktTodo.done}">
+                        <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Vienna"></f:convertDateTime>
+                        <f:ajax render="date msg"/>
+                    </h:inputText>
+                </h:column>
+                <h:column>
+                    <h:inputText id="pri" 
+                                 value="#{aktTodo.priority}"
+                                 style="background-color: ${toDoCon.getPriortiyColor(aktTodo)}"
+                                 disabled="#{aktTodo.done}">
+                        <f:validateLongRange minimum="1" maximum="3"/>
+                        <f:passThroughAttribute name="type" value="number"/>
+                        <f:passThroughAttribute name="min" value="1"/>
+                        <f:passThroughAttribute name="max" value="3"/>
+                        <f:ajax render="pri"/>
+                    </h:inputText>
+                </h:column>
+                <h:column>
+                    <h:selectBooleanCheckbox id="done" 
+                                             value="#{aktTodo.done}">
+                        <f:ajax render="date done pri descr"/>
+                    </h:selectBooleanCheckbox>
+                </h:column>
+                <h:column>
+                    <h:message id="msg" for="date" style="color: red;"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
