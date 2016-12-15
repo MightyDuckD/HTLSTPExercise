@@ -20,7 +20,7 @@ import javax.servlet.annotation.WebFilter;
  *
  * @author Simon
  */
-@WebFilter(servletNames = {"TestServlet"})
+@WebFilter(servletNames = {"TestServlet","SprachenServlet"})
 public class TemplateFilter implements Filter {
 
     @Override

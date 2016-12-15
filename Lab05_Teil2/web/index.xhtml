@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Lab5 Teil2</title>
+    </h:head>
+    <h:body>
+        <h1>Lab05 Teil2</h1>
+        <p style="width:300px;">
+            Dadurch das die Annotation @Eager von mir nicht funktioniert hat und ich die von <a href="http://showcase.omnifaces.org/cdi/Eager">OmniFaces</a> nicht 
+            einbinden wollte, muss beim ersten Aufruf des Formulars erst die Datenbankverbindung geöffnet werden.<br/>
+            Dadurch dauert der erste Datenbankzugriff sehr lange.
+        </p>
+        <h:form>
+            <h:commandLink value="Formular 2" action="#{formCon.formular2()}"></h:commandLink><br/>
+            <h:commandLink value="Personen Table" action="viewall"></h:commandLink>
+        </h:form>
+    </h:body>
+</html>
+

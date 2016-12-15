@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Personen Formular 1</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1>Edit Person Formular 1</h1>
+            <h:panelGrid columns="3">
+                <span>Vorname</span>
+                <h:inputText id="vorname"
+                             value="#{formCon.person.vorname}" 
+                             required="true"
+                             validatorMessage="Vorname muss mit Großbuchstaben beginnen gefolgt von bis 19 zu Kleinbuchstaben"
+                             requiredMessage="Wert ist erforderlich">
+                    <f:validateRegex pattern="[A-Z][a-z]{1,19}"/>
+                </h:inputText>
+                <h:message for="vorname" />
+                <span>Zuname</span>
+                <h:inputText id="zuname"
+                             value="#{formCon.person.zuname}" 
+                             required="true"
+                             validatorMessage="Zuname muss mit Großbuchstaben beginnen gefolgt von bis 19 zu Kleinbuchstaben"
+                             requiredMessage="Wert ist erforderlich"> 
+                    <f:validateRegex pattern="[A-Z][a-z]{1,19}"/>
+                </h:inputText>
+                <h:message for="zuname" />
+                <span>Geburtstag</span>
+                <h:inputText id="geburtstag"
+                             value="#{formCon.person.geburtstag}" 
+                             required="true"
+                             requiredMessage="Wert ist erforderlich"
+                             converterMessage="Ungültiges Datum(dd.MM.yyyy)">
+                    <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Vienna"></f:convertDateTime>
+                    <f:validator validatorId="datumvorheutevalidator"></f:validator>
+                </h:inputText>
+                <h:message for="geburtstag" />
+                <span>Hobby</span>
+                <h:inputText id="hobby"
+                             value="#{formCon.person.hobby}"/>
+                <h:message for="hobby" />
+                <span>Geschlecht</span>
+                <h:inputText id="geschlecht"
+                             value="#{formCon.person.weiblich}" 
+                             required="true"
+                             requiredMessage="Wert ist erforderlich"
+                             converter="geschlechtconverter">
+                </h:inputText>
+                <h:message for="geschlecht" />
+            </h:panelGrid>
+            <h:commandButton value="Show Person"
+                             action="viewuser"/>
+        </h:form>
+    </h:body>
+</html>
+

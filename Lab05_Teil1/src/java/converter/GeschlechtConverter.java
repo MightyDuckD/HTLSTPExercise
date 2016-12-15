@@ -16,7 +16,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Simon
  */
-@FacesConverter(value = "geschlechtconverter", forClass = Boolean.class)
+@FacesConverter(value = "geschlechtconverter")
 public class GeschlechtConverter implements Converter {
 
     @Override

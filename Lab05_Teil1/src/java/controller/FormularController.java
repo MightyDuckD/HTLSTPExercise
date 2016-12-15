@@ -6,9 +6,13 @@
 package controller;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
+import model.Hobby;
 import model.Person;
 
 /**
@@ -20,10 +24,15 @@ import model.Person;
 public class FormularController implements Serializable {
 
     private Person person;
+    private List<SelectItem> hobbies;
 
     @PostConstruct
     public void init() {
         person = new Person();
+        hobbies = Hobby.getHobbies()
+                .stream()
+                .map(h -> new SelectItem(h, h.getBezeichnung()))
+                .collect(Collectors.toList());
     }
 
     public String formular2() {
@@ -40,4 +49,7 @@ public class FormularController implements Serializable {
         return person;
     }
 
+    public List<SelectItem> getHobbies() {
+        return hobbies;
+    }
 }

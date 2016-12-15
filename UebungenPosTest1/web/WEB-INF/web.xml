@@ -20,6 +20,11 @@
     </context-param>
     
     <error-page>
+        <exception-type>servlet.SprachenServlet$SprachenException</exception-type>
+        <location>/html/sprachenerror.html</location>
+    </error-page>
+    
+    <error-page>
         <exception-type>java.io.FileNotFoundException</exception-type>
         <location>/ErrorServlet</location>
     </error-page>
