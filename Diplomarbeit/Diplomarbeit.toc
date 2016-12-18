@@ -6,10 +6,10 @@
 \contentsline {chapter}{Inhaltsverzeichnis}{vi}{section*.5}
 \contentsline {chapter}{\numberline {1}\"Ubersicht}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Was ist Steganographie}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}Einsatzgebiete}{3}{section.1.2}
-\contentsline {section}{\numberline {1.3}Vor- und Nachteile}{3}{section.1.3}
-\contentsline {section}{\numberline {1.4}Abgrenzung zur Kryptographie}{3}{section.1.4}
-\contentsline {section}{\numberline {1.5}Steganographie als ''Wicked Problem''}{3}{section.1.5}
+\contentsline {section}{\numberline {1.2}Einsatzgebiete}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}Vor- und Nachteile}{2}{section.1.3}
+\contentsline {section}{\numberline {1.4}Abgrenzung zur Kryptographie}{2}{section.1.4}
+\contentsline {section}{\numberline {1.5}Steganographie als ''Wicked Problem''}{4}{section.1.5}
 \contentsline {chapter}{Anhang}{5}{section*.10}
 \contentsline {section}{Tabellenverzeichnis}{6}{section*.12}
 \contentsline {section}{Verzeichnis der Listings}{7}{section*.14}
