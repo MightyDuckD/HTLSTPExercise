@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	 version="3.1">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>
+            User1:Pass1
+            User2:Pass2
+            User3:Pass3
+        </param-value>
+    </context-param>
+    
+    <error-page>
+        <exception-type>servlet.SprachenServlet$SprachenException</exception-type>
+        <location>/html/sprachenerror.html</location>
+    </error-page>
+    
+    <error-page>
+        <exception-type>java.io.FileNotFoundException</exception-type>
+        <location>/ErrorServlet</location>
+    </error-page>
+    
+    <!-- generic handler for all types of exceptions -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/html/error.html</location>
+    </error-page>
+</web-app>
