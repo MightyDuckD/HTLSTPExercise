@@ -2,12 +2,12 @@
 
 	\section{Was ist Steganographie}
 	
-	Die Steganographie ist eine Methode die sich mit dem verstecken von zu übermittelnden Nachrichten beschäftigt und kam schon in der Antike zum Einsatz. Das Wort kommt aus den griechischen Wörter ''stegano'' und ''graphein'', was übersetzt ''bedeckt schreiben'' bedeutet \cite{L: StegoGeschichte}. Dabei wird meist ein Text, aber auch andere Arten von Informationen, in einem Trägermedium versteckt. Diese Kombination wird als Steganogramm bezeichnet. Das Medium sollte so gewählt sein, das sich die einzubettenden Daten leicht integrieren lassen. Außerdem benötigt es ein gewisses Maß an Entropie damit Unregelmäßigkeiten nicht so stark auffallen, denn eine Blume ist in einer bunten Blumenwiese schwerer zu finden als auf einem asphaltierten Parkplatz. Ziel ist es immer, die Wahrnehmungsschwelle eines Menschen so weit zu unterschreiten, dass man gar nicht auf die Idee kommt überhaupt nach einer versteckten Nachricht zu suchen. 
+	Die Steganographie ist eine Methode, die sich mit dem verstecken von zu übermittelnden Nachrichten beschäftigt und kam schon in der Antike zum Einsatz. Das Wort kommt aus den griechischen Wörtern ''stegano'' und ''graphein'', was übersetzt ''bedeckt schreiben'' bedeutet \cite{L: StegoGeschichte}. Dabei wird meist ein Text, aber auch andere Arten von Informationen, in einem Trägermedium versteckt. Diese Kombination wird als Steganogramm bezeichnet. Das Medium sollte so gewählt sein, das sich die einzubettenden Daten leicht integrieren lassen. Außerdem benötigt es ein gewisses Maß an Entropie damit Unregelmäßigkeiten nicht so stark auffallen, denn eine Blume ist in einer bunten Blumenwiese schwerer zu finden als auf einem asphaltierten Parkplatz. Ziel ist es immer, die Wahrnehmungsschwelle eines Menschen so weit zu unterschreiten, dass man gar nicht auf die Idee kommt überhaupt nach einer versteckten Nachricht zu suchen. 
 	\todo{Welche Techniken wofür gut sind und welche Trägermaterialen man braucht wird in den späteren abschnitten behandelt}
 	
 	
 	Die Möglichkeiten für Steganogramme haben sich mit der Entwicklung von Computer und elektronischer Datenverarbeitung sehr stark verändert, die Idee dahinter ist jedoch die gleiche: Man versteckt Informationen.
-	Früher hat man noch Beispielsweise mit Unsichtbarer Tinte geschrieben, welche erst mit Hitze sichtbar wird (\zb Zitronensaft). Auch wurden Techniken wie etwa die monoalphabetische Substituion benutzt, bei welcher Buchstaben des zu versteckenden Wortes über eine Tabelle durch Wörter ersetzt werden. Diese Wortfolge wird dann mit weiteren nicht in der Tabelle vorkommenden Worten ergänzt um vollständige, grammatikalisch korrekte Sätze bilden zu können. Eine solche Tabelle findet man zum Beispiel in dem Buch 1 der Polygraphia von Johannes Trithemius (Siehe: \autoref{fig:L: Polygraphia}).
+	Früher hat man noch Beispielsweise mit Unsichtbarer Tinte geschrieben, welche erst mit Hitze sichtbar wird (\zb Zitronensaft). Auch wurden Techniken wie etwa die monoalphabetische Substituion benutzt, bei welcher Buchstaben des zu versteckenden Wortes über eine Tabelle durch Wörter ersetzt werden. Diese Wortfolge wird dann mit weiteren nicht in der Tabelle vorkommenden Worten ergänzt um vollständige, grammatikalisch korrekte Sätze bilden zu können. Eine solche Tabelle findet man zum Beispiel in dem Buch 1 der Polygraphia von Johannes Trithemius (Siehe: \autoref{fig:L: Polygraphia}). Heute werden vor allem Verfahren eingesetzt, die Bilder und Videos nutzen, denn kann man die große Menge an Daten verwenden welche sowieso jeden Tag millionenfach versendet werden. Diese können  mit den richtigen Programmen auch sehr leicht manipuliert und bearbeitet werden um sie als Steganogramme einzusetzen.
 	
 	\begin{figure}[H]
 		\centering
@@ -21,30 +21,11 @@
 	
 	
 	
-	\section{Einsatzgebiete}
-	
-	Steganographie schützt Daten nicht vor Missbrauch, warum sollte man sie dann überhaupt verwenden, wenn Kryptographie viel sicherer ist? In der westlichen Welt ist Verschlüsselung durch das Internet so weit verbreitet das es als Selbstverständlich erscheint, seine Daten und Konversationen verschlüsselt zu speichern. Doch in vielen Ländern ist es auch heute noch illegal solche Techniken einzusetzen. Selbst in den Vereinigten Staaten von Amerika gab es noch bis in das Jahr 2000 sehr   restriktive Gesetze was Verschlüsselung angelangt. Das führte soweit, das sogar ein T-Shirt auf welches der Source-Code für RSA-Encryption gedruckt wurde, unter das Waffengesetz fiel, als ''export-restricted munition'' deklariert und für den Export verboten wurde.
-	
-	Hier kommt Steganographie zum Einsatz. Sie bietet eine Möglichkeit seine Daten und sich Selber trotz der lokal geltenden Gesetze zu schützen. Nicht nur das es schwer zu erkennen ist ob sich überhaupt versteckte Daten auf einem Laufwerk befinden, steganographische Verfahren werden meist gar nicht von den Gesetzten verboten. Man befindet sich meist in einer Grauzone, was einem einen gewissen Verhandlungsspielraum schafft. 
-	
-	Sie bietet auch eine Schutz vor potentiellen Hackern. Während bei verschlüsselten Daten ein sich lohnendes Ziel auf den Angreifer wartet, ist es bei Steganographie sehr unwahrscheinlich etwas verwertbares zu finden, falls überhaupt etwas vorhanden ist. Dadurch macht man sich dadurch als Opfer sehr unattraktiv.
-	
-	\cite{L: StegoVersteck}
-	
-	\section{Vor- und Nachteile}
-	
 	
 	
 	\section{Abgrenzung zur Kryptographie}
 	
-	Kryptographie und Steganographie werden oft gemeinsam verwendet, wodurch meist nicht genau zwischen diesen beiden Verfahren unterschieden wird. Wie man in \autoref{L: Tab: Stego VS Crypto} \todo{Wie bekommt man die richtige Bezeichnung hier in den Text(unterschied zwischen label und caption)} sehen kann, wirken beide Techniken auf den ersten Blick sehr ähnlich, sind aber bei genauerer Betrachtung zwei komplett unterschiedliche Verfahren. Wichtig ist hier vor allem zu beachten: Steganographie schützt Daten nicht vor Dritten, wenn diese gezielt danach Suchen und wenn sie sich sicher sind, das in den Informationen die Ihnen vorliegen weitere Nachrichten versteckt wurden. Des weiteren haben Steganogramme die Eigenschaft zwar von Menschen schlecht erkannt werden zu können, von Computern jedoch meist relativ schnell durch Analysen und Vergleiche eine versteckte Nachricht sichtbar gemacht werden kann. \todo{Dazu mehr in den Punkten XYZ (z.B:) Wicked Problem} Bei dem Erfolg eines computergestützten Verfahren kommt es aber sehr stark auf die verwendete Technik und die verfügbare Rechenleistung an. 
-	
-	Am Sichersten ist es wenn man beide Verfahren kombiniert. Dadurch hat man nicht nur die Vorteile der Kryptographie (Vertraulichkeit, Integrität und Authentizität), sondern auch die der Steganographie. Interessant ist hier vor allem die Eigenschaft von Verschlüsselungen: Diese gelten dann als sicher, wenn sie den Klartext derart verändern, das er keine statistischen Merkmale des ursprünglichen Text mehr aufweist. 
-	Der Geheimtext kann also bei guten Verschlüsselungsverfahren statistisch nicht mehr von Rauschen unterschieden werden. Wenn man dieses ''Rauschen'' dann mit Hilfe von Steganographie in ein unauffälliges Trägermedium einbettet, ist es selbst mit elektronischer Datenverarbeitung nicht mehr möglich, eine Nachricht im Steganogramm zu entdecken. Die einzige Möglichkeit für Dritte hier noch etwas herauszufinden ist es das Steganogramm mit dem originalen Trägermaterial zu vergleichen. Hier fallen dann Unterschiede auf. Diese Technik ist aber in der Praxis selten anwendbar, denn einzigartige Trägermaterialien können sehr leicht hergestellt werden (\zb Digitalfotografie) und, weil das Trägermedium nicht zum dekodieren benötigt wird, kann es nach der Erstellung des Steganogramm gelöscht/vernichtet werden.
-	
-	
-	
-	
+	Kryptographie und Steganographie werden oft gemeinsam verwendet, wodurch meist nicht genau zwischen diesen beiden Verfahren unterschieden wird. Wie man in \autoref{L: Tab: Stego VS Crypto} \todo{Wie bekommt man die richtige Bezeichnung hier in den Text(unterschied zwischen label und caption)} sehen kann, wirken beide Techniken auf den ersten Blick sehr ähnlich, sind aber bei genauerer Betrachtung zwei komplett unterschiedliche Verfahren. Wichtig ist hier vor allem zu beachten: Steganographie schützt Daten nicht vor Dritten, wenn diese gezielt danach Suchen und wenn sie sich sicher sind, das in den Informationen die Ihnen vorliegen weitere Nachrichten versteckt wurden. Des weiteren haben Steganogramme die Eigenschaft zwar von Menschen schlecht erkannt werden zu können, von Computern jedoch meist relativ schnell eine versteckte Nachricht sichtbar gemacht werden kann. Bei dem Erfolg eines computergestützten Verfahren kommt es aber sehr stark auf die verwendete Technik und die verfügbare Rechenleistung an. 
 	
 	
 	\begin{table}[h]
@@ -63,14 +44,46 @@
 				Scheinbar existiert gar & Die Nachricht existiert, kann aber\\
 				keine Nachricht & nicht gelesen werden \\
 				\hline
-				
 			\end{tabular}
 		\end{center}
 		\caption{Vergleich zwischen Steganographie und Kryptographie, Quelle: \cite{L: Stego VS Crypto}} 
 		\label{L: Tab: Stego VS Crypto}
 	\end{table}
 	
+	Am Sichersten ist es wenn man beide Verfahren kombiniert. Dadurch hat man nicht nur die Vorteile der Kryptographie (Vertraulichkeit, Integrität und Authentizität), sondern auch die der Steganographie. Interessant ist hier vor allem die Eigenschaft von Verschlüsselungen: Diese gelten dann als sicher, wenn sie den Klartext derart verändern, das er keine statistischen Merkmale des ursprünglichen Text mehr aufweist. 
+	Der Geheimtext kann also bei guten Verschlüsselungsverfahren statistisch nicht mehr von Rauschen unterschieden werden. Wenn man dieses ''Rauschen'' dann mit Hilfe von Steganographie in ein unauffälliges Trägermedium einbettet, ist es selbst mit elektronischer Datenverarbeitung nicht mehr möglich, eine Nachricht im Steganogramm zu entdecken. Die einzige Möglichkeit für Dritte hier noch etwas herauszufinden ist es das Steganogramm mit dem originalen Trägermaterial zu vergleichen. Hier fallen dann Unterschiede auf. Diese Technik ist aber in der Praxis selten anwendbar, denn einzigartige Trägermaterialien können sehr leicht hergestellt werden (\zb Digitalfotografie) und, weil das Trägermedium nicht zum dekodieren benötigt wird, kann das Original nach der Erstellung des Steganogramm gelöscht/vernichtet werden.
 	
 	
+	
+	\section{Einsatzgebiete}
+	
+	Steganographie schützt Daten nicht vor Missbrauch, warum sollte man sie dann überhaupt verwenden, wenn Kryptographie viel sicherer ist? In der westlichen Welt ist Verschlüsselung durch das Internet so weit verbreitet das es als Selbstverständlich erscheint, seine Daten und Konversationen verschlüsselt zu speichern. Doch in vielen Ländern ist es auch heute noch illegal solche Techniken einzusetzen. Selbst in den Vereinigten Staaten von Amerika gab es noch bis in das Jahr 2000 sehr   restriktive Gesetze was Verschlüsselung angelangt. Das führte soweit, das sogar ein T-Shirt auf welches der Source-Code für RSA-Encryption gedruckt wurde, unter das Waffengesetz fiel, als ''export-restricted munition'' deklariert und für den Export verboten wurde.
+	
+	Hier kommt Steganographie zum Einsatz. Sie bietet eine Möglichkeit seine Daten und sich Selber trotz der lokal geltenden Gesetze zu schützen. Nicht nur das es schwer zu erkennen ist ob sich überhaupt versteckte Daten auf einem Laufwerk befinden, steganographische Verfahren werden meist gar nicht von den Gesetzten verboten. Man befindet sich meist in einer Grauzone, was einem einen gewissen Verhandlungsspielraum verschafft. 
+	
+	Sie bietet auch eine Schutz vor potentiellen Hackern.Denn während bei verschlüsselten Daten ein sich lohnendes Ziel auf den Angreifer wartet, ist es bei Steganographie sehr unwahrscheinlich etwas verwertbares zu finden, falls überhaupt etwas vorhanden ist. Dadurch macht man sich als Opfer sehr unattraktiv.
+	
+	\cite{L: StegoVersteck}
 	
 	\section{Steganographie als ''Wicked Problem''}
+	
+	Die Steganographie besitzt viele Eigenschaften von sogenannten ''Wicked Problems''. 
+	
+	\begin{itemize}
+		\item Es gibt keine genaue Definition des Problem
+		\item Sie haben keine Stopp-Regel (''hat man auch wirklich nichts übersehen?'')
+		\item Es gibt keinen ultimativen und sofortigen Test für die Richtigkeit von Lösungen des Problem
+		\item Wicked Problems haben weder eine abzählbare Lösungsmenge, noch gibt es eine gut beschriebenen Gruppe an gültigen Operatoren
+	\end{itemize}
+	
+	Diese Eigenschaften und die Tatsache das Kommunikation schwer zu definieren ist führen dazu das paranoide oder phantasievolle Menschen glauben Nachrichten zu empfangen, obwohl keine vorhanden sind. Da können selbst kleine unbedeutende Handlungen von Mitmenschen als geheime Nachrichtenübertragung interpretiert werden, was unter anderem zu Problemen führen kann wo eigentlich keine sind. 
+	
+	Doch auch in der Verbrechensaufklärung kann die Wicked-Problem Eigenschaft von Steganographie zum Problem werden. Wird hier denn wirklich neben der offensichtlich übertragenen Information noch eine versteckte Nachricht mitgesendet? Eine Verdächtige Person kauft jeden Tag einen Kaffee auf dem Weg zur Arbeit. Die Verkäuferin ist die Freundin von dem Steuerberater des Chefs des Verdächtigen. Plötzlich kauft er aber einen Kräutertee. Hat er jetzt den Steuerberater vor irgendetwas gewarnt oder hat er heute nur Halsweh und möchte seinen Hals schonen? Das ist eben die Natur von Wicked Problems. Man kann sich nie sicher sein, den es gibt keine genaue Fragestellung, kein eindeutiges Erfolgskriterium noch eine klar definierte Ausgangslage. 
+	
+	
+	
+	
+	
+	
+	
+	
