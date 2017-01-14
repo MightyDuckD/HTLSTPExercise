@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Lehner-Reisen</title>
+        <meta charset="utf-8"/>
+        <!--Bootstrap-->
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/agency.min.css" rel="stylesheet"/>
+        <link href="css/fontawesome.min.css" rel="stylesheet"/>
+        <style>
+            .navbar-custom {
+                background-color: rgba(0,0,0,0.62);
+            }
+            .nav>li>a:focus,.nav>li>a:hover{
+                background-color: transparent;
+            }
+        </style>
+    </h:head>
+    <h:body style="margin: 0px;" id="page-top" class="index" a:data-spy="scroll">
+        <nav id="mainNav" class="navbar navbar-custom navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <a class="navbar-brand page-scroll" href="#page-top">Lehner-Reisen</a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#services">Services</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#about">About</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#team">Team</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#contact">Contact</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#signup">Sign Up</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </nav>
+
+        <header>
+            <div class="container">
+                <div class="intro-text">
+                    <div class="intro-lead-in">Reif für die Insel?</div>
+                    <div class="intro-heading">Wir haben das richtige Angebot</div>
+                </div>
+
+            </div>
+        </header>
+        <ui:insert name="content">
+            <h1>no content</h1>
+        </ui:insert>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="copyright">Copyright &copy; Your Website 2016</span>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-inline quicklinks">
+                            <li><a href="#">Privacy Policy</a>
+                            </li>
+                            <li><a href="#">Terms of Use</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!--Bootstrap-->
+        <script src="js/jquery.min.js"/>
+        <script src="js/bootstrap.min.js"/>
+        <script src="js/affix.js"/>
+        <script src="js/jquery.easing.min.js"/>
+        <script src="js/agency.min.js"/>
+        <script>
+            jQuery(window).on('activate.bs.scrollspy', function (e) {
+                history.replaceState({}, "", $("a[href^='#']", e.target).attr("href"));
+            });
+        </script>
+    </h:body>
+</html>
+
