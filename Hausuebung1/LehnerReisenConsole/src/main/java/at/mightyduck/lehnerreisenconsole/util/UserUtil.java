@@ -28,8 +28,8 @@ public class UserUtil {
         }
     }
 
-    public static boolean authenticateUser(Benutzer user, String subittedUsername, String submittedPassword) {
-        String dbUsername = user != null ? user.getEmail() : null;
+    public static boolean authenticateUser(Benutzer user, String subittedEmail, String submittedPassword) {
+        String dbEmail = user != null ? user.getEmail() : null;
         String salt = user != null ? user.getSalt() : "";
         String dbPassword = user != null ? user.getPasswort() : null;
 
@@ -40,7 +40,7 @@ public class UserUtil {
         System.out.println(user + " " + hashedPassword + " " + dbPassword);
 
         //check if password matches the db password
-        if (user != null && subittedUsername.equals(dbUsername) && hashedPassword.equals(dbPassword)) {
+        if (user != null && subittedEmail.equals(dbEmail) && hashedPassword.equals(dbPassword)) {
             return true;
         }
         return false;
@@ -53,16 +53,16 @@ public class UserUtil {
     }
 
     /**
-     * Creates a new user where username = username and password =
-     * sha256(sha256(username+password) + salt). Salt is generated via the
+     * Creates a new user with email = email and password =
+     * sha256(sha256(email+password) + salt). Salt is generated via the
      * generateSalt() method.
      *
      * @return
      */
-    public static String hash(String username, String password) {
-        String submittedPassword = sha256(username + password);
+    public static Benutzer createUser(String email, String password) {
+        String submittedPassword = sha256(email + password);
         String salt = generateSalt();
-        return sha256(submittedPassword + salt);
+        return new Benutzer(email,sha256(submittedPassword + salt),salt);
     }
 
     public static String sha256(String str) {

@@ -7,6 +7,7 @@ package at.mightyduck.lehnerreisenconsole.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -28,11 +29,16 @@ public class Benutzer implements Serializable {
     @Column
     private boolean newsletter;
     
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "benutzer_reisetyp", joinColumns = @JoinColumn(name = "emailid"), inverseJoinColumns = @JoinColumn(name = "reiseid"))
     private Set<Reisetyp> interessen;
 
     public Benutzer() {
-        this(null, null, null, false);
+        this(null, null, null);
+    }
+
+    public Benutzer(String email, String passwort, String salt) {
+        this(email, passwort, salt, false);
     }
 
     public Benutzer(String email, String passwort, String salt, boolean newsletter) {
@@ -41,6 +47,18 @@ public class Benutzer implements Serializable {
         this.salt = salt;
         this.newsletter = newsletter;
         this.interessen = new HashSet<>();
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getEmail() {
@@ -62,10 +80,43 @@ public class Benutzer implements Serializable {
     public Set<Reisetyp> getInteressen() {
         return interessen;
     }
-    
+
+    public void setInteressen(Set<Reisetyp> interessen) {
+        this.interessen = interessen;
+    }
+
+    public void setNewsletter(boolean newsletter) {
+        System.out.println(email + " " + newsletter);
+        this.newsletter = newsletter;
+    }
+
     @Override
     public String toString() {
         return "Benutzer{" + "email=" + email + ", passwort=" + passwort + ", salt=" + salt + ", newsletter=" + newsletter + '}';
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.email);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!Objects.equals(getClass(),obj.getClass())) {
+            return false;
+        }
+        final Benutzer other = (Benutzer) obj;
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
 }

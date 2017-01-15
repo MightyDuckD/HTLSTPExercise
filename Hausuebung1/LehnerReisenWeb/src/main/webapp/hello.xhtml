@@ -5,11 +5,57 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"     
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <f:view locale="de">
+    <h:body>
         <ui:composition template="/faces/template.xhtml">
+            <ui:define name="navbar">
+                <nav id="mainNav" class="navbar navbar-custom navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header page-scroll">
+                            <a class="navbar-brand page-scroll" href="#page-top">Lehner-Reisen</a>
+                        </div>
+                        <div class="navbar-collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="hidden">
+                                    <a href="#page-top"></a>
+                                </li>
+                                <li>
+                                    <a class="page-scroll" href="#services">Services</a>
+                                </li>
+                                <li>
+                                    <a class="page-scroll" href="#about">About</a>
+                                </li>
+                                <li>
+                                    <a class="page-scroll" href="#team">Team</a>
+                                </li>
+                                <li>
+                                    <a class="page-scroll" href="#contact">Contact</a>
+                                </li>
+                                <li>
+                                    <a class="page-scroll" href="#signup">Sign Up</a>
+                                </li>
+                                <li>
+                                    <a class="page-scroll" href="#{root}member/member.xhtml">Member Area</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </nav>
+            </ui:define>
             <ui:define name="content">
+                <header>
+                    <div class="container">
+                        <div class="intro-text">
+                            <div class="intro-lead-in">Reif für die Insel?</div>
+                            <div class="intro-heading">Wir haben das richtige Angebot</div>
+                        </div>
+
+                    </div>
+                </header>
+
                 <style>
                     .img-circle-custom {
                         height:100%; 
@@ -229,12 +275,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <h:button class="btn btn-xl" value="Send Message" ></h:button>
+                                    <h:commandButton class="btn btn-xl" value="Send Message" ></h:commandButton>
                                 </div>
                             </div>
                         </h:form>
                     </div>
                 </section>
+
+
+
                 <section id="signup">
                     <div class="container">
                         <div class="row">
@@ -253,49 +302,97 @@
                                                 <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
                                             </div>     
                                             <div class="panel-body"  style="padding-top: 30px">
-                                                <div class="input-group" style="margin-bottom: 25px">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                    <h:inputText  class="form-control" a:placeholder="email"></h:inputText>
-                                                </div>
-                                                <div class="input-group" style="margin-bottom: 25px">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                                    <h:inputText  class="form-control" a:placeholder="password"></h:inputText>
-                                                </div>
-                                                <h:commandButton class="btn btn-lg btn-warning btn-block" value="Login" action="#signup"/>
+                                                <h:form id="loginform" onsubmit="return hashOnSubmit(this);">
+                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                        <h:inputText value="#{usercon.email}" id="email" class="form-control" a:placeholder="email"></h:inputText>
+                                                    </div>
+                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                        <h:inputText id="password" class="form-control" a:placeholder="password"></h:inputText>
+                                                        <!--TODO: change to inputPassword-->
+                                                    </div>
+                                                    <h:inputHidden id="hashedpassword" value="#{usercon.password}"></h:inputHidden>
+                                                    <h:commandButton class="btn btn-lg btn-warning btn-block" value="Login" action="#{usercon.login}">
+                                                        <f:ajax execute="@form"  render="loginform"></f:ajax>
+                                                    </h:commandButton>
+                                                </h:form>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-
                                         <div class="panel panel-warning">
                                             <div class="panel-heading">
                                                 <div class="panel-title">Register</div>
                                                 <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
                                             </div>     
                                             <div class="panel-body" style="padding-top: 30px">
-                                                <div class="input-group" style="margin-bottom: 25px">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                    <h:inputText  class="form-control" a:placeholder="email"></h:inputText>
-                                                </div>
-                                                <div class="input-group" style="margin-bottom: 25px">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                                    <h:inputText  class="form-control" a:placeholder="password"></h:inputText>
-                                                </div>
-                                                <div class="input-group" style="margin-bottom: 25px">
-                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                                    <h:inputText  class="form-control" a:placeholder="repeat password"></h:inputText>
-                                                </div>
-
-                                                <h:commandButton class="btn btn-lg btn-warning btn-block" value="Register" action="#signup"/>
+                                                <h:form id="registerform">
+                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                        <h:inputText id="reg_email" binding="#{usercon.emailComponent}" value="#{usercon.reg_email}" class="form-control" a:placeholder="email" required="true" requiredMessage="This value is required." validatorMessage="Please enter a valid email adress.">
+                                                            <f:validateLength minimum="5" maximum="50" />
+                                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                                        </h:inputText>
+                                                    </div> 
+                                                    <h:message for="reg_email"/>
+                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                        <h:inputText  id="reg_password1" value="#{usercon.reg_password1}" class="form-control" a:placeholder="password" required="true" requiredMessage="This value is required." validatorMessage="The password must have at least 6 characters.">
+                                                            <f:validateLength minimum="6"/>
+                                                        </h:inputText>
+                                                    </div>
+                                                    <h:message for="reg_password1"/>
+                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                        <h:inputText  id="reg_password2"  binding="#{usercon.password2Component}" value="#{usercon.reg_password2}" class="form-control" a:placeholder="repeat password" required="true"  requiredMessage="This value is required.">
+                                                        </h:inputText>
+                                                    </div>
+                                                    <h:message for="reg_password2"/>
+                                                    <h:commandButton class="btn btn-lg btn-warning btn-block" value="Register"  action="#{usercon.register()}">
+                                                        <f:ajax execute="@form"  render="registerform"></f:ajax>
+                                                    </h:commandButton>
+                                                </h:form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <h:messages globalOnly="true" layout="table"></h:messages>
                         </div>
                     </div>
                 </section>
             </ui:define>
+            <ui:define name="footer">
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="copyright">Copyright &copy; Your Website 2016</span>
+                            </div>
+                            <div class="col-md-4">
+                                <ul class="list-inline social-buttons">
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <ul class="list-inline quicklinks">
+                                    <li><a href="#">Privacy Policy</a>
+                                    </li>
+                                    <li><a href="#">Terms of Use</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </ui:define>
         </ui:composition>
-    </f:view>
+    </h:body>
 </html>
+

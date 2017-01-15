@@ -7,7 +7,7 @@
     <property name="hibernate.connection.url">jdbc:postgresql://if-remote.htlstp.ac.at:54322/5A_10_Hue1</property>
     <property name="hibernate.connection.username">5AHIF_16</property>
     <property name="hibernate.connection.password">jeke18</property>
-    <property name="hibernate.hbm2ddl.auto">create-drop</property>
+    <property name="hibernate.connection.pool_size">3</property>
     <mapping class="at.mightyduck.lehnerreisenconsole.model.Benutzer"/>
     <mapping class="at.mightyduck.lehnerreisenconsole.model.Reisetyp"/>
     <mapping class="at.mightyduck.lehnerreisenconsole.model.Reiseveranstaltung"/>

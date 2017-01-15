@@ -14,12 +14,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.function.BiConsumer;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -29,20 +30,25 @@ public class MainApp {
 
     public static final Map<String, BiConsumer<String, BufferedReader>> commands = new HashMap<>();
     public static final DAO dao = new DAO();
+    public static final Random random = new Random(System.currentTimeMillis());
 
     static {
         commands.put("list", MainApp::listData);
         commands.put("help", MainApp::printHelp);
     }
+    
+    
 
     public static void main(String[] args) throws IOException {
         System.out.println("Opening hibernate session ...");
         HibernateUtil.getSessionFactory();
+        HibernateUtil.drop();
+        HibernateUtil.create();
 
         System.out.println("Filling database with data ...");
         Benutzer[] users = new Benutzer[]{
-            new Benutzer("simon@mightyduck.at", UserUtil.hash("password", "salt1"), "salt1", true),
-            new Benutzer("lehner@mightyduck.at", UserUtil.hash("password", "salt2"), "salt2", false)
+            UserUtil.createUser("simon@mightyduck.at", "password"),
+            UserUtil.createUser("lehner@mightyduck.at", "password")
         };
 
         Reisetyp[] typen = new Reisetyp[]{
@@ -57,26 +63,43 @@ public class MainApp {
             null, "Wien",
             "Hotel Ibis Wien Mariahilf \nFrühstück\n2 Nächte\ninkl. 3-Gang-Menü im Restaurant Kardos!",
             "http://www.hofer-reisen.at/reiseangebote/oesterreich/wien/wien/wien-hotel-ibis-wien-mariahilf-9062110",
-            null/*13.01.2017*/, null,
-            79.00
+            new GregorianCalendar(2017, Calendar.JANUARY, 12).getTime(), null,
+            79.00,typen[0],"wien1.jpg"
             ),
             new Reiseveranstaltung(
             null, "Wien",
             "JUFA Hotel Wien City\nFrühstück\n2 Nächte",
             "http://www.hofer-reisen.at/reiseangebote/oesterreich/wien/wien/wien-jufa-hotel-wien-city-9040566",
-            null/*08.01.2017*/, null,
-            59.00
+            new GregorianCalendar(2017, Calendar.JANUARY, 12).getTime(), null,
+            59.00,typen[2],"wien2.jpg"
+            ),
+            new Reiseveranstaltung(
+            null, "Venedig",
+            "Frühstück\n2 Nächte",
+            "",
+            new GregorianCalendar(2017, Calendar.JANUARY, 12).getTime(), null,
+            59.00,typen[1],"venedig1.jpg"
+            ),
+            new Reiseveranstaltung(
+            null, "Wien",
+            "JUFA Hotel Wien Erlebnistage",
+            "http://www.hofer-reisen.at/reiseangebote/oesterreich/wien/wien/wien-jufa-hotel-wien-city-9040566",
+            new GregorianCalendar(2017, Calendar.JANUARY, 12).getTime(), null,
+            59.00,typen[2],"wien3.jpg"
             )
         };
-
-        Arrays.stream(users).forEach(dao::save);
-        Arrays.stream(typen).forEach(dao::save);
-        Arrays.stream(veranstalungen).forEach(dao::save);
         
+        users[0].getInteressen().add(typen[0]);
+        users[0].getInteressen().add(typen[1]);
+        
+
+        Arrays.stream(typen).forEach(dao::save);
+        Arrays.stream(users).forEach(dao::save);
+        Arrays.stream(veranstalungen).forEach(dao::save);
 
         try {
             if (args.length != 1 || (!"--noconsole".equals(args[0]) && !"-n".equals(args[0]))) {
-                commandLine();
+//                commandLine();
             }
         } finally {
             System.out.println("Shutting down hibernate ...");

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"     
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/faces/template.xhtml">
+        <ui:define name="navbar">
+            <ui:include src="/faces/navbar.xhtml"></ui:include>
+        </ui:define>
+        <ui:define name="content">
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h2><h:outputText value="#{usercon.benutzer.email}"></h:outputText></h2>
+                        </div>
+                        <div class="col-lg-4">
+                            <h:form id="newsletterform" >
+                                <h3>
+                                    <span style="vertical-align: middle; margin-right: 20px;">Newsletter</span>
+                                    <h:selectBooleanCheckbox id="newsletter" value="#{usercon.benutzer.newsletter}">
+                                        <f:ajax event="change" render="accordion:newsletterform2 accordion:newsletterform3" />
+                                    </h:selectBooleanCheckbox> 
+                                    <h:outputScript>
+                                        $('#newsletterform\\:newsletter').bootstrapToggle();
+                                    </h:outputScript>
+                                </h3>
+                            </h:form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h:form id="interesse1" >
+                                <h:selectManyCheckbox converter="#{reisetypconverter}" value="#{usercon.selectedReisetypen}">
+                                    <f:selectItems value="#{usercon.dao.reisetypen}" var="typ" itemValue="#{typ}" itemLabel="#{typ.bezeichnung}">
+                                    </f:selectItems>
+                                    <f:ajax event="change" listener="#{usercon.saveSelectedReisetypen()}"/>
+                                </h:selectManyCheckbox>
+                                <h:outputScript>
+                                    $('#interesse1 :input:checkbox').bootstrapToggle({
+                                    on: '<i class='fa fa-check'></i> Ja',
+                                    off: '<i class='fa fa-ban'></i> Nein',
+                                    size: 'small',
+                                    onstyle: 'warning',
+                                    offstyle: 'danger'
+                                    });
+                                </h:outputScript>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <a data-toggle="collapse" href="#collapse1">Alternative Switches</a>
+                                    </h3>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse">
+                                    <p:accordionPanel id="accordion">
+                                        <p:tab title="Alternative Switches">
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <h:form id="newsletterform2">
+                                                        <p:inputSwitch value="#{usercon.benutzer.newsletter}">
+                                                            <f:ajax render="newsletterform accordion:newsletterform3"></f:ajax>
+                                                        </p:inputSwitch>
+                                                    </h:form>
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <a href='http://www.primefaces.org/showcase/ui/input/inputSwitch.xhtml'>Prime-Faces Switch</a>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-1">
+                                                    <h:form id="newsletterform3">
+                                                        <label class="switch">
+                                                            <h:selectBooleanCheckbox id="newsletter" value="#{usercon.benutzer.newsletter}">
+                                                                <f:ajax render="newsletterform accordion:newsletterform2"/>
+                                                            </h:selectBooleanCheckbox> 
+                                                            <div class="slider round"></div>
+                                                        </label>
+                                                    </h:form> 
+                                                </div>
+                                                <div class="col-lg-11">
+                                                    <a href='http://www.w3schools.com/howto/howto_css_switch.asp'>W3-School's Css Switch </a>
+                                                </div>
+                                            </div>
+                                        </p:tab>
+                                    </p:accordionPanel>
+                                    <h:form id="interesse" >
+                                        <h:dataTable value="#{usercon.dao.reisetypen}" var="reisetyp">
+                                            <h:column>
+                                                <f:facet name="header">Name</f:facet>
+                                                    #{reisetyp.bezeichnung}
+                                            </h:column>
+                                            <h:column>#{reisetyp.reiseid}
+                                                <f:facet name="header">Interessiert</f:facet>
+                                                <h:selectBooleanCheckbox  value="#{usercon.benutzer.newsletter}">
+                                                    <f:ajax event="change"/>
+                                                </h:selectBooleanCheckbox> 
+                                            </h:column>
+                                        </h:dataTable>
+                                        <h:outputScript>
+                                            $('#interesse :input:checkbox').bootstrapToggle({
+                                            on: '<i class='fa fa-check'></i> Ja',
+                                            off: '<i class='fa fa-ban'></i> Nein',
+                                            size: 'small',
+                                            onstyle: 'warning',
+                                            offstyle: 'danger'
+                                            });
+                                        </h:outputScript>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </ui:define>
+    </ui:composition>
+</html>
