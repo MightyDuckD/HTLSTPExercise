@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,6 +31,13 @@ public class EventController implements Serializable {
     @Inject 
     private UserController usercon;
 
+    private Reiseveranstaltung show;
+    
+    @PostConstruct
+    public void init() {
+        show = null;
+    }
+    
     public DAO getDao() {
         return dao;
     }
@@ -39,5 +47,13 @@ public class EventController implements Serializable {
         return dao.getVeranstaltungen(typ);
     }
     
+    public void setShow(Reiseveranstaltung show) {
+        System.out.println(show);
+        this.show = show;
+    }
+    
+    public Reiseveranstaltung getShow() {
+        return show;
+    }
     
 }

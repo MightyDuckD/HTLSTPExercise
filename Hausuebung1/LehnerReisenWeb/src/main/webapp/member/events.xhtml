@@ -14,34 +14,65 @@
             <ui:include src="/faces/navbar.xhtml"></ui:include>
         </ui:define>
         <ui:define name="content">
-            <section>
-                <div class="container">
-                    <c:forEach var="typ" items="#{usercon.benutzer.interessen}">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">#{typ.bezeichnung}</div>
-                                    <div class="panel-body"> 
-                                        <c:forEach var="ev" items="#{eventcon.getVeranstaltungen(typ)}">
-                                            <div class="col-md-4">
-                                                <div class="thumbnail">
-                                                    <img src="#{root}/img/#{ev.image}"/>
-                                                    <div class="caption">
-                                                        <h4>#{ev.zielort}</h4>
-                                                        <p>#{ev.beginn} - #{ev.ende}</p>
-                                                        <p>
-                                                            <a href="#" class="btn btn-primary" role="button">Show More</a> 
-                                                        </p>
+            <section style="padding:10px;padding-top: 150px">
+                <h:form id="showform" >
+                    <c:if test="#{not empty eventcon.show}">
+                        <div class="container">
+                            <div class="row well equal">
+                                <div class="col-lg-9">
+                                    <div class="row">
+                                        <div class="col-md-12"><h3>#{eventcon.show.zielort} <span class="badge">#{eventcon.show.preis}€</span></h3></div>
+                                    </div>
+                                    <div class="row" style="height: 165px;">
+                                        <div class="col-md-12">#{eventcon.show.beschreibung}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">#{eventcon.show.zeitspanne}</div>
+                                        <div class="col-md-6"><a class="btn btn-lg btn-warning pull-right" href="#{eventcon.show.hyperlink}">Zum Angebot</a></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 thumbnail" style="margin-bottom: 0px;">
+                                    <img class="img-responsive" src="#{root}/img/#{eventcon.show.image}"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </c:if>
+                </h:form>
+            </section>
+            <section style="padding:10px;">
+                <h:form>
+                    <div class="container">
+                        <c:forEach var="typ" items="#{usercon.benutzer.interessen}">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"> <h5>#{typ.bezeichnung}</h5></div>
+                                        <div class="panel-body"> 
+                                            <c:forEach var="ev" items="#{eventcon.getVeranstaltungen(typ)}">
+                                                <div class="col-md-4">
+                                                    <div class="thumbnail">
+                                                        <img src="#{root}/img/#{ev.image}"/>
+                                                        <div class="caption">
+                                                            <h4>#{ev.zielort}</h4>
+                                                            <p>#{ev.zeitspanne}</p>
+                                                            <p>
+                                                                <h:commandButton class="btn btn-primary" value="Show More" action="#{eventcon.setShow(ev)}">
+                                                                    <f:ajax render=":showform"></f:ajax>
+                                                                </h:commandButton>
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </c:forEach>
+                                            </c:forEach>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </c:forEach>
-                </div>
+                        </c:forEach>
+                    </div>
+                </h:form>
             </section>
         </ui:define>
     </ui:composition>

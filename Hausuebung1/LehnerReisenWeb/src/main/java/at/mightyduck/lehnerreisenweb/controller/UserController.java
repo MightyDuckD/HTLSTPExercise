@@ -42,25 +42,6 @@ public class UserController implements Serializable {
     private String reg_password1;
     private String reg_password2;
 
-    private UIComponent password2Component;
-    private UIComponent emailComponent;
-
-    public UIComponent getPassword2Component() {
-        return password2Component;
-    }
-
-    public void setPassword2Component(UIComponent component) {
-        this.password2Component = component;
-    }
-
-    public void setEmailComponent(UIComponent emailComponent) {
-        this.emailComponent = emailComponent;
-    }
-
-    public UIComponent getEmailComponent() {
-        return emailComponent;
-    }
-
     public Benutzer getBenutzer() {
         return aktuellerBenutzer;
     }
@@ -74,11 +55,12 @@ public class UserController implements Serializable {
     }
 
     public void setPassword(String password) {
-        System.out.println("set: " + password);
+        System.out.println("pw set: " + password);
         this.password = password;
     }
 
     public void setEmail(String email) {
+        System.out.println("em set: " + email);
         this.email = email;
     }
 
@@ -101,7 +83,8 @@ public class UserController implements Serializable {
     }
 
     public void login() throws IOException {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext ec = context.getExternalContext();
 
         System.out.println(email);
         System.out.println(password);
@@ -114,7 +97,7 @@ public class UserController implements Serializable {
                 ec.redirect("member/member.xhtml");
                 return;
             }
-            ec.redirect("hello.xhtml#signup");
+            context.addMessage("loginform", new FacesMessage("Email/Passwort Kombination ungültig"));
         } finally {
             password = null;
         }
@@ -125,11 +108,11 @@ public class UserController implements Serializable {
         System.out.println(reg_password1 + " " + reg_password2);
         boolean failed = false;
         if (!Objects.equals(reg_password1, reg_password2)) {
-            context.addMessage(password2Component.getClientId(), new FacesMessage("The passwords do not match."));
+            context.addMessage("registerform:reg_password2", new FacesMessage("The passwords do not match."));
             failed = true;
         }
         if (dao.getBenutzerByEmail(reg_email) != null) {
-            context.addMessage(emailComponent.getClientId(), new FacesMessage("The email adress is already in use."));
+            context.addMessage("id registerform:reg_email", new FacesMessage("The email adress is already in use."));
             failed = true;
         }
         if (!failed) {

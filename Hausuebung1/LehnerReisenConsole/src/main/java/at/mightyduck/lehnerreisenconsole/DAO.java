@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -28,6 +29,7 @@ import org.jboss.logging.Logger;
  *
  * @author Simon
  */
+@Named
 @ApplicationScoped
 public class DAO implements Serializable{
 

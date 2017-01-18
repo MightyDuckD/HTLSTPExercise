@@ -14,7 +14,7 @@
             <ui:include src="/faces/navbar.xhtml"></ui:include>
         </ui:define>
         <ui:define name="content">
-            <section>
+            <section style="padding:10px;padding-top: 150px;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
@@ -34,10 +34,20 @@
                             </h:form>
                         </div>
                     </div>
+                    <style>
+                        #interesse1\:reisetypen td{
+                            float: left;
+                            width: 33%;
+                            padding: 2px;
+                        }
+                        #interesse1\:reisetypen td>label{
+                            margin: 3px;
+                        }
+                    </style>
                     <div class="row">
                         <div class="col-lg-12">
                             <h:form id="interesse1" >
-                                <h:selectManyCheckbox converter="#{reisetypconverter}" value="#{usercon.selectedReisetypen}">
+                                <h:selectManyCheckbox id="reisetypen" converter="#{reisetypconverter}" value="#{usercon.selectedReisetypen}">
                                     <f:selectItems value="#{usercon.dao.reisetypen}" var="typ" itemValue="#{typ}" itemLabel="#{typ.bezeichnung}">
                                     </f:selectItems>
                                     <f:ajax event="change" listener="#{usercon.saveSelectedReisetypen()}"/>
@@ -57,7 +67,7 @@
                 </div>
             </section>
 
-            <section>
+            <section style="padding:10px;">
                 <div class="container">
                     <div class="row">
                         <div class="panel-group">

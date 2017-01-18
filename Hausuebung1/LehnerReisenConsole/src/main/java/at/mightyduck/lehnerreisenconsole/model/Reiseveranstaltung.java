@@ -23,7 +23,7 @@ public class Reiseveranstaltung implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer verid;
 
-    @Column(nullable = false,length = 30)
+    @Column(nullable = false, length = 30)
     private String zielort;
 
     @Column(length = 300)
@@ -135,6 +135,13 @@ public class Reiseveranstaltung implements Serializable {
 
     public Reisetyp getTyp() {
         return typ;
+    }
+
+    public String getZeitspanne() {
+        if (ende == null) {
+            return "von " + beginn + " bis unbegrenzt";
+        }
+        return "von " + beginn + " bis " + ende;
     }
 
     @Override

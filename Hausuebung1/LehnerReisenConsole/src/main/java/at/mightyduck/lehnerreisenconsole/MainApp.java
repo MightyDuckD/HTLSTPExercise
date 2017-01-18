@@ -54,7 +54,29 @@ public class MainApp {
         Reisetyp[] typen = new Reisetyp[]{
             new Reisetyp(null, "Städtereisen"),
             new Reisetyp(null, "Italien"),
-            new Reisetyp(null, "Last Minute")
+            new Reisetyp(null, "Last Minute"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test"),
+            new Reisetyp(null, "Test")
         };
 
         //Reisen von hofer-reisen.at
@@ -70,7 +92,7 @@ public class MainApp {
             null, "Wien",
             "JUFA Hotel Wien City\nFrühstück\n2 Nächte",
             "http://www.hofer-reisen.at/reiseangebote/oesterreich/wien/wien/wien-jufa-hotel-wien-city-9040566",
-            new GregorianCalendar(2017, Calendar.JANUARY, 12).getTime(), null,
+            new GregorianCalendar(2017, Calendar.JANUARY, 12).getTime(),  new GregorianCalendar(2017, Calendar.JANUARY, 12+7).getTime(),
             59.00,typen[2],"wien2.jpg"
             ),
             new Reiseveranstaltung(

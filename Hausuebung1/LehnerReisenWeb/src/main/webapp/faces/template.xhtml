@@ -16,6 +16,7 @@
         <link href="#{root}css/simple-switch.css" rel="stylesheet"/>
         <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"/>
         <script src="#{root}js/jquery.min.js"/>
+        <script src="#{root}js/sjcl.js"/>
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"/>
         <style>
             .navbar-custom {
@@ -37,7 +38,6 @@
         </ui:insert>
 
         <!--Bootstrap-->
-        <script src="#{root}js/sjcl.js"/>
         <script src="#{root}js/bootstrap.min.js"/>
         <script src="#{root}js/jquery.easing.min.js"/>
         <script src="#{root}js/agency.min.js"/>
@@ -46,35 +46,11 @@
             jQuery(window).on('activate.bs.scrollspy', function (e) {
                 history.replaceState({}, "", $("a[href^='#']", e.target).attr("href"));
             });
-            
+
             $('#newsletterform\\:newsletter').bootstrapToggle();
 
-            function sha256_hash(message) {
-                var bitArray = sjcl.hash.sha256.hash(message);
-                var digest_sha256 = sjcl.codec.hex.fromBits(bitArray);
-                return digest_sha256;
-            }
 
-            function hashOnSubmit(aForm) {
-                //Getting the two input objects
-                var inputEmail = aForm[aForm.id + ':email'];
-                var inputPassword = aForm[aForm.id + ':password'];
 
-                //Hashing the password before submitting
-                inputPassword.value = sha256_hash(inputEmail.value + inputPassword.value);
-
-                //Submitting
-                return true;
-            }
-
-            function updatePassword() {
-                email = jQuery('#loginform\\:email').val();
-                password = jQuery('#loginform\\:password').val();
-                jQuery('#loginform\\:hashedpassword').val(sha256_hash(email + password));
-            }
-
-            jQuery('#loginform\\:password').keyup(updatePassword);
-            jQuery('#loginform\\:email').keyup(updatePassword);
 
         </script>
     </h:body>

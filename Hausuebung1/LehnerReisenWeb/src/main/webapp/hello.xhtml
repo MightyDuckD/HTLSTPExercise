@@ -285,6 +285,12 @@
 
 
                 <section id="signup">
+                    <style>
+                        #loginform .input-group,#registerform .input-group {
+                            margin-top: 15px;
+                            margin-bottom: 15px;
+                        }
+                    </style>
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12 text-center">
@@ -301,21 +307,37 @@
                                                 <div class="panel-title">Login</div>
                                                 <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
                                             </div>     
-                                            <div class="panel-body"  style="padding-top: 30px">
+                                            <div class="panel-body">
                                                 <h:form id="loginform" onsubmit="return hashOnSubmit(this);">
-                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                    <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                         <h:inputText value="#{usercon.email}" id="email" class="form-control" a:placeholder="email"></h:inputText>
                                                     </div>
-                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                    <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                                                         <h:inputText id="password" class="form-control" a:placeholder="password"></h:inputText>
                                                         <!--TODO: change to inputPassword-->
                                                     </div>
+                                                    <div class="input-group"><h:message class="label label-danger" for="loginform"></h:message></div>
                                                     <h:inputHidden id="hashedpassword" value="#{usercon.password}"></h:inputHidden>
                                                     <h:commandButton class="btn btn-lg btn-warning btn-block" value="Login" action="#{usercon.login}">
                                                         <f:ajax execute="@form"  render="loginform"></f:ajax>
                                                     </h:commandButton>
+                                                    <h:outputScript>
+                                                        function sha256_hash(message) {
+                                                        var bitArray = sjcl.hash.sha256.hash(message);
+                                                        var digest_sha256 = sjcl.codec.hex.fromBits(bitArray);
+                                                        return digest_sha256;
+                                                        }
+                                                        function updatePassword() {
+                                                        email = jQuery('#loginform\\:email').val();
+                                                        password = jQuery('#loginform\\:password').val();
+                                                        jQuery('#loginform\\:hashedpassword').val(sha256_hash(email + password));
+                                                        }
+                                                        updatePassword();
+                                                        jQuery('#loginform\\:password').keyup(updatePassword);
+                                                        jQuery('#loginform\\:email').keyup(updatePassword);
+                                                    </h:outputScript>
                                                 </h:form>
                                             </div>
                                         </div>
@@ -326,29 +348,29 @@
                                                 <div class="panel-title">Register</div>
                                                 <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
                                             </div>     
-                                            <div class="panel-body" style="padding-top: 30px">
+                                            <div class="panel-body" >
                                                 <h:form id="registerform">
-                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                    <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                        <h:inputText id="reg_email" binding="#{usercon.emailComponent}" value="#{usercon.reg_email}" class="form-control" a:placeholder="email" required="true" requiredMessage="This value is required." validatorMessage="Please enter a valid email adress.">
+                                                        <h:inputText id="reg_email" value="#{usercon.reg_email}" class="form-control" a:placeholder="email" required="true" requiredMessage="This value is required." validatorMessage="Please enter a valid email address.">
                                                             <f:validateLength minimum="5" maximum="50" />
                                                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                                         </h:inputText>
                                                     </div> 
-                                                    <h:message for="reg_email"/>
-                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                    <div class="input-group"><h:message  class="label label-danger" for="reg_email"/></div>
+                                                    <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                                                         <h:inputText  id="reg_password1" value="#{usercon.reg_password1}" class="form-control" a:placeholder="password" required="true" requiredMessage="This value is required." validatorMessage="The password must have at least 6 characters.">
                                                             <f:validateLength minimum="6"/>
                                                         </h:inputText>
                                                     </div>
-                                                    <h:message for="reg_password1"/>
-                                                    <div class="input-group" style="margin-bottom: 25px">
+                                                    <div class="input-group"><h:message class="label label-danger"  for="reg_password1"/></div>
+                                                    <div class="input-group" >
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                                        <h:inputText  id="reg_password2"  binding="#{usercon.password2Component}" value="#{usercon.reg_password2}" class="form-control" a:placeholder="repeat password" required="true"  requiredMessage="This value is required.">
+                                                        <h:inputText  id="reg_password2"  value="#{usercon.reg_password2}" class="form-control" a:placeholder="repeat password" required="true"  requiredMessage="This value is required.">
                                                         </h:inputText>
                                                     </div>
-                                                    <h:message for="reg_password2"/>
+                                                    <div class="input-group"><h:message  class="label label-danger" for="reg_password2"/></div>
                                                     <h:commandButton class="btn btn-lg btn-warning btn-block" value="Register"  action="#{usercon.register()}">
                                                         <f:ajax execute="@form"  render="registerform"></f:ajax>
                                                     </h:commandButton>
