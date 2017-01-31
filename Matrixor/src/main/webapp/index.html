@@ -18,12 +18,12 @@
 
         <script>
             function pauseEvent(e) {
-                if (e.stopPropagation)
-                    e.stopPropagation();
+//                if (e.stopPropagation)
+//                    e.stopPropagation();
                 if (e.preventDefault)
                     e.preventDefault();
-                e.cancelBubble = true;
-                e.returnValue = false;
+//                e.cancelBubble = true;
+//                e.returnValue = false;
                 return false;
             }
         </script>
@@ -71,6 +71,12 @@
                 -webkit-user-select: none;
                 -moz-user-select: none;
                 user-select: none;
+            }
+            .dragging {
+                cursor: move;
+            }
+            .notdragging {
+                cursor: auto;
             }
         </style>
 
