@@ -14,6 +14,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -30,19 +33,23 @@ import net.sf.jasperreports.engine.JasperPrint;
  *
  * @author Simon
  */
-@Named(value = "pdfController")
+@Named(value = "pdfcon")
 @RequestScoped
 public class PDFController implements Serializable {
 
-    private String logo = "IF";
-    private String[] imgArray = {"IF","EL","ET","MB","WI"};
+    private String logo = "IF", name = "", filename = "", defaultFilename = "EmployeeReport.pdf";
+    private String[] imgArray = {"IF", "EL", "ET", "MB", "WI"};
 
-    public String getPattern() {
+    public String getDefaultFilename() {
+        return defaultFilename;
+    }
+
+    public String getLogo() {
         return logo;
     }
 
-    public void setPattern(String pattern) {
-        this.logo = pattern;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String[] getImgArray() {
@@ -53,42 +60,68 @@ public class PDFController implements Serializable {
         this.imgArray = imgArray;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    @PostConstruct
+    public void init() {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PDFController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void sendPDF(ActionEvent e) throws ClassNotFoundException {
-        JasperPrint jasperPrint;
-        Class.forName("org.postgresql.Driver");
+        ExternalContext ext = FacesContext.getCurrentInstance().getExternalContext();
 
-        try (Connection con = DriverManager.getConnection("jdbc:postgresql://193.170.118.29:54322/5A_18_iReport_employee", "5AHIF_16", "jeke18")) {
+        try (Connection con = DriverManager.getConnection("jdbc:postgresql://if-remote.htlstp.ac.at:54322/5A_10_Lab06", "5AHIF_16", "jeke18");
+                InputStream is = ext.getResourceAsStream("/reports/employee_report.jasper");) {
             // Externen Context holen
-            ExternalContext ext = FacesContext.getCurrentInstance().getExternalContext();
 
-            // ParameterMap definieren
+            //Create ParameterMap
             Map<String, Object> parameter = new HashMap<>();
-            ImageIcon i = new ImageIcon(ext.getRealPath("/images/HTL-" + logo +".png"));
+            ImageIcon i = new ImageIcon(ext.getRealPath("/images/HTL-" + logo + ".png"));
             parameter.put("image", i.getImage());
-            String name = "HTL-" + logo;
             parameter.put("name", name);
+
+            //Choose a suitable filename
+            String cleanFilename = filename.isEmpty() ? defaultFilename : filename;
+            if (!cleanFilename.toLowerCase().endsWith(".pdf")) {
+                cleanFilename += ".pdf";
+            }
 
             // HttpServletResponse konfigurieren
             HttpServletResponse response = (HttpServletResponse) ext.getResponse();
             response.reset();
             response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename=\"Employee_Report.pdf\"");
 
-            try (InputStream is = ext.getResourceAsStream("/reports/employee_report.jasper");
-                    OutputStream output = response.getOutputStream()) {
-                jasperPrint = JasperFillManager.fillReport(is, parameter, con);
-                System.out.println("Report erfolgreich befüllt");
+            //append the .pdf extension to the filename if not already there
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + cleanFilename + "\"");
 
-                // Report in den SerrvletOutputstream exportieren
-                JasperExportManager.exportReportToPdfStream(jasperPrint, output);
-                System.out.println("Report erfolgreich gesendet");
-            } catch (JRException | IOException ex) {
-                ex.printStackTrace();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            OutputStream output = response.getOutputStream();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(is, parameter, con);
+
+            // generate report and send it
+            JasperExportManager.exportReportToPdfStream(jasperPrint, output);
+
+        } catch (SQLException | JRException | IOException ex) {
+            Logger.getLogger(PDFController.class.getName()).log(Level.SEVERE, "Fehler beim erstellen eines report", ex);
         }
-        // JSF Lebenszyklus abbrechen
+        // cancel JSF Lifecycle
         FacesContext.getCurrentInstance().responseComplete();
     }
 }

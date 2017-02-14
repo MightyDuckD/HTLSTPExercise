@@ -6,7 +6,7 @@
 	<parameter name="image" class="java.awt.Image"/>
 	<parameter name="name" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select emp_name, wh_hours, wh_date from employee, working_hours where emp_id = wh_emp order by emp_name, wh_date;]]>
+		<![CDATA[select emp_name, wh_hours, wh_date from employee, working_hours where emp_id = wh_emp and emp_name like '%$P!{name}%' order by emp_name, wh_date;]]>
 	</queryString>
 	<field name="emp_name" class="java.lang.String"/>
 	<field name="wh_hours" class="java.math.BigDecimal"/>
@@ -17,9 +17,9 @@
 	<group name="emp_name">
 		<groupExpression><![CDATA[$F{emp_name}]]></groupExpression>
 		<groupHeader>
-			<band height="67">
+			<band height="48">
 				<textField>
-					<reportElement x="119" y="0" width="137" height="20" uuid="b9c919f3-2324-40d9-ad9e-b52022143a31"/>
+					<reportElement x="119" y="0" width="237" height="20" uuid="b9c919f3-2324-40d9-ad9e-b52022143a31"/>
 					<textElement>
 						<font size="14" isBold="true"/>
 					</textElement>
@@ -33,26 +33,30 @@
 					<text><![CDATA[Employee:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="119" y="42" width="100" height="20" uuid="fe0158f5-d697-4b49-a968-e968e45981d8"/>
+					<reportElement x="238" y="28" width="118" height="20" uuid="fe0158f5-d697-4b49-a968-e968e45981d8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<text><![CDATA[Hours worked]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="256" y="42" width="100" height="20" uuid="bc255ea2-67c4-4604-abb8-c48c91fac664"/>
+					<reportElement x="119" y="28" width="119" height="20" uuid="bc255ea2-67c4-4604-abb8-c48c91fac664"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<text><![CDATA[Date]]></text>
 				</staticText>
 				<line>
-					<reportElement x="119" y="62" width="237" height="1" uuid="79a3fda0-6b7e-49f0-b13d-070c74c496a2"/>
+					<reportElement x="119" y="47" width="237" height="1" uuid="79a3fda0-6b7e-49f0-b13d-070c74c496a2"/>
 				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="52">
+			<band height="48">
 				<textField>
-					<reportElement x="119" y="10" width="100" height="20" uuid="7b96fa2c-c554-4b4d-a810-a098f8edfd14"/>
+					<reportElement x="238" y="1" width="118" height="20" uuid="7b96fa2c-c554-4b4d-a810-a098f8edfd14"/>
+					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$V{sum}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="19" y="10" width="100" height="20" uuid="c4f87d13-0cee-4887-914d-1af758f5d888"/>
+					<reportElement x="119" y="1" width="119" height="20" uuid="c4f87d13-0cee-4887-914d-1af758f5d888"/>
+					<textElement textAlignment="Right"/>
 					<text><![CDATA[Total:]]></text>
 				</staticText>
 				<line>
@@ -65,62 +69,57 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="133" splitType="Stretch">
+		<band height="98" splitType="Stretch">
 			<rectangle>
-				<reportElement x="100" y="13" width="332" height="46" forecolor="#FF9900" uuid="80f98003-962e-4c40-9350-515e06bbb92d"/>
+				<reportElement x="19" y="13" width="413" height="46" forecolor="#FF9900" uuid="80f98003-962e-4c40-9350-515e06bbb92d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="153" y="24" width="279" height="23" uuid="62aab1f4-660b-4550-89c5-52c76695b8e3"/>
-				<textElement>
+				<reportElement x="33" y="24" width="387" height="23" uuid="62aab1f4-660b-4550-89c5-52c76695b8e3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Employee Work Hours Report]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="200" y="76" width="100" height="20" uuid="aa5e9c30-b038-4532-8e0f-3005bc1a321c"/>
-				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
-			</textField>
 			<image>
 				<reportElement x="455" y="0" width="100" height="96" uuid="80e0b386-d4b6-4ece-8728-5d3587daf9d6"/>
 				<imageExpression><![CDATA[$P{image}]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="100" y="76" width="100" height="20" uuid="2f3b05a0-34f3-4dad-a8a8-0b136d628dc9"/>
-				<text><![CDATA[Abteilung:]]></text>
-			</staticText>
 		</band>
 	</title>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField pattern="###0.0">
-				<reportElement x="119" y="0" width="100" height="20" uuid="ebb001f4-6f67-48ed-be92-aa72e75625de"/>
+				<reportElement x="238" y="1" width="118" height="20" uuid="ebb001f4-6f67-48ed-be92-aa72e75625de"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{wh_hours}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd.MM.yyyy">
-				<reportElement x="256" y="0" width="100" height="20" uuid="0b09289f-37f5-47d5-a906-9d755c40a400"/>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="119" y="0" width="119" height="20" uuid="0b09289f-37f5-47d5-a906-9d755c40a400"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{wh_date}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="24" splitType="Stretch">
-			<textField pattern="MMMMM dd, yyyy">
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd MMMMM yyyy">
 				<reportElement x="100" y="0" width="100" height="20" uuid="762473df-8748-461b-9f83-9bdcc1eb2c8e"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="432" y="0" width="80" height="20" uuid="f59133f6-49e2-43d8-875a-7d852d5c6b2e"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="515" y="0" width="40" height="20" uuid="ce996d0d-a860-48d4-8eb3-50373c05553a"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="19" y="0" width="100" height="20" uuid="5206a92e-9668-4bce-8e77-65ac54bd39b5"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Report created:]]></text>
 			</staticText>
 		</band>

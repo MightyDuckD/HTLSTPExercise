@@ -2,22 +2,73 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Lab06 Lehner</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <style>
+            td {
+                padding: 4px;
+            }
+        </style>
     </h:head>
-    
+
     <h:body>
-        <h:form target="_blank">
-            <h:outputLabel value="Abteilung"/>
-            <h:selectOneRadio value="#{pdfController.pattern}">
-                <f:selectItems value="#{pdfController.imgArray}"
-                               var="img"
-                               itemLabel="#{img}"
-                               itemValue="#{img}"/>
-            </h:selectOneRadio>
-            <h:commandButton actionListener="#{pdfController.sendPDF}" value="Generate PDF"/>
-        </h:form>
+        <div class="container">
+            <div class="row">
+                <h2>Simon Lehner-D. Report</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h:form target="_blank">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                Filter Employees
+                            </div>
+                            <div class="col-sm-9">
+                                <h:inputText value="#{pdfcon.name}" a:placeholder="e.g: 'Doe'"></h:inputText>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                Filename
+                            </div>
+                            <div class="col-sm-9">
+                                <h:inputText value="#{pdfcon.filename}" a:placeholder="#{pdfcon.defaultFilename}"></h:inputText>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                Department
+                            </div>
+                            <div class="col-sm-9">
+                                <h:selectOneRadio value="#{pdfcon.logo}">
+                                    <f:selectItems value="#{pdfcon.imgArray}"
+                                                   var="img"
+                                                   itemLabel="#{img}"
+                                                   itemValue="#{img}"/>
+                                </h:selectOneRadio>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-9">
+                                <h:commandButton actionListener="#{pdfcon.sendPDF}" value="Generate PDF"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 
