@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Lab07 Lehner-D.</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form id="bookform">
+                <div>
+                    <h:selectOneMenu id="autordropdown" value="#{bookcon.selectedAutor}">
+                        <f:selectItem itemValue="#{null}" itemLabel="-- Alle Autoren --"></f:selectItem>
+                        <f:selectItems value="#{bookcon.autoren}" 
+                                       var="autor"
+                                       itemLabel="#{autor}"
+                                       itemValue="#{autor}">
+                        </f:selectItems>
+                        <f:ajax render=":bookform:booktable"/>
+                    </h:selectOneMenu>
+                </div>
+                <div>
+                    <h:dataTable id="booktable" value="#{bookcon.books}"
+                                 var="book">
+                        <h:column>
+                            <f:facet name="header">ISBN</f:facet>
+                                #{book.cleanIsbn}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Titel</f:facet>
+                                #{book.titel}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Autor</f:facet>
+                                #{book.autor}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Preis</f:facet>
+                                #{book.preis}
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
+            </h:form>
+        </div>
+        <div>
+            <h:form id="addform">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Autor:"/>
+                    <h:inputText value="#{bookcon.newbook.autor}"
+                                 a:placeholder="Sir Arthur Conan Doyle">
+                        <f:validateRequired/>
+                    </h:inputText>
+
+                    <h:outputText value="ISBN:"/>
+                    <h:inputText value="#{bookcon.newbook.isbn}"
+                                 a:placeholder="978-0-1406-2361-1">
+                        <f:validateRequired/>
+                        <f:validator validatorId="isbnvalidator"/>
+                    </h:inputText>
+
+                    <h:outputText value="Preis:"/>
+                    <h:inputText value="#{bookcon.newbook.preis}"
+                                 a:placeholder="43.99">
+                        <f:validateDoubleRange minimum="0"/>
+                        <f:validateRequired/>
+                    </h:inputText>
+
+                    <h:outputText value="Titel:"/>
+                    <h:inputText value="#{bookcon.newbook.titel}"
+                                 a:placeholder="The Hound of the Baskervilles">
+                        <f:validateRequired/>
+                    </h:inputText>
+                </h:panelGrid>
+                <h:commandButton value="Buch Hinzufügen"
+                                 action="#{bookcon.createBook}">
+                </h:commandButton>
+                <h:messages/>
+            </h:form>
+        </div>
+    </h:body>
+</html>
