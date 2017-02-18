@@ -5,6 +5,7 @@
  */
 package at.mightyduck.lab07.controller;
 
+import at.mightyduck.isbn.ISBN;
 import at.mightyduck.isbn.ISBNLib;
 import at.mightyduck.lab07.model.Book;
 import at.mightyduck.lab07.model.BookService;
@@ -31,7 +32,8 @@ public class BookController implements Serializable {
     private List<Book> books;
     private String selectedAutor;
     private Book newbook;
-
+    private String isbn;
+    
     @PostConstruct
     public void init() {
         books = new ArrayList<>(BookService.getTestData());
@@ -77,6 +79,15 @@ public class BookController implements Serializable {
             this.books.add(newbook);
             this.newbook = new Book("", null, "", "");
         }
+    }
+
+    public ISBN getIsbnDetails() {
+        return (isbn == null || isbn.isEmpty()) ? null : ISBNLib.getInstance().clean(isbn);
+    }
+    
+    public void viewIsbnDetails(String isbn) {
+        System.out.println("set details " + isbn);
+        this.isbn = isbn;
     }
 
     public Book getNewbook() {
