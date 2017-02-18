@@ -67,9 +67,12 @@ public class BookController implements Serializable {
     }
 
     public void createBook() {
-        if(books.contains(newbook)) {
+        String isbnOld = newbook.getIsbn();
+        this.newbook.setIsbn(ISBNLib.getInstance().clean(isbnOld).toString());
+        if(this.books.contains(newbook)) {
             FacesMessage message = new FacesMessage("Ein Buch mit dieser ISBN existiert bereits");
             FacesContext.getCurrentInstance().addMessage("addform:isbn", message);
+            this.newbook.setIsbn(isbnOld);
         } else {   
             this.books.add(newbook);
             this.newbook = new Book("", null, "", "");

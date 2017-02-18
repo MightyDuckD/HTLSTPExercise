@@ -27,8 +27,6 @@ public class IsbnValidator implements Validator {
         ISBNLib lib = ISBNLib.getInstance();
         try {
             ISBNLib.ISBN isbn = lib.clean(o.toString());
-            System.out.println(isbn.getCheckDigit());
-            System.out.println(isbn.calculateCheckDigit());
             if (!isbn.isValidCheckDigit()) {
                 throw new ValidatorException(new FacesMessage("Ungültige ISBN - Falsche Checksumme"));
             }
