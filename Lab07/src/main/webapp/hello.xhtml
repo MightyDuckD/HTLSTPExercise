@@ -32,7 +32,7 @@ and open the template in the editor.
                                  var="book">
                         <h:column>
                             <f:facet name="header">ISBN</f:facet>
-                                #{book.cleanIsbn}
+                                #{book.isbn}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Titel</f:facet>
@@ -53,37 +53,49 @@ and open the template in the editor.
         </div>
         <div>
             <h:form id="addform">
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="3">
                     <h:outputText value="Autor:"/>
                     <h:inputText value="#{bookcon.newbook.autor}"
+                                 id="autor"
+                                 validatorMessage="Bitte geben Sie einen Autor ein"
                                  a:placeholder="Sir Arthur Conan Doyle">
                         <f:validateRequired/>
                     </h:inputText>
+                    <h:message for="autor"/>
 
                     <h:outputText value="ISBN:"/>
                     <h:inputText value="#{bookcon.newbook.isbn}"
+                                 id="isbn"
+                                 validatorMessage="Bitte geben Sie eine gültige ISBN ein"
                                  a:placeholder="978-0-1406-2361-1">
                         <f:validateRequired/>
                         <f:validator validatorId="isbnvalidator"/>
                     </h:inputText>
+                    <h:message for="isbn"/>
 
                     <h:outputText value="Preis:"/>
                     <h:inputText value="#{bookcon.newbook.preis}"
+                                 id="preis"
+                                 validatorMessage="Bitte geben Sie einen gültigen Preis an"
+                                 converterMessage="Bitte geben Sie einen gültigen Preis an"
                                  a:placeholder="43.99">
                         <f:validateDoubleRange minimum="0"/>
                         <f:validateRequired/>
                     </h:inputText>
+                    <h:message for="preis"/>
 
                     <h:outputText value="Titel:"/>
                     <h:inputText value="#{bookcon.newbook.titel}"
+                                 id="titel"
+                                 validatorMessage="Bitte geben Sie einen Buchtitel ein"
                                  a:placeholder="The Hound of the Baskervilles">
                         <f:validateRequired/>
                     </h:inputText>
+                    <h:message for="titel"/>
                 </h:panelGrid>
                 <h:commandButton value="Buch Hinzufügen"
                                  action="#{bookcon.createBook}">
                 </h:commandButton>
-                <h:messages/>
             </h:form>
         </div>
     </h:body>

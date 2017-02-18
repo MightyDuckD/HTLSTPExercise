@@ -36,17 +36,6 @@ public class Book implements Serializable {
         return isbn;
     }
 
-    public String getCleanIsbn() {
-        String clean = isbn.replace("-", "");
-        return String.format("%3s-%1s-%4s-%4s-%1s",
-                clean.substring(0, 3),
-                clean.substring(3, 4),
-                clean.substring(4, 8),
-                clean.substring(8, 12),
-                clean.substring(12, 13)
-        );
-    }
-
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
