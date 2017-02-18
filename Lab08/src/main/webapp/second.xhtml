@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lehner-D. Lab08</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form id="schuelertree">
+            <p:growl id="messages" showDetail="true" />
+            <h3 style="margin-top:0">Client</h3>
+            <p:tree value="#{treecon.root}" 
+                    var="node"
+                    selectionMode="single" 
+                    selection="#{treecon.selectedNode}">
+                <p:ajax event="expand" listener="#{treecon.nodeExpand}" />
+                <p:ajax event="collapse" listener="#{treecon.nodeCollapse}" />
+                <p:ajax event="select" update=":schuelerdetail :schuelertree:messages" listener="#{treecon.onNodeSelect}" />
+                <p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
+                            collapsedIcon="ui-icon ui-icon-folder-collapsed">
+                    <h:outputText value="#{node}"/>
+                </p:treeNode>
+                <p:treeNode type="schueler"
+                            icon="ui-icon ui-icon-person">
+                    <h:outputText value="#{node}"/>
+                </p:treeNode>
+            </p:tree>
+        </h:form>
+        <h:form id="schuelerdetail">
+            <c:if test="#{not (null == treecon.selectedSchueler)}">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Nr."/>
+                    <h:outputText value="#{treecon.selectedSchueler.nr}"/>
+                    <h:outputLabel value="Vorname"/>
+                    <h:outputText value="#{treecon.selectedSchueler.vorname}"/>
+                    <h:outputLabel value="Nachname"/>
+                    <h:outputText value="#{treecon.selectedSchueler.nachname}"/>
+                    <h:outputLabel value="Geschlecht"/>
+                    <h:outputText value="#{treecon.selectedSchueler.geschlecht}"/>
+                </h:panelGrid>
+            </c:if>
+        </h:form>
+        <h:form id="schuelerregister">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Vorname"/>
+                <h:inputText value="#{schuelercon.newSchueler.vorname}"/>
+                <h:outputLabel value="Nachname"/>
+                <h:inputText value="#{schuelercon.newSchueler.nachname}"/>
+                <h:outputLabel value="Geschlecht"/>
+                <h:inputText value="#{schuelercon.newSchueler.geschlecht}"/>
+                <h:commandButton value="Hinzufügen" action="#{treecon.addNewSchueler}">
+                </h:commandButton>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Lehner-D. Lab08</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <p:dataTable value="#{schuelercon.schueler}"
+                             filteredValue="#{schuelercon.filteredSchueler}"
+                             var="schueler"
+                             paginator="true"
+                             paginatorAlwaysVisible="false"
+                             rows="8"
+                             rowKey="#{schueler}"
+                             selection="#{schuelercon.selectedSchueler}">
+                    <f:facet name="header">
+                        Schüler der 5BHDVK 2008/09
+                    </f:facet>
+                    
+                    <p:column selectionMode="multiple"
+                              style="width:16px;text-align:center" />
+
+                    <p:column headerText="Katalognummer">
+                        <h:outputText value="#{schueler.nr}"/>
+                    </p:column>   
+
+                    <p:column filterBy="#{schueler.nachname}"
+                              filterMatchMode="contains"> 
+                        <f:facet name="header">
+                            Zuname
+                        </f:facet>
+                        <h:outputText value="#{schueler.nachname}"/>
+                    </p:column>    
+
+                    <p:column filterBy="#{schueler.vorname}"
+                              filterMatchMode="contains"> 
+                        <f:facet name="header">
+                            Vorname
+                        </f:facet>
+                        <h:outputText value="#{schueler.vorname}"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton icon="ui-icon-arrow-l" 
+                                         value="Zurück" 
+                                         action="hello.xhtml"/>
+                        <p:commandButton icon="ui-icon-search" 
+                                         value="Anzeigen" 
+                                         action="selection.xhtml"/>
+                    </f:facet>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </h:body>
+</html>
