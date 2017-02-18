@@ -5,7 +5,7 @@
  */
 package at.mightyduck.lab07.controller;
 
-import at.mightyduck.lab07.ISBNLib;
+import at.mightyduck.isbn.ISBNLib;
 import at.mightyduck.lab07.model.Book;
 import at.mightyduck.lab07.model.BookService;
 import java.io.Serializable;

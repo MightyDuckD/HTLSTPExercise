@@ -5,7 +5,9 @@
  */
 package at.mightyduck.lab07.validator;
 
-import at.mightyduck.lab07.ISBNLib;
+import at.mightyduck.isbn.ISBN;
+import at.mightyduck.isbn.ISBNException;
+import at.mightyduck.isbn.ISBNLib;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -26,11 +28,11 @@ public class IsbnValidator implements Validator {
         }
         ISBNLib lib = ISBNLib.getInstance();
         try {
-            ISBNLib.ISBN isbn = lib.clean(o.toString());
+            ISBN isbn = lib.clean(o.toString());
             if (!isbn.isValidCheckDigit()) {
                 throw new ValidatorException(new FacesMessage("Ungültige ISBN - Falsche Checksumme"));
             }
-        } catch (ISBNLib.ISBNException ex) {
+        } catch (ISBNException ex) {
             throw new ValidatorException(new FacesMessage(ex.getMessage()));
         }
     }

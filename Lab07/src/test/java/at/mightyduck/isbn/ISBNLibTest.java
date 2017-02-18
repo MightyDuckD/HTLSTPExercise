@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package at.mightyduck.lab07;
+package at.mightyduck.isbn;
 
+import at.mightyduck.isbn.ISBNLib;
+import at.mightyduck.isbn.ISBNException;
+import at.mightyduck.isbn.ISBN;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,7 +23,7 @@ public class ISBNLibTest {
     @Test
     public void testValid0() {
         ISBNLib lib = ISBNLib.getInstance();
-        ISBNLib.ISBN isbn = lib.clean("9780777777770");
+        ISBN isbn = lib.clean("9780777777770");
         Assert.assertEquals("978", isbn.getPrefix());
         Assert.assertEquals("0", isbn.getRegistrationGroup());
         Assert.assertEquals("7777", isbn.getRegistrant());
@@ -35,7 +38,7 @@ public class ISBNLibTest {
     @Test
     public void testValid1() {
         ISBNLib lib = ISBNLib.getInstance();
-        ISBNLib.ISBN isbn = lib.clean("9789512388882");
+        ISBN isbn = lib.clean("9789512388882");
         Assert.assertEquals("978", isbn.getPrefix());
         Assert.assertEquals("951", isbn.getRegistrationGroup());
         Assert.assertEquals("23", isbn.getRegistrant());
@@ -51,9 +54,9 @@ public class ISBNLibTest {
     public void testErrors() {
         ISBNLib lib = ISBNLib.getInstance();
         try {
-            ISBNLib.ISBN isbn = lib.clean("9786999999990");//invalid as in official manual
+            ISBN isbn = lib.clean("9786999999990");//invalid as in official manual
             Assert.fail("Exception should have been thrown");
-        } catch (ISBNLib.ISBNException ex) {
+        } catch (ISBNException ex) {
             Assert.assertEquals("Unbekannte Registration Group", ex.getMessage());
         }
     }
