@@ -5,11 +5,7 @@
  */
 package at.mightyduck.lab07;
 
-import at.mightyduck.lab07.validator.IsbnChecksumValidator;
-import javax.faces.FacesException;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import javax.faces.validator.ValidatorException;
+import at.mightyduck.lab07.validator.IsbnValidator;
 
 /**
  *
@@ -17,7 +13,7 @@ import javax.faces.validator.ValidatorException;
  */
 public class ISBNLibTest {
 
-    private IsbnChecksumValidator v = new IsbnChecksumValidator();
+    private IsbnValidator v = new IsbnValidator();
 
     public ISBNLibTest() {
     }

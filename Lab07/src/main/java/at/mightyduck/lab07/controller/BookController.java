@@ -8,26 +8,17 @@ package at.mightyduck.lab07.controller;
 import at.mightyduck.lab07.ISBNLib;
 import at.mightyduck.lab07.model.Book;
 import at.mightyduck.lab07.model.BookService;
-import at.mightyduck.lab07.validator.IsbnChecksumValidator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -49,16 +40,12 @@ public class BookController implements Serializable {
     }
 
     private void cleanBooks() {
-        try {
-            ISBNLib.ISBNRangeMessage lib = ISBNLib.loadFromStream(BookController.class.getResourceAsStream("/ISBNRangeMessage.xml"));
-            for (Book b : books) {
-                b.setIsbn(ISBNLib.clean(lib, b.getIsbn()));
-            }
-        } catch (JAXBException ex) {
-            Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);
+        ISBNLib lib = ISBNLib.getInstance();
+        for (Book b : books) {
+            b.setIsbn(lib.clean(b.getIsbn()).toString());
         }
     }
-    
+
     public Collection<String> getAutoren() {
         Set<String> result = new TreeSet<>();
         for (Book b : books) {
@@ -80,8 +67,13 @@ public class BookController implements Serializable {
     }
 
     public void createBook() {
-        this.books.add(newbook);
-        this.newbook = new Book("", null, "", "");
+        if(books.contains(newbook)) {
+            FacesMessage message = new FacesMessage("Ein Buch mit dieser ISBN existiert bereits");
+            FacesContext.getCurrentInstance().addMessage("addform:isbn", message);
+        } else {   
+            this.books.add(newbook);
+            this.newbook = new Book("", null, "", "");
+        }
     }
 
     public Book getNewbook() {

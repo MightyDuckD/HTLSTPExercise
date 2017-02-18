@@ -1,6 +1,7 @@
 package at.mightyduck.lab07.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -55,4 +56,28 @@ public class Book implements Serializable {
     public void setTitel(String titel) {
         this.titel = titel;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.isbn);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Book other = (Book) obj;
+        if (!Objects.equals(this.isbn, other.isbn)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
