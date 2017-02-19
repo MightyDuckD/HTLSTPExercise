@@ -4,6 +4,7 @@
 	
 	In dem nachfolgendem Kapitel werden einige dieser Verfahren erklärt und etwaige Fehler und Schwierigkeiten die damit verbunden sind aufgezeigt. Außerdem werden einige Implementierungen gezeigt, verglichen und auf die Verwendbarkeit im Alltag getestet. 
 	
+	
 	\section{Verstecken von Dateien}
 	% https://de.wikibooks.org/wiki/Disk-Forensik/\_Sicherstellung/\_Versteckte\_Daten\#Alternate\_Data\_Streams\_.28ADS.29
 	% http://www.tippscout.de/kommandozeile-log-dateien-kombinieren_tipp_3644.html
@@ -71,11 +72,113 @@
 	
 	Viele Dateiformate besitzen eine interne Angabe über wie lang die Datei sein sollte. Dies kann ausgenützt werden indem man eine Payload am Ende der Datei anfügt. Programme welche die Trägerdatei lesen wollen ignorieren den zusätzlich angehängten Teil. Die versteckte Datei kann schnell und einfach wieder aus der Trägerdatei extrahiert werden. \\
 	
-	Zu beachten ist hier vor allem das man eine geeignete Trägerdatei wählt. Denn bei einer Datei welche sich oft in der Länge ändert kann es passieren das sein Versteckter angehängter Teil einfach überschrieben wird. Außerdem sollte darauf geachtet werden das die Datei eine fix definierte Länge besitzt. Eine Beispiel für geeignete Dateiformate sind Bild- und Videoformate, sofern man sie nicht noch weiter bearbeiten will. Diese besitzen immer eine im Header der Datei angegebene Länge und haben auch meistens eine relativ große Dateigröße, wodurch kleinere angehängte Dateien im Speicherplatzverbrauch nicht so stark auffallen. 
+	Zu beachten ist hier vor allem das man eine geeignete Trägerdatei wählt. Denn bei einer Datei welche sich oft in der Länge ändert kann es passieren das sein Versteckter angehängter Teil einfach überschrieben wird. Außerdem sollte darauf geachtet werden dass die Datei eine fix definierte Länge besitzt. Eine Beispiel für geeignete Dateiformate sind Bild- und Videoformate, sofern man sie nicht noch weiter bearbeiten will. Diese besitzen eine im Header der Datei angegebene Länge und haben auch eine relativ große Größe, wodurch kleinere angehängte Dateien im Speicherplatzverbrauch nicht so stark auffallen. 
 	
 	
-	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.8]{images/L-bmp.png}
+		\caption{Beispiel für das Verstecken einer Datei am Ende einer Bitmap}
+		\label{fig:L: Datei in Bitmap}
+	\end{figure}
 	% http://paulbourke.net/dataformats/bmp/
 	
+	\section{Modifikation von Bilddateien} \ltodo{Die ganze Sache gibt es auch in der klassischen wo es darum geht z.B. in der Länge der Gartenzaunbretter Informationen zu verstecken}
 	
+	Bilder auf einem Computer sind nichts anderes als Matrizen welche Farbeinformationen für die einzelnen Pixel des Bildes beinhalten. Es gibt zahlreiche Verfahren in diesen Daten zu verstecken. Im den folgenden Kapitel werden einige dieser Verfahren vorgestellt. Dadurch dass alle Daten im Computer in Binärform als Zahl gespeichert sind, ist es vollkommen egal welche Datei als Payload eingebettet wird. 
+	
+	Aus diesem Grund wird in den Beispielen die Kodierung aus \ref{L: Kodierung Payload} für die Payload verwendet.
+	\begin{table}[]
+		\centering
+		\caption{Kodierungstabelle der Payload}
+		\label{L: Kodierung Payload}
+		\begin{tabular}{|lll|lll|lll|lll|}
+			\hline
+			\textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} \\ \hline
+			A                & 0            & 000000        & I                & 8            & 001000        & Q                & 16           & 010000        & Y                & 24           & 011000        \\
+			B                & 1            & 000001        & J                & 9            & 001001        & R                & 17           & 010001        & Z                & 25           & 011001        \\
+			C                & 2            & 000010        & K                & 10           & 001010        & S                & 18           & 010010        & Leerzeichen      & 26           & 011010        \\
+			D                & 3            & 000011        & L                & 11           & 001011        & T                & 19           & 010011        & .                & 27           & 011011        \\
+			E                & 4            & 000100        & M                & 12           & 001100        & U                & 20           & 010100        & ,                & 28           & 011100        \\
+			F                & 5            & 000101        & N                & 13           & 001101        & V                & 21           & 010101        & ?                & 29           & 011101        \\
+			G                & 6            & 000110        & O                & 14           & 001110        & W                & 22           & 010110        & !                & 30           & 011110        \\
+			H                & 7            & 000111        & P                & 15           & 001111        & X                & 23           & 010111        & ''               & 31           & 011111        \\
+			\hline
+		\end{tabular}
+	\end{table}
+%	\begin{table}[]
+%		\centering
+%		\caption{Kodierungstabelle der Payload}
+%		\label{L: Kodierung Payload}
+%		\begin{tabular}{|lll|lll|lll|lll|}
+%			\hline
+%			\textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} \\ \hline
+%			A                & 32            & 100000        & I                & 40           & 101000        & Q                & 48           & 110000        & Y                & 56           & 111000        \\
+%			B                & 33            & 100001        & J                & 41           & 101001        & R                & 49           & 110001        & Z                & 57           & 111001        \\
+%			C                & 34            & 100010        & K                & 42           & 101010        & S                & 50           & 110010        & Zeilenumbruch    & 58           & 111010        \\
+%			D                & 35            & 100011        & L                & 43           & 101011        & T                & 51           & 110011        & >                & 59           & 111011        \\
+%			E                & 36            & 100100        & M                & 44           & 101100        & U                & 52           & 110100        & <                & 60           & 111100        \\
+%			F                & 37            & 100101        & N                & 45           & 101101        & V                & 53           & 110101        & (                & 61           & 111101        \\
+%			G                & 38            & 100110        & O                & 46           & 101110        & W                & 54           & 110110        & )                & 62           & 111110        \\
+%			H                & 39            & 100111        & P                & 47           & 101111        & X                & 55           & 110111        & End of Message   & 63           & 111111        \\
+%			\hline
+%		\end{tabular}
+%	\end{table}
+	
+	
+	\subsection{LSB Verfahren}
+	
+	Das Least Significant Bit Verfahren nützt die Tatsache aus, dass der Farbraum einer modernen Bilddatei sehr groß ist\footnote{Bei den meisten Formaten 24-Bit, wodurch 16,777,216 Farben dargestellt werden können}. Dadurch ist es für das menschliche Auge sehr schwierig, eng beieinander liegende Farbtöne zu unterscheiden. Computerprogramme können nun gezielt einzelne Farben manipulieren um Informationen in den Pixel des Bildes zu kodieren. 
+	
+	Bei einem 24-Bit RGB Bild besteht jeder Farbkanal aus 8 Bit. Um die Nachricht zu kodieren wird das LSB von einem oder mehreren der Farbkanäle des Pixel auf den jeweiligen Wert aus der kodierten Nachricht gesetzt. Da das LSB nur einen wertmäßigen Unterschied von +-1 ausmacht wenn es verändert wird, fällt diese Änderung kaum auf. Wenn wir bei einem Pixel einen der Farbkanäle bearbeiten verändern wir den Farbwert des Kanal um $\frac{1}{256} = 0.39\% $. Der Farbwert des Pixel ändert sich sogar nur um $ \frac{1}{16777216} = 0.00000596\% $. Es ist so gut wie unmöglich mit dem freien Auge hier noch einen Unterschied zu erkennen.
+	
+	Ein große Rolle spielt wie viel Trägermaterial zur Verfügung steht und wie viele Daten darin eingebettet werden. Je nachdem kann man die einzelnen Bits weiter verteilen oder muss sogar mehrere Bits auf ein Pixel. 
+	Es ist auch durchaus sinnvoll diverse Prüfsummen in die eingebetteten Daten einzubauen um sicher zu stellen das die extrahierten Daten auch keine Fehler enthalten. Wenn genug Platz zur Verfügung steht ist es auch möglich die Daten redundant zu speichern.
+	
+	\ltodo{Tabelle mit Vergleich wie viele Bit Farbe / wie viele Bit Daten und wie viel Prozent das ausmacht + Bildbeispiele für den Farbunterschied den das ausmacht}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.8]{images/L-lsb-entwurf.png}
+		\caption{LSB Entwurf, muss ich noch verbessern..}
+		\label{fig:L: LSB in Bitmap}
+	\end{figure}
+	
+	In \ref{fig:L: LSB Tabelle} wurde eine Datendichte von einem Zeichen pro Pixel gewählt. Bei einem Bild mit 2  Megapixel lassen sich bis zu 2 Millionen Zeichen abspeichern. Das Buch ''Schöne neue Welt'' von Aldous Huxley hat rund 430.000 Zeichen, geht sich also bereits vier Mal in einem doch recht kleinen Bild aus. Das setzt aber Voraus das die in \ref{L: Kodierung Payload} angeführte Kodierungstabelle verwendet wird. Diese unterstützt aber weder Kleinbuchstaben noch Zeilenumbrüche, Umlaute oder Zahlen. Das Buch wäre durchaus noch lesbar, aber eben doch recht umständlich. In der ASCII Kodierung hat das Buch eine Größe von 449.414 Bytes, also 3.595.312 Bits. Bei einer Datendichte von 6 Bit / Pixel geht sich das Buch dennoch in einem 2 Megapixel großen Bild aus.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{tabular}{|c|c|c|c|c|c|c|c|}
+			\hline 
+			Pixel Nummer & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\ 
+			\hline 
+			Nachricht & T & R & E & F & F & P & U \\ 
+			\hline 
+			Dec & 19 & 17 & 4 & 4 & 5 & 15 & 20 \\ 
+			\hline 
+			Binär & 10011 & 10001 & 00100 & 00100 & 00101 & 01111 & 10100 \\ 
+			\hline 
+			Roter Farbwert & RRRR RR10 & RRRR RR10 & RRRR RR00 & RRRR RR00 & RRRR RR00 & RRRR RR01 & RRRR RR10 \\ 
+			\hline 
+			Grüner Farbwert & GGGG GG01 & GGGG GG00 & GGGG GG10 & GGGG GG10 & GGGG GG10 & GGGG GG11 & GGGG GG10 \\ 
+			\hline 
+			Blauer Farbwert & BBBB BBB1 & BBBB BBB1 & BBBB BBB0 & BBBB BBB0 & BBBB BBB1 & BBBB BBB1 & BBBB BBB0 \\ 
+			\hline 
+		\end{tabular} 
+		\caption{Beispiel für 1 Zeichen pro Pixel.}
+		\label{fig:L: LSB Tabelle}
+	\end{figure}
+	
+	
+	
+	
+	\subsection{Codemultiplex Verfahren}
+	
+	\subsection{QIM Verfahren}
+	
+	\subsection{Frequenztransformation Verfahren}
+	
+	\subsection{Whitening}
+	
+	\subsection{Ansatz zur Verhinderung von Informationsverlust durch verlustbehaftete Komprimierung wie in JPEG Dateien}
 	
