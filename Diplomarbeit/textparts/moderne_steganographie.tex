@@ -1,0 +1,81 @@
+\chapter{Moderne Steganographie}
+	
+	Mit moderner Steganographie sind Verfahren gemeint, welche nur mit Hilfsmittel der elektronischen Datenverarbeitung funktionieren. Sie verlassen sich meist darauf das in riesigen Zahlenmengen kleine Hinweise versteckt sind. Solch große Datenmengen lassen sich per Hand nicht mehr berechnen, wie etwa die vielen Millionen Bildpunkte auf einer digital Fotografie. 
+	
+	In dem nachfolgendem Kapitel werden einige dieser Verfahren erklärt und etwaige Fehler und Schwierigkeiten die damit verbunden sind aufgezeigt. Außerdem werden einige Implementierungen gezeigt, verglichen und auf die Verwendbarkeit im Alltag getestet. 
+	
+	\section{Verstecken von Dateien}
+	% https://de.wikibooks.org/wiki/Disk-Forensik/\_Sicherstellung/\_Versteckte\_Daten\#Alternate\_Data\_Streams\_.28ADS.29
+	% http://www.tippscout.de/kommandozeile-log-dateien-kombinieren_tipp_3644.html
+	
+	\ltodo{Ist das wirklich Steganographie?}
+	Die Dateisysteme der Betriebssysteme bieten zahlreiche Möglichkeiten um seine Daten für dritte schwer auffindbar zu machen. In der folgenden Tabelle werden einige Verfahren verglichen und anschließend genauer erläutert. Es ist jedoch zu Bemerken, dass es sich hier um sehr einfache Verfahren handelt die höchstens Schutz gegen Computeranfänger bietet und für jeden Forensiker keine Herausforderung darstellen.
+	
+	\begin{tabular}{|l|l|l|l|}
+		\hline 
+		Beschreibung & Anwendbarkeit & Human Attack & Computer Attack \\ 
+		\hline 
+		Alternativer Datenstream & ext. Programm wird benötigt & mittel & einfach \\ 
+		\hline 
+		Dateien Verketten & überall unterstützt & mittel & einfach \\
+		\hline
+		Versteckte Datei & überall unterstützt & einfach & einfach \\
+		\hline
+		Dateiendung verändern & nur auf windows und osx \footnote{Linux verwendet das Programm ''file'' um über die Magic Number den Dateityp zu erkennen} & einfach & sehr einfach \\
+		\hline
+	\end{tabular} 
+
+	\subsection{Alternativer Datenstream}
+	% https://www.irongeek.com/i.php?page=security/altds
+	
+	Die alternativen Dateistreams wurden von Windows bei ihrem Dateisystem NTFS deshalb eingefügt, da sie auch das Dateisystem von Apple HFS unterstützen wollten. Dort werden sogenannte Resource Forks verwendet um weitere Informationen wie Icons für Dateien zu speichern. Diese Dateistreams sind mit dem normalen Datei Explorer von Windows nicht direkt sichtbar, können aber erahnt werden wenn man die in den Eigenschaften angezeigte Größe mit der tatsächlichen Größe vergleicht. Vor allem für große versteckte Dateien wie Bilder oder Videos können hier leicht große Unterschiede erkannt werden.	
+	
+	
+	\subsubsection{Erstellen von ADS unter Windows}
+
+	Alternative Dateistreams können nicht einfach mit dem Windows Explorer erstellt werden. Die einfachste Möglichkeit unter Windows alternative Dateistreams zu erstellen ist über die Kommandozeile. Angesprochen werden die einzelnen Streams über den Dateinamen der sichtbaren Trägerdatei und einem mit Doppelpunkt getrennten Namen für den Stream. Über diesen Bezeichner kann nun jedes Programm auf den alternativen Stream zugreifen.
+	
+	Als Trägerdatei kann jede beliebige Datei verwendet werden. Je größer die gewählte Trägerdatei ist, desto unwahrscheinlicher ist es das jemanden der zusätzliche Datenstream auffällt. In dem folgenden Beispiel wird die Datei ''unscheinbare\_textdatei.txt'' über die Windows-Kommandozeile erstellt und mit einem unbedeutenden Text befüllt.
+	\begin{lstlisting}
+	echo "Hallo Welt, hier ist nichts." > unscheinbare_textdatei.txt
+	\end{lstlisting}
+	
+	Nun kann man mit dem gleichen Befehl und einem angepassten Dateinamen auf gleiche Weise alternative Datenstreams befüllen.
+	\begin{lstlisting}
+	echo "Geheim" > unscheinbare_textdatei.txt:geheimer_stream.txt
+	\end{lstlisting}
+	
+	Sowohl die Trägerdatei als auch der alternative Stream können mit jedem beliebigen Programm jederzeit bearbeitet werden. Zu beachten ist nur wieder das der Explorer und alle ''Datei öffnen'' Dialoge die geheimen Streams nicht anzeigt. Dazu muss man wieder auf die Kommandozeile zurückgreifen. Zum Beispiel kann man den Stream mit dem Programm Notepad von Windows öffnen.
+	\begin{lstlisting}
+	notepad unscheinbare_textdatei.txt:geheimer_stream.txt
+	\end{lstlisting}
+	
+	Wie man sehen kann können diese alternativen Streams von jedem Programm ohne viel Mehraufwand geöffnet werden. Sie stellen also keinen ausreichenden Schutz vor ungewollten Zugriff auf den Inhalt da.\\
+	Um sich eine Übersicht über alle Dateien und ihre Streams machen zu können gibt es zahlreiche fertige Tools, welche ohne viel Aufwand das gesamte Dateisystem nach solchen Strukturen durchsuchen. Bei einem konkreten Verdacht kann jedoch auch das bei Windows mitgelieferte Programm $dir$ verwendet werden.
+	Man navigiert über die Kommandozeile in den jeweiligen Ordner und dort ruft man den $dir$ Befehl mit dem Parameter $/r$ auf.
+	
+	\begin{lstlisting}
+	C:\stuff>dir /r
+	Datenträger in Laufwerk C: ist Windows
+	Volumeseriennummer: F8D1-CAC1
+	
+	Verzeichnis von C:\stuff
+	
+	16.02.2017  17:37    <DIR>     .
+	16.02.2017  17:37    <DIR>     ..
+	16.02.2017  17:44           28 unscheinbare_textdatei.txt
+	                            11 unscheinbare_textdatei.txt:geheimer_stream.txt:$DATA
+	\end{lstlisting}
+	
+	\subsection{Anfügen am Dateiende}
+	
+	Viele Dateiformate besitzen eine interne Angabe über wie lang die Datei sein sollte. Dies kann ausgenützt werden indem man eine Payload am Ende der Datei anfügt. Programme welche die Trägerdatei lesen wollen ignorieren den zusätzlich angehängten Teil. Die versteckte Datei kann schnell und einfach wieder aus der Trägerdatei extrahiert werden. \\
+	
+	Zu beachten ist hier vor allem das man eine geeignete Trägerdatei wählt. Denn bei einer Datei welche sich oft in der Länge ändert kann es passieren das sein Versteckter angehängter Teil einfach überschrieben wird. Außerdem sollte darauf geachtet werden das die Datei eine fix definierte Länge besitzt. Eine Beispiel für geeignete Dateiformate sind Bild- und Videoformate, sofern man sie nicht noch weiter bearbeiten will. Diese besitzen immer eine im Header der Datei angegebene Länge und haben auch meistens eine relativ große Dateigröße, wodurch kleinere angehängte Dateien im Speicherplatzverbrauch nicht so stark auffallen. 
+	
+	
+	
+	% http://paulbourke.net/dataformats/bmp/
+	
+	
+	
