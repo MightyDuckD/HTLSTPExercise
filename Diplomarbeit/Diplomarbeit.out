@@ -9,7 +9,10 @@
 \BOOKMARK [1][-]{section.1.2}{Abgrenzung zur Kryptographie}{chapter.1}% 9
 \BOOKMARK [1][-]{section.1.3}{Einsatzgebiete}{chapter.1}% 10
 \BOOKMARK [1][-]{section.1.4}{Steganographie als ''Wicked Problem''}{chapter.1}% 11
-\BOOKMARK [0][-]{section*.10}{Anhang}{}% 12
-\BOOKMARK [1][-]{section*.12}{Tabellenverzeichnis}{section*.10}% 13
-\BOOKMARK [1][-]{section*.14}{Verzeichnis der Listings}{section*.10}% 14
-\BOOKMARK [1][-]{section*.17}{Literaturverzeichnis}{section*.10}% 15
+\BOOKMARK [0][-]{chapter.2}{Moderne Steganographie}{}% 12
+\BOOKMARK [1][-]{section.2.1}{Verstecken von Dateien}{chapter.2}% 13
+\BOOKMARK [2][-]{subsection.2.1.1}{Alternativer Datenstream}{section.2.1}% 14
+\BOOKMARK [0][-]{section*.11}{Anhang}{}% 15
+\BOOKMARK [1][-]{section*.13}{Tabellenverzeichnis}{section*.11}% 16
+\BOOKMARK [1][-]{section*.15}{Verzeichnis der Listings}{section*.11}% 17
+\BOOKMARK [1][-]{section*.18}{Literaturverzeichnis}{section*.11}% 18
