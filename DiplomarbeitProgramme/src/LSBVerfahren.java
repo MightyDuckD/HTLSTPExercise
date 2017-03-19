@@ -15,11 +15,17 @@ import javax.imageio.ImageIO;
 public class LSBVerfahren {
 
     public static final int SEED = 1234;
-    
+    public static boolean repeat = true;
+
     public static int bitpair(byte data[], int offset) {
-        if (offset / 8 >= data.length) {
+        if (!repeat && offset >= data.length * 8) {
             return 0;
+        } else {
+            while (offset >= data.length * 8) {
+                offset -= data.length * 8;
+            }
         }
+
         return (data[offset / 8] >> (offset % 8)) & 0x3;
     }
 
@@ -57,22 +63,20 @@ public class LSBVerfahren {
     }
 
     public static void extractDataFromImage(String args[]) throws IOException {
-        BufferedImage image = ImageIO.read(new File("schöne-neue-earth.png"));//load the original image
+        BufferedImage image = ImageIO.read(new File("lsb-hidden-data.png"));//load the original image
         byte data[] = decode(image);//extract payload from image
-        Files.write(new File("schöne-neue-welt-extract.pdf").toPath(), data, WRITE, CREATE);//write extracted payload to hdd to test if it worked
+        Files.write(new File("lsb-output.txt").toPath(), data, WRITE, CREATE);//write extracted payload to hdd to test if it worked
     }
 
     public static void encodeDataIntoImage(String args[]) throws IOException {
         BufferedImage image = ImageIO.read(new File("earth.png"));//load the original image
-        byte data[] = Files.readAllBytes(new File("schöne-neue-welt.pdf").toPath());//load the original payload file
+        byte data[] = Files.readAllBytes(new File("lsb-input.txt").toPath());//load the original payload file
         encode(image, data);//add payload to image
-        data = decode(image);//extract payload from image
-        ImageIO.write(image, "png", new File("schöne-neue-earth.png"));//write image with payload to hdd
-        Files.write(new File("schöne-neue-welt-extract.pdf").toPath(), data, WRITE, CREATE);//write extracted payload to hdd to test if it worked
+        ImageIO.write(image, "png", new File("lsb-hidden-data.png"));//write image with payload to hdd
     }
 
     public static void main(String[] args) throws IOException {
-//        encodeDataIntoImage(args);
+        encodeDataIntoImage(args);
         extractDataFromImage(args);
     }
 }
