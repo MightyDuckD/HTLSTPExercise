@@ -15,15 +15,15 @@ import javax.imageio.ImageIO;
 public class LSBVerfahren {
 
     public static final int SEED = 1234;
+    
+    // if true the input is repeated if there is still space in the file
     public static boolean repeat = true;
 
     public static int bitpair(byte data[], int offset) {
-        if (!repeat && offset >= data.length * 8) {
+        if (data.length == 0 || !repeat && offset >= data.length * 8) {
             return 0;
         } else {
-            while (offset >= data.length * 8) {
-                offset -= data.length * 8;
-            }
+            offset = offset % (data.length * 8);
         }
 
         return (data[offset / 8] >> (offset % 8)) & 0x3;
@@ -76,7 +76,9 @@ public class LSBVerfahren {
     }
 
     public static void main(String[] args) throws IOException {
-        encodeDataIntoImage(args);
+//        System.out.println("encoding");
+//        encodeDataIntoImage(args);
+        System.out.println("extracting");
         extractDataFromImage(args);
     }
 }

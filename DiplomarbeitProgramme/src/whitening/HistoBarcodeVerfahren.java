@@ -147,12 +147,13 @@ public class HistoBarcodeVerfahren {
             }
         }
         ImageIO.write(result, "png", new File("barcode-earth-output.png"));
-
+        BufferedImage read = ImageIO.read(new File("barcode-earth-output.png"));
         int histo2[] = new int[256];
 
-        forEach(result, (x, y, c) -> {
+        forEach(read, (x, y, c) -> {
             histo2[avg(c)]++;
         });
+        
         ImageIO.write(render(histo2, 0, 300), "png", new File("barcode-earth-histo.png"));
         System.out.println(Arrays.toString(histo2));
 

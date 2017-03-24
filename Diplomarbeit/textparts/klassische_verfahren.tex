@@ -12,7 +12,7 @@
 	Spreu und Weizen Verfahren\footnote{eng.: Chaffing and Winnowing} stellen eine Mischform zwischen Steganographie und Kryptographieverfahren da und können daher nicht wirklich eindeutig zugeordnet werden. Die Idee des Verfahren ist es, die zu versteckenden Daten in einem Haufen nicht relevanter Information zu verstecken, wie die Nadel im Heuhaufen. 
 	
 	\ltodo{Nachfolgenden Absatz und Zitat ans Ende der Section schieben?}
-	Es handelt sich bei diesem Verfahren deswegen um eine Mischform, weil es sich genau genommen lediglich um das Authentifizieren von gesendeten Paketen handelt. Das hinzufügen der Spreu kann auch von einer dritten unwissenden Person geschehen. Dadurch können sowohl Sender als auch Empfänger sämtliche Verantwortung abstreiten und argumentieren, so wollen nur die Authentizität ihrer Nachrichten sicherstellen. Dadurch können auch Gesetzte welche Kryptographie beschränken oder sogar verbieten nicht auf das Spreu und Weizen Verfahren angewandt werden.
+	Es handelt sich bei diesem Verfahren deswegen um eine Mischform weil es sich genau genommen lediglich um das Authentifizieren von gesendeten Paketen handelt. Das hinzufügen der Spreu kann auch von einer dritten unwissenden Person geschehen. Dadurch können sowohl Sender als auch Empfänger sämtliche Verantwortung abstreiten und argumentieren, sie wollen nur die Authentizität ihrer Nachrichten sicherstellen. Dadurch können auch Gesetze welche Kryptographie beschränken oder sogar verbieten nicht auf das Spreu und Weizen Verfahren angewandt werden.
 	
 	\begin{quote}
 	% http://people.csail.mit.edu/rivest/chaffing-980701.txt
@@ -24,9 +24,9 @@
 
 	\subsection{Sender-Seite}
 	
-	Der Sender muss seine Nachricht in Pakete unterteilen. Ihre Größe kann beliebig gewählt werden. Er muss die Pakete außerdem in irgendeiner Weise durchnummerieren, um sie auf der Empfängerseite wieder in der richtigen Reihenfolge zusammensetzten zu können.
+	Der Sender muss seine Nachricht in Pakete unterteilen. Ihre Größe kann beliebig gewählt werden. Er muss die Pakete außerdem in irgendeiner Weise durchnummerieren, um sie auf der Empfängerseite wieder in der richtigen Reihenfolge zusammensetzen zu können.
 	
-	An jedes Paket wird nun ein Message Authentication Code (kurz: MAC) angehängt. Dieser dient wie der Name schon vermuten lässt zur Authentifizierung der Nachrichten. Einen MAC zu verwenden ist ein vernünftiger Schritt welcher oft verwendet wird und erregt somit wenig Aufmerksamkeit. 
+	An jedes Paket wird nun ein Message Authentication Code (kurz: MAC) angehängt. Dieser dient wie der Name schon vermuten lässt zur Authentifizierung der Nachrichten. Einen MAC zu verwenden ist ein vernünftiger Schritt, welcher oft verwendet wird und erregt somit wenig Aufmerksamkeit. 
 	
 	Die Nachricht ''Hallo Hans, wir treffen uns am 24. Jan um 18 Uhr am Hauptbahnhof'' könnte etwa so aufgeteilt werden:
 	
@@ -79,7 +79,7 @@
 	Hier deutlich zu erkennen die ungültigen MAC's, nämlich ungerade Zahlen.
 	\subsection{Empfänger-Seite}
 	
-	Der Empfänger sortiert nun die Pakete nach der ID und überprüft deren MAC's. Für ihn ist nun gut ersichtlich welche der Pakete die ursprüngliche Nachricht enthalten. Wie man in dem Beispiel gut sehen kann ist es für einen eingeweihten Empfänger sehr leicht die Ursprüngliche Nachricht zu erkennen. Für einen unwissenden Dritten kann es sich jedoch äußerst schwierig gestalten die richtigen Nachrichtenfragmente zusammenzusetzen. 
+	Der Empfänger sortiert nun die Pakete nach der ID und überprüft deren MAC's. Für ihn ist nun gut ersichtlich, welche der Pakete die ursprüngliche Nachricht enthalten. Wie man in dem Beispiel gut sehen kann, ist es für einen eingeweihten Empfänger sehr leicht die Ursprüngliche Nachricht zu erkennen. Für einen unwissenden Dritten kann es sich jedoch äußerst schwierig gestalten die richtigen Nachrichtenfragmente zusammenzusetzen. 
 	
 	Es könnten durchaus auch Texte wie ''Hallo Alice, wir telefonieren am 27. Jan um 18 Uhr am Westbahnhof'' oder ''Hallo Bob, wir treffen uns am 24. Jan um 18 Uhr am Bahnhof Meidling'' als mögliche Lösungen gesehen werden.
 	
@@ -114,9 +114,7 @@
 
 	\subsection{Sicherheitsaspekte}
 	
-	In dem obigen Beispiel gibt es $3 * 2 * 2 * 3 = 36$ verschiedene Lösungswege eine Nachricht zusammen zu setzten. Wenn man den Text verlängert und in noch mehr Pakete aufspaltet ergeben sich dadurch auch mehr Kombinationen. Angenommen man sendet für jedes Paket ein ungültiges alternatives Spreupaket, hätte man nach $n$ Paketen $ 2^{n}$ mögliche Ergebnisse. 
+	In dem obigen Beispiel gibt es $3 * 2 * 2 * 3 = 36$ verschiedene Lösungswege eine Nachricht zusammen zu setzen. Wenn man den Text verlängert und in noch mehr Pakete aufspaltet, ergeben sich dadurch auch mehr Kombinationen. Angenommen man sendet für jedes Paket ein ungültiges alternatives Spreupaket, hätte man nach $n$ Paketen $ 2^{n}$ mögliche Ergebnisse. 
 	
-	Bereits nach 10 Fragmenten ergeben sich dadurch 1024 verschiedene Nachrichten, nach 30 sogar schon mehr als 1 Milliarde. Wie man sehen kann entstehen sogar bei geringer Menge an Spreu sehr schnell eine riesige Menge an Kombinationen und man kann durchaus auch hunderte Spreupakete mitsenden. Dies fällt vor allem einfach in ''packet-switched network environments'' wie dem Internet.
+	Bereits nach 10 Fragmenten ergeben sich dadurch 1024 verschiedene Nachrichten, nach 30 sogar schon mehr als 1 Milliarde. Wie man sehen kann, entstehen sogar bei geringer Menge an Spreu sehr schnell eine riesige Menge an Kombinationen und man kann durchaus auch hunderte Spreupakete mitsenden. Dies fällt vor allem einfach in ''packet-switched network environments'' wie dem Internet.
 	
-	
-\section{}

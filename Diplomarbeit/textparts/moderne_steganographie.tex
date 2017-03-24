@@ -4,6 +4,113 @@
 	
 	In dem nachfolgendem Kapitel werden einige dieser Verfahren erklärt und etwaige Fehler und Schwierigkeiten die damit verbunden sind aufgezeigt. Außerdem werden einige Implementierungen gezeigt, verglichen und auf die Verwendbarkeit im Alltag getestet. 
 	
+	\section{Allgemein}
+	
+	\subsection{Whitening}
+	
+	
+	Als Whitening werden Prozesse und Techniken bezeichnet mit dem Ziel, Daten jegliche Ordnung und Regelmäßigkeit zu entziehen. Je besser ein Whitening Verharen funktioniert desto weniger ist der Datenstrom von generierten Zufallswerten unterscheidbar. \\
+	
+	Dies hat den Vorteil, dass die Daten nach der Transformation in dem einzubettendem Medium nicht so stark auffallen wie zuvor. \\
+	
+	Whitening Verfahren wandeln auf deterministische Weise Datenströme, welche in etwa wie \ref{fig:L: Whitening Clear} aussehen können, um damit sie dem Profil von \ref{fig:L: Whitening Random} ähneln. Dies muss auf eine Art und Weise geschehen das beim extrahieren der Daten die angewandte Operation wieder rückgängig gemacht werden kann. Es können also keine wirklich zufälligen Techniken zum Einsatz kommen. Man verwendet hier vor allem sogenannte Pseudozufallsgeneratoren, welche lediglich die Eigenschaften von echten zufälligen Ereignissen nachahmen, bei Bedarf aber beliebig oft wiederholt werden können. Dadurch ist sichergestellt das sich die angewandten Operationen auch wieder rückgängig machen lassen. Es werden auch oft Methoden aus der Kryptologie verwendet, welche nicht nur herausragende Ergebnisse in Hinsicht auf Zufälligkeit erzielen, sondern zugleich auch die Daten mit Hilfe eines Keys schützen.
+	 
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1]{images/L-whitening-clear.png}
+		\caption{Hier deutlich zu erkennen die verwendeten ASCII Zeichen.}
+		\label{fig:L: Whitening Clear}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1]{images/L-whitening-random.png}
+		\caption{In diesen zufälligen Daten kann kein Muster erkannt werden.}
+		\label{fig:L: Whitening Random}
+	\end{figure}
+	
+	\ltodo{Höhere Auflösung für Whitening Diagramme https://docs.google.com/spreadsheets/d/1xDMWNJa9r2ggmzPAmDgE8qYJ5hk-8Hh9ZFuKrGrx7Gw}
+	
+	
+	
+	
+     
+	
+	\subsubsection {Pseudozufallsgenerator mit bitweiser Verknüpfung}
+	
+	Bei Verfahren welche auf Pseudozufallsgeneratoren bauen ist die größte Stärke auch gleich die größte Schwäche: ''Sie sind vorhersehbar''. Sie Schützen zwar das Steganogramm vor unwissenden Dritten, wie so oft aber nicht wenn jemand gezielt danach sucht. Ihre sehr beschränkte Anzahl an Seeds und die Reproduzierbarkeit führen dazu das ein Angreifer sehr einfach auf die gängigsten Generatoren testen kann. 
+	\\
+	Das hier zur Anwendung kommende Prinzip ''Security through obscurity'' war bereits zu Beginn des 20. Jahrhunderts bekannt und auch als nicht sicher eingestuft. Das bekannteste Beispiel für Security through obscurity ist einen nicht standardisierten Port für eine Webanwendung zu verwenden. Dies Schützt zwar vor automatisierten Bots, ein gezielter Angriff hebelt diesen ''Sicherheitsmechanismus'' innerhalb von Minuten aus. Genau so ist es mit schwachen Whitening Verfahren welche auf Obskurität setzen.
+	\\
+	In dem nachfolgenden Beispiel wird als Whitening der Datenstrom mit Hilfe der XOR-Operation mit einem Pseudozufallszahlengeneratoren Datenstrom verknüpft. Zum Einsatz kommt hier ein Kongruenzgenerator wie er auch in der Standard Java Klasse java.lang.Random verwendet wird.  
+	
+	\begin{figure}[H]
+	\begin{tabular}{|l|l|c|c|c|c|c|c|}
+		\hline 
+		& Byte 1 & Byte 2 & Byte 3 & Byte 4 & Byte 5 & Byte 6 \\ 
+		\hline 
+		Inhalt  & L & o & r & e & m &   \\ 
+		\hline 
+		Datenstrom & 76 & 111 & 114 & 101 & 109 & 32 \\ 
+		\hline 
+		Random (Seed=0) & 187 & 212 & 61 & 155 & 163 & 79 \\ 
+		\hline 
+		Datenstrom XOR Random & 247 & 187 & 79 & 254 & 206 & 111 \\ 
+		\hline 
+	\end{tabular} 	
+    \caption{Wenn der Inhalt wieder hergestellt werden soll muss nur von unten nach oben alles wieder Rückgängig gemacht werden.}
+	\label{fig:L: Whitening Random Tabelle}
+\end{figure}
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1]{images/L-whitening-vergleich.png}
+		\caption{In diesem Vergleich ist gut zu sehen das nach Anwendung von diesem Verfahren der Datenstrom nicht mehr von zufälligen Werten unterscheidbar ist.}
+		\label{fig:L: Whitening Random}
+	\end{figure}
+	
+	\subsubsection {AES-256 Verschlüsselung mit Key}
+	
+	Es kann auch die Eigenschaft von Verschlüsselung genutzt werden, Daten derart zu verarbeiten dass sie nicht mehr von zufälligen Werten unterscheidbar ist. In dem nachfolgenden Beispiel wird die zurzeit als sicher geltende AES-256 Verschlüsselung verwendet. 
+	
+	Folgende Java Funktion wurde für die Verschlüsselung des Plaintext verwendet:
+	\lstinputlisting[firstline=30,lastline=42,caption={AESVerfahren.java},label={fig:L: AES Java}]{sources/AESVerfahren.java}
+	
+	Wenn man die daraus resultierenden Daten auswertet, lässt sich wieder der gewünschte Whitening-Effekt beobachten. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1]{images/L-whitening-aes.png}
+		\caption{Vergleich zwischen AES verschlüsselten Daten und zufälligen Werten.}
+		\label{fig:L: Whitening AES}
+	\end{figure}
+
+	
+	\subsection{Fehlerkorrekturverfahren}
+	
+	Moderne Verfahren sind sehr anfällig auf verlustbehaftete Komprimierung. Dadurch das sie meistens darauf basieren einzelne Bits zu verändern, passiert es auch sehr schnell das die erneute Manipulation des Trägermaterials zum Verlust der versteckten Daten führt. In dem folgenden Abschnitt werden Techniken vorgestellt um diesen Informationsverlust zu verhindern oder wenigstens zu entdecken. Des weiteren werden mehrere Verfahren nach Robustheit verglichen.
+	
+	\subsubsection{Redundante Datenspeicherung}
+	
+	Eine Möglichkeit ist es die Daten mehrfach abzuspeichern. Das bietet Schutz vor Manipulation von einzelnen Teilen des Bild. Zum Beispiel das Wegschneiden von Rändern, das Entfernen von Gesichtern, Wasserzeichen oder einfach Bild Über- und Unterschriften welche erst später zu dem Bild hinzugefügt werden.  
+	
+	Keine Verbesserung der Robustheit findet jedoch bei Komprimierung des Trägermaterial statt, denn hier werden alle Teile geringfügig verändert was bereits ausreicht um einen kompletten Informationsverlust zu verursachen. 
+	
+	Auch wenn das Trägermaterial vergrößert/verkleinert wird Hilft redundante Speicherung meist nicht. Bei Skalierung von Bildern werden immer Filtering Methoden eingesetzt werden. Diese kombinieren oft mehrere Pixel zu einem einzelnen und wenden dabei zahlreiche Operationen an. Dadurch geht fast immer sämtliche steganographisch versteckte Information verloren. 
+	
+	\subsubsection{Paritätsbit}
+	
+	Die Parität einer Zahl beschreibt ob eine Zahl durch zwei Teilbar ist. Das Paritätsbit wird zur Überprüfung auf Übertragungsfehler verwendet indem es nach einer festgelegten Anzahl an übertragenen Bits mitgesendet wird. Es werden die gesetzten Bits des zu überprüfenden Bereich gezählt. Ist dieser Wert nun eine gerade/ungerade Zahl wird das Paritätsbit entsprechend gesetzt.
+
+	Wenn im Laufe der Übertragung ein einzelnes Bit umgedreht wird kann dies durch das Paritätsbit entdeckt werden. Der Fehler selbst kann dadurch aber nicht ausgebessert werden, da nicht bekannt ist wo er in der Bitfolge aufgetreten ist. Außerdem kann nur eine ungerade Anzahl an Fehlern festgestellt werden. Eine Weiterentwicklung diese Verfahren stellt der unten vorgestellte Hamming-Code dar.
+	
+	\subsubsection{Zyklische Redundanzprüfung (\zb CRC-32)}
+	
+	Die zyklische Redundanzprüfung basiert auf Polynomdivison. Es wird ein CRC-Polynom gewählt welches dessen Koeffizienten entweder 1 oder 0 sind. So entspricht etwa die Bitfolge 110101 dem Polynom $ x^{5} + x^{4} + x^{2} + 1$
+	
+	\subsubsection{Hamming-Code}
 	
 	\section{Verstecken von Dateien}
 	% https://de.wikibooks.org/wiki/Disk-Forensik/\_Sicherstellung/\_Versteckte\_Daten\#Alternate\_Data\_Streams\_.28ADS.29
@@ -68,7 +175,7 @@
 	                            11 unscheinbare_textdatei.txt:geheimer_stream.txt:$DATA
 	\end{lstlisting}
 	
-	\subsection{Anfügen am Dateiende}
+	\subsection{Dateien Verketten}
 	
 	Viele Dateiformate besitzen eine interne Angabe über wie lang die Datei sein sollte. Dies kann ausgenützt werden indem man eine Payload am Ende der Datei anfügt. Programme welche die Trägerdatei lesen wollen ignorieren den zusätzlich angehängten Teil. Die versteckte Datei kann schnell und einfach wieder aus der Trägerdatei extrahiert werden. \\
 	
@@ -144,7 +251,7 @@
 		\label{fig:L: LSB in Bitmap}
 	\end{figure}
 	
-	In \ref{fig:L: LSB Tabelle} wurde eine Datendichte von einem Zeichen pro Pixel gewählt. Bei einem Bild mit 2  Megapixel lassen sich bis zu 2 Millionen Zeichen abspeichern. Das Buch ''Schöne neue Welt'' von Aldous Huxley hat rund 430.000 Zeichen, geht sich also bereits vier Mal in einem doch recht kleinen Bild aus. Das setzt aber Voraus das die in \ref{L: Kodierung Payload} angeführte Kodierungstabelle verwendet wird. Diese unterstützt aber weder Kleinbuchstaben noch Zeilenumbrüche, Umlaute oder Zahlen. Das Buch wäre durchaus noch lesbar, aber eben doch recht umständlich. In der ASCII Kodierung hat das Buch eine Größe von 449.414 Bytes, also 3.595.312 Bits. Bei einer Datendichte von 6 Bit / Pixel geht sich das Buch dennoch in einem 2 Megapixel großen Bild aus.
+	In dem Beispiel aus \ref{fig:L: LSB Tabelle} wurde eine Datendichte von einem Zeichen pro Pixel gewählt. Bei einem Bild mit 2  Megapixel lassen sich bis zu 2 Millionen Zeichen abspeichern. Das Buch ''Schöne neue Welt'' von Aldous Huxley hat rund 430.000 Zeichen, geht sich also bereits vier Mal in einem doch recht kleinen Bild aus. Das setzt aber Voraus das die in \ref{L: Kodierung Payload} angeführte Kodierungstabelle verwendet wird. Diese unterstützt aber weder Kleinbuchstaben noch Zeilenumbrüche, Umlaute oder Zahlen. Das Buch wäre durchaus noch lesbar, aber eben doch recht umständlich. In der ASCII Kodierung hat das Buch eine Größe von 449.414 Bytes, also 3.595.312 Bits. Bei einer Datendichte von 6 Bit / Pixel geht sich das Buch dennoch in einem 2 Megapixel großen Bild aus.
 	
 	\begin{figure}[H]
 		\centering
@@ -169,16 +276,29 @@
 		\label{fig:L: LSB Tabelle}
 	\end{figure}
 	
+	In dem in \ref{fig:L: LSB Earth} gezeigtem Beispiel wurde das Buch ''Schöne neue Welt'' in ein Bild der Erde integriert. Verwendet wurde das in \ref{fig:L: LSB Java} gezeigte Java-Programm. Die kurze Länge des Programm zeigt das dieses Verfahren sehr einfach zu implementieren ist. Man kann durchaus, egal wo man sich gerade befindet, mit Hilfe eines Computers ein Programm schreiben und geheime Nachrichten versenden. Durch den  zusätzlichen Einsatz von Whitening kann also von überall aus eine Steganografisch sichere Datenübermittlung stattfinden, ohne weitere Tools. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{images/L-schoene-neue-earth.png}
+		\caption{In diesem Bild wurde ein ganzes Buch versteckt, und es ist trotzdem nicht zu erkennen.}
+		\label{fig:L: LSB Earth}
+	\end{figure}
+
+	\lstinputlisting[caption={LSBVerfahren.java},label={fig:L: LSB Java}]{sources/LSBVerfahren.java}
+
+	
+	Wenn die einzubettenden Daten nicht den gesamten Verfügbaren ''Speicherplatz'' innerhalb des Steganogramm verwenden, sollte unbedingt ein Padding aus zufälligen Daten hinzugefügt werden. Sonst können sich deutliche Unterschiede in dem Aussehen des Bild ergeben wenn es große, einfarbige Flächen besitzt, wie in \ref{} deutlich zu erkennen ist.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.3]{images/L-lsb-sichtbare-einbettung.png}
+		\caption{Auf der linken Seite befinden sich eingebettete Daten, auf der rechten Seite nicht.}
+		\label{fig:L: LSB No Padding}
+	\end{figure}
 	
 	
+	Die resultierende Datei ist deutlich größer als die Originale. Das liegt daran dass durch das einbetten der Daten große einfarbige Flächen minimal verändert wurden, wodurch sie sich nicht mehr so gut komprimieren lassen wie zuvor.
 	
-	\subsection{Codemultiplex Verfahren}
 	
-	\subsection{QIM Verfahren}
-	
-	\subsection{Frequenztransformation Verfahren}
-	
-	\subsection{Whitening}
-	
-	\subsection{Ansatz zur Verhinderung von Informationsverlust durch verlustbehaftete Komprimierung wie in JPEG Dateien}
-	
+	\subsection{Barcode Verfahren}
