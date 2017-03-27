@@ -6,14 +6,18 @@
 	
 	\section{Allgemein}
 	
+	In dem folgenden Abschnitt wird der Begriff Whitening erklärt und auf die Möglichkeit von Fehlerkorrekturmaßnahmen bei der Übertragung von Daten eingegangen.
+	
 	\subsection{Whitening}
 	
 	
-	Als Whitening werden Prozesse und Techniken bezeichnet mit dem Ziel, Daten jegliche Ordnung und Regelmäßigkeit zu entziehen. Je besser ein Whitening Verharen funktioniert desto weniger ist der Datenstrom von generierten Zufallswerten unterscheidbar. \\
+	Als Whitening werden Prozesse und Techniken bezeichnet mit dem Ziel, Daten jegliche Ordnung und Regelmäßigkeit zu entziehen. Je besser ein Whitening Verfahren funktioniert desto weniger ist der Datenstrom von generierten Zufallswerten unterscheidbar. \\
 	
 	Dies hat den Vorteil, dass die Daten nach der Transformation in dem einzubettendem Medium nicht so stark auffallen wie zuvor. \\
 	
-	Whitening Verfahren wandeln auf deterministische Weise Datenströme, welche in etwa wie \ref{fig:L: Whitening Clear} aussehen können, um damit sie dem Profil von \ref{fig:L: Whitening Random} ähneln. Dies muss auf eine Art und Weise geschehen das beim extrahieren der Daten die angewandte Operation wieder rückgängig gemacht werden kann. Es können also keine wirklich zufälligen Techniken zum Einsatz kommen. Man verwendet hier vor allem sogenannte Pseudozufallsgeneratoren, welche lediglich die Eigenschaften von echten zufälligen Ereignissen nachahmen, bei Bedarf aber beliebig oft wiederholt werden können. Dadurch ist sichergestellt das sich die angewandten Operationen auch wieder rückgängig machen lassen. Es werden auch oft Methoden aus der Kryptologie verwendet, welche nicht nur herausragende Ergebnisse in Hinsicht auf Zufälligkeit erzielen, sondern zugleich auch die Daten mit Hilfe eines Keys schützen.
+	Whitening Verfahren wandeln auf deterministische Weise Datenströme, welche in etwa wie \ref{fig:L: Whitening Clear} aussehen können, um damit sie dem Profil von \ref{fig:L: Whitening Random} ähneln. Dies muss auf eine Art und Weise geschehen das beim extrahieren der Daten die angewandte Operation wieder rückgängig gemacht werden kann. Es können also keine wirklich zufälligen generierten Daten zum Einsatz kommen. 
+	
+	Man verwendet hier vor allem sogenannte Pseudozufallsgeneratoren, welche lediglich die Eigenschaften von echten zufälligen Ereignissen nachahmen, bei Bedarf aber beliebig oft wiederholt werden können. Dadurch ist sichergestellt das sich die angewandten Operationen auch wieder rückgängig machen lassen. Es werden auch oft Methoden aus der Kryptologie verwendet, welche nicht nur herausragende Ergebnisse in Hinsicht auf Zufälligkeit erzielen, sondern zugleich auch die Daten mit Hilfe eines Schlüssel schützen.
 	 
 	
 	
@@ -108,9 +112,11 @@
 	
 	\subsubsection{Zyklische Redundanzprüfung (\zb CRC-32)}
 	
-	Die zyklische Redundanzprüfung basiert auf Polynomdivison. Es wird ein CRC-Polynom gewählt welches dessen Koeffizienten entweder 1 oder 0 sind. So entspricht etwa die Bitfolge 110101 dem Polynom $ x^{5} + x^{4} + x^{2} + 1$
+	Die zyklische Redundanzprüfung basiert auf Polynomdivison. Es wird ein CRC-Polynom gewählt  dessen Koeffizienten entweder 1 oder 0 sind. So entspricht etwa die Bitfolge 110101 dem Polynom $ x^{5} + x^{4} + x^{2} + 1$. 
+	Die zu prüfende Bitfolge wird nun mit einem Padding aus $n$ Nullen versehen, wobei $n$ dem Grad es Polynom entspricht. Das Ergebnis wird durch das CRC-Polynom dividiert, der Rest der Division an die Ursprüngliche Bitfolge ohne Padding angehängt und das ganze dann Übertragen. Dabei muss beachtet werden das bei der Division ausschließlich der XOR-Operator verwendet wird.
+	Auf der Empfängerseite wird die gesamte übertragene Bitfolge erneut durch das CRC-Polynom dividiert. Beträgt der Rest Null dann ist entweder kein Fehler aufgetreten oder ein sehr unwahrscheinlicher. 
+	Mit diesem Verfahren können nicht nur Fehler entdeckt, sondern im besten Fall sogar ausgebessert werden.
 	
-	\subsubsection{Hamming-Code}
 	
 	\section{Verstecken von Dateien}
 	% https://de.wikibooks.org/wiki/Disk-Forensik/\_Sicherstellung/\_Versteckte\_Daten\#Alternate\_Data\_Streams\_.28ADS.29
@@ -233,11 +239,11 @@
 %	\end{table}
 	
 	
-	\subsection{LSB Verfahren}
+	\subsection{Least Significant Bit Verfahren}
 	
-	Das Least Significant Bit Verfahren nützt die Tatsache aus, dass der Farbraum einer modernen Bilddatei sehr groß ist\footnote{Bei den meisten Formaten 24-Bit, wodurch 16,777,216 Farben dargestellt werden können}. Dadurch ist es für das menschliche Auge sehr schwierig, eng beieinander liegende Farbtöne zu unterscheiden. Computerprogramme können nun gezielt einzelne Farben manipulieren um Informationen in den Pixel des Bildes zu kodieren. 
+	Das Least Significant Bit (LSB) Verfahren nützt die Tatsache aus, dass der Farbraum einer modernen Bilddatei sehr groß ist\footnote{Bei den meisten Formaten 24-Bit, wodurch 16,777,216 Farben dargestellt werden können}. Dadurch ist es für das menschliche Auge sehr schwierig, eng beieinander liegende Farbtöne zu unterscheiden. Computerprogramme können nun gezielt einzelne Farben manipulieren um Informationen in den Pixel des Bildes zu kodieren. 
 	
-	Bei einem 24-Bit RGB Bild besteht jeder Farbkanal aus 8 Bit. Um die Nachricht zu kodieren wird das LSB von einem oder mehreren der Farbkanäle des Pixel auf den jeweiligen Wert aus der kodierten Nachricht gesetzt. Da das LSB nur einen wertmäßigen Unterschied von +-1 ausmacht wenn es verändert wird, fällt diese Änderung kaum auf. Wenn wir bei einem Pixel einen der Farbkanäle bearbeiten verändern wir den Farbwert des Kanal um $\frac{1}{256} = 0.39\% $. Der Farbwert des Pixel ändert sich sogar nur um $ \frac{1}{16777216} = 0.00000596\% $. Es ist so gut wie unmöglich mit dem freien Auge hier noch einen Unterschied zu erkennen.
+	Bei einem 24-Bit RGB Bild besteht jeder Farbkanal aus 8 Bit. Um die Nachricht zu kodieren wird das LSB von einem oder mehreren der Farbkanäle des Pixel auf den jeweiligen Wert aus der kodierten Nachricht gesetzt. Da das LSB nur einen wertmäßigen Unterschied von +/-1 ausmacht wenn es verändert wird, fällt diese Änderung kaum auf. Wenn wir bei einem Pixel einen der Farbkanäle bearbeiten verändern wir den Farbwert des Kanal um $\frac{1}{256} = 0.39\% $. Der Farbwert des Pixel ändert sich sogar nur um $ \frac{1}{16777216} = 0.00000596\% $. Es ist so gut wie unmöglich mit dem freien Auge hier noch einen Unterschied zu erkennen.
 	
 	Ein große Rolle spielt wie viel Trägermaterial zur Verfügung steht und wie viele Daten darin eingebettet werden. Je nachdem kann man die einzelnen Bits weiter verteilen oder muss sogar mehrere Bits auf ein Pixel. 
 	Es ist auch durchaus sinnvoll diverse Prüfsummen in die eingebetteten Daten einzubauen um sicher zu stellen das die extrahierten Daten auch keine Fehler enthalten. Wenn genug Platz zur Verfügung steht ist es auch möglich die Daten redundant zu speichern.
@@ -246,8 +252,8 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.8]{images/L-lsb-entwurf.png}
-		\caption{LSB Entwurf, muss ich noch verbessern..}
+		\includegraphics[scale=0.7]{images/L-lsb-entwurf.png}
+		\caption{LSB Verfahren Erklärung}
 		\label{fig:L: LSB in Bitmap}
 	\end{figure}
 	
@@ -272,11 +278,11 @@
 			Blauer Farbwert & BBBB BBB1 & BBBB BBB1 & BBBB BBB0 & BBBB BBB0 & BBBB BBB1 & BBBB BBB1 & BBBB BBB0 \\ 
 			\hline 
 		\end{tabular} 
-		\caption{Beispiel für 1 Zeichen pro Pixel.}
+		\caption{Beispiel für Kodierung von einem Zeichen pro Pixel.}
 		\label{fig:L: LSB Tabelle}
 	\end{figure}
 	
-	In dem in \ref{fig:L: LSB Earth} gezeigtem Beispiel wurde das Buch ''Schöne neue Welt'' in ein Bild der Erde integriert. Verwendet wurde das in \ref{fig:L: LSB Java} gezeigte Java-Programm. Die kurze Länge des Programm zeigt das dieses Verfahren sehr einfach zu implementieren ist. Man kann durchaus, egal wo man sich gerade befindet, mit Hilfe eines Computers ein Programm schreiben und geheime Nachrichten versenden. Durch den  zusätzlichen Einsatz von Whitening kann also von überall aus eine Steganografisch sichere Datenübermittlung stattfinden, ohne weitere Tools. 
+	In dem in \ref{fig:L: LSB Earth} gezeigtem Beispiel wurde das Buch ''Schöne neue Welt'' in ein Bild der Erde integriert. Verwendet wurde das in \ref{fig:L: LSB Java} gezeigte Java-Programm. Die kurze Länge des Programm zeigt das dieses Verfahren sehr einfach zu implementieren ist. Man kann durchaus, egal wo man sich gerade befindet, mit Hilfe eines Computers ein Programm schreiben und geheime Nachrichten versenden. Durch den  zusätzlichen Einsatz von Whitening kann also von überall aus eine steganografisch sichere Datenübermittlung stattfinden, ohne bereits  vorhandene Programme. 
 	
 	\begin{figure}[H]
 		\centering
@@ -288,7 +294,7 @@
 	\lstinputlisting[caption={LSBVerfahren.java},label={fig:L: LSB Java}]{sources/LSBVerfahren.java}
 
 	
-	Wenn die einzubettenden Daten nicht den gesamten Verfügbaren ''Speicherplatz'' innerhalb des Steganogramm verwenden, sollte unbedingt ein Padding aus zufälligen Daten hinzugefügt werden. Sonst können sich deutliche Unterschiede in dem Aussehen des Bild ergeben wenn es große, einfarbige Flächen besitzt, wie in \ref{} deutlich zu erkennen ist.
+	Wenn die einzubettenden Daten nicht den gesamten Verfügbaren ''Speicherplatz'' innerhalb des Steganogramm verwenden, sollte unbedingt ein Padding aus zufälligen Daten hinzugefügt werden. Sonst können sich deutliche Unterschiede in dem Aussehen des Bild ergeben wenn es große, einfarbige Flächen besitzt, wie in \ref{fig:L: LSB No Padding} deutlich zu erkennen ist.
 	
 	\begin{figure}[H]
 		\centering
@@ -301,4 +307,58 @@
 	Die resultierende Datei ist deutlich größer als die Originale. Das liegt daran dass durch das einbetten der Daten große einfarbige Flächen minimal verändert wurden, wodurch sie sich nicht mehr so gut komprimieren lassen wie zuvor.
 	
 	
+	\subsubsection{Varianten des Least Significant Bit Verfahren}
+	
 	\subsection{Barcode Verfahren}
+	
+	Das Barcodeverfahren ist ein selbst erfundenes Verfahren welches einen Barcode in einem Bild versteckt. Dies geschieht indem das Bild zuerst in ein 8-Bit Graustufenbild konvertiert und anschließend das Histogramm des Bildes generiert wird. 
+	
+	Ein Histogram ist eine grafische Abbildung der Anzahl einzelner Farbwerte. In das  \ref{fig:L: Barcode Example}  wurde das Bild zuerst in ein 8-BGraustufenbild umgewandelt, die entstehenden 256 verschiedenen Werte gezählt und grafisch Dargestellt. 
+	
+	Wenn man nun das Bild gezielt so bearbeitet das bestimmte Farbwerte nicht mehr vorkommen, dann ergeben sich dadurch auch im Histogramm entsprechende Spalten. Mit dieser Hilfe kann nun jedes beliebiges eindimensionale Barcodeformat eingebettet werden.
+	
+		
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.02]{images/L-earth.png}
+		\includegraphics[scale=0.3]{images/L-barcode-example.png}
+		\caption{}
+		\label{fig:L: Barcode Example}
+	\end{figure}
+	
+	
+	Damit gängige Barcodescanner jedoch den Barcode wahrnehmen können muss das Histogramm grafisch gewisse Anforderungen erfüllen. Die meisten vorhandenen Histogramm Generatoren stellen das Resultat in einer schönen ansprechenden Form dar, \zb der Graph geglättet und in Farbe. Barcodescanner brauchen aber schwarze Striche welche deutlich voneinander unterscheidbar sind. Deshalb muss ein spezieller Barcodegenerator verwendet werden.
+	
+	 Ein Beispiel für einen solchen Generator findet sich in \ref{fig:L: HistogramViewer}. Dieses Programm generiert dann für Barcodescanner verwendbare Histogramme, wie in \ref{fig:L: Barcode Histogram Example} gezeigt wird. In diesem Beispiel wurde das gängige Barcodeformat CODE\_128 verwendet und der Text ''Simon Lehner-D.'' damit kodiert.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1.5]{images/L-histogram-viewer-output.png}
+		\caption{fig:L: Barcode Histogram Example}
+		\label{fig:L: Barcode Histogram Example}
+	\end{figure}
+	
+	\ltodo {Einfach nur den link zum git repo reintun?}
+	\lstinputlisting[caption={HistogramViewer.java},label={fig:L: HistogramViewer}]{sources/HistogramViewer.java}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
