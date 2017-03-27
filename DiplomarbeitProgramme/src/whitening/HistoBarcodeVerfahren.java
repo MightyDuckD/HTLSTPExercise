@@ -101,7 +101,7 @@ public class HistoBarcodeVerfahren {
     public static void main(String[] args) throws IOException {
         //
         BufferedImage img = ImageIO.read(new File("earth.png"));
-        BufferedImage bar = ImageIO.read(new File("barcode-pure-2x.png"));
+        BufferedImage bar = ImageIO.read(new File("barcode-pure-2x.2.png"));
         BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         //
         int histo[] = new int[256];
@@ -153,10 +153,24 @@ public class HistoBarcodeVerfahren {
         forEach(read, (x, y, c) -> {
             histo2[avg(c)]++;
         });
-        
-        ImageIO.write(render(histo2, 0, 300), "png", new File("barcode-earth-histo.png"));
+        ImageIO.write(render2(histo,256,20), "png", new File("barcode-earth-histo-original.png"));
+        ImageIO.write(render2(histo2,256,20), "png", new File("barcode-earth-histo-barcode.png"));
         System.out.println(Arrays.toString(histo2));
 
+    }
+
+    public static BufferedImage render2(int histo[], int height,double scale) {
+        BufferedImage img = new BufferedImage(histo.length, height, BufferedImage.TYPE_INT_RGB);
+        for (int i = 0; i < histo.length; i++) {
+            int to = Math.max(0,Math.min(height - 1, (int) (scale * Math.log(histo[i]))));
+            for (int j = 0; j < to; j++) {
+                img.setRGB(i, height - j - 1, Color.black.getRGB());
+            }
+            for (int j = to; j < height; j++) {
+                img.setRGB(i, height - j - 1, Color.white.getRGB());
+            }
+        }
+        return img;
     }
 
     public static BufferedImage render(int histo[], int low, int high) {

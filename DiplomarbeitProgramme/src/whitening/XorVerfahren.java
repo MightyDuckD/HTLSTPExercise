@@ -2,7 +2,6 @@ package whitening;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
-import static whitening.Main.doit;
 
 /**
  *
