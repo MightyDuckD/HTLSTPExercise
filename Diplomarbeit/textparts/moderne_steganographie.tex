@@ -422,8 +422,19 @@
 	
 	\subsubsection{Grafisches Hilfsmittel zum Entschlüsseln von Stereogrammen}
 	
+	Wenn man nun keine Motivation oder nicht genügend Zeit hat die richtige Blicktechnik zu erlernen kann man auf technische Hilfsmittel zurückgreifen.
 	
+	Meistens reicht es aus einfach das Bild in einem geeigneten Bildbarbeitungsprogramm zu öffnen und dort richtig zu bearbeiten: Es muss das gesamte Bild kopiert und wieder eingefügt werden. Das eingefügte Bild wird dann auf der selben Höhe solange nach links und rechts verschoben bis man den gewünschten Effekt erzielt. Dabei ist zu beachten, dass das Programm die Composite-Einstellungen ''Differenz'' unterstützt und diese auch verwendet wird. Das Wort Composite kommt aus dem Englischen und bedeutet so viel wie Zusammensetzung oder Gemisch. Im Sinne von Bildbearbeitung ist damit gemeint auf welche Art und Weiße die Pixel miteinander verbunden werden sollen. Für Stereogramme müssen die Pixel voneinander subtrahiert werden, es wird also die Differenz der Pixel benötigt. Daher auch die entsprechende Einstellung. 
 	
+	Wenn der Bedarf da ist, des öfteren Stereogramme zu Entschlüsseln, dann ist es oft Hilfreich ein kleines Programm dafür zu verwenden. Es gibt zum Beispiel eine Implementierung eines solchen Programm unter \url{http://magiceye.ecksdee.co.uk/}. Diese verwendet jedoch Low-Level Javascript Array Operationen, wodurch die Anwendung bei sehr großen Dateien zu langsam und damit unbrauchbar ist.
+	
+	 Moderne Browser unterstützen für die Rendering Kontexte in Javascript die oben erwähnten Composite-Operationen. Daher kann eine eigene kleine Funktion als Solver in nicht mehr als 5 Lines of Code geschrieben werden. Diese verwendet Hardwarebeschleunigung und ist somit selbst bei riesigen Dateien noch ausreichend schnell. Diese Funktion muss nur noch in eine kleine Oberfläche verpackt werden und ist schon einsatzbereit.
+	 
+	 \lstinputlisting[caption={Einfacher Stereogramm Solver},label={fig:L: Stereogramm Solver}]{sources/StereogrammSolverShort.js}
+	 \ltodo{Javascript wird nicht unterstuetzt}
+	 
+	 
+	 \ltodo{Stereogramme mit verlaufenden 3D Bildern sind etwas komplizierter zum schoen darstellen, muss ich nur implementieren, hab da schon ne idee}
 	
 	\subsubsection{Automatische Erkennung von Stereogrammen}
 	
