@@ -78,55 +78,48 @@ public class StereogrammSolverAdv {
 //        return img;
     }
 
-    public static double test(BufferedImage src, int treshold) {
+    public static double test(BufferedImage src, int treshold, int offset) {
         int cnt = 0;
-        for (int x = 0; x < src.getWidth(); x++) {
+        for (int x = offset; x < src.getWidth(); x++) {
             for (int y = 0; y < src.getHeight(); y++) {
                 cnt += (avg(src.getRGB(x, y)) <= treshold) ? 1 : 0;
             }
         }
-        return (double) cnt / (src.getHeight() * src.getWidth());
+        return (double) cnt / (src.getHeight() * (src.getWidth() - offset));
     }
 
-    public static void main(String[] args) throws Exception {
-//        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/heart.png"));
+    public static void main(String[] args) throws Exception {//''
 //        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/text.png"));
+//        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/heart.png"));
 //        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/wagram-bigger.png"));
-        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/ost-smaller.jpg"));
+//        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/ost-smaller.jpg"));
+        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png"));
         //resize image for performance reasons
         BufferedImage convertedImg = new BufferedImage(400, (int) (400.0 * original.getHeight() / original.getWidth()), BufferedImage.TYPE_INT_RGB);
         convertedImg.getGraphics().drawImage(original, 0, 0, convertedImg.getWidth(), convertedImg.getHeight(), null);
-        ImageIO.write(convertedImg, "png", new File("test.converted.png"));
         //
         int length = convertedImg.getWidth();
-        int height = 255;
-        BufferedImage out = new BufferedImage(length, height, BufferedImage.TYPE_INT_RGB);
         System.out.println("done with ");
-        double data20[] = new double[length];
+        double data[] = new double[length];
         for (int i = 0; i < length; i++) {
             BufferedImage result = diff(convertedImg, i);
-            System.out.print(" " + i);
-            data20[i] = (float) test(result, 20);
-            System.out.print("\t" + data20[i]);
-//            for (int j = 0; j < out.getHeight(); j++) {
-//                float r = (float) test(result, j);
-//                if (j == 20) {
-//                    data20[i] = r;
-//                }
-//                out.setRGB(i, j, new Color(r, r, r).getRGB());
-//            }
-            System.out.println("");
+            data[i] = (float) test(result, 20, i);
+            System.out.println(data[i]);
         }
-        ImageIO.write(out, "png", new File("solver-out-stat-text.png"));
 
-        double mn = data20[0];
-        double biggest = 0;
-        for (int i = 0; i < data20.length; i++) {
-            biggest = Math.max(biggest, data20[i] - mn);
-            mn = Math.min(mn, data20[i]);
+        System.out.println("Biggest diff between two points = " + getBiggestDiff(data));
+
+    }
+
+    public static double getBiggestDiff(double[] data) {
+        double mn = data[0];
+        double biggest = Double.MIN_VALUE;
+//        for (int i = 0; i < data.length * 3 / 4; i++) {
+        for (int i = 0; i < data.length; i++) {
+            biggest = Math.max(biggest, data[i] - mn);
+            mn = Math.min(mn, data[i]);
         }
-        System.out.println("Biggest diff between two points = " + biggest);
-
+        return biggest;
     }
 
 }

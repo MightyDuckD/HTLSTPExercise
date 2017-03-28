@@ -417,16 +417,73 @@
 	
 	\subsubsection{Steganographie mithilfe von Stereogrammen}
 	
+	Ein Autostereogramm ist eigentlich schon ein Steganogramm, da ja der eigentliche Inhalt auf den ersten Blick nicht ersichtlich ist. Wenn man ein Schwarz/Weiß Bild mit Text drauf als Depth Map verwendet ergibt das ein Stereogramm welches einen geheimen Text enthält. 
 	
 	
+	\subsubsection{Grafisches Hilfsmittel zum Entschlüsseln von Stereogrammen}
 	
-	\subsubsection{Bildfehler erkennen}
+	
 	
 	
 	\subsubsection{Automatische Erkennung von Stereogrammen}
 	
+	Es gibt noch kein Standardverfahren zur Erkennung ob es sich bei einem Bild um ein Stereogramm handelt. Deswegen wurde im Rahmen des Projekt Geocaching-Tools und für diese Diplomarbeit ein  eigenes entwickelt. 
 	
-	\subsubsection{Grafisches Hilfsmittel zum Entschlüsseln von Stereogrammen}
+	Wie bereits bei den grafischen Hilfsmittel zum Entschlüsseln von Stereogrammen gezeigt werden Stereogramme beim Verarbeiten eine Kopie des Bildes um ein gewisses Offset nach rechts verschoben und anschließend vom Bild subtrahiert. Die Herausforderung und das Ziel des Verfahren ist es also das richtige Offset, falls vorhanden, zu erkennen. 
+	
+	Dabei werden ganz Ähnlich wie man es bei dem grafischen Hilfsmittel per Hand machen kann alle möglichen Verschiebungen generiert. Zwei identische Farben voneinander Subtrahiert ergeben die Farbe schwarz. Es wird also nach einem Offset gesucht bei dem ein Möglichst großer Teil des Bildes Schwarz wird. Damit ist auch schon der größte Teil der Arbeit getan. Aus den prozentualen Schwarzanteilen vom Gesamtbild über die verschiedenen Verschiebungen ergibt sich für jedes Bild eine Datenserie. Diese muss nur noch Analysiert werden. 
+	
+	In \ref{fig:L: Stereogramm Erkennung Vergleich} sind vier Bilder mit dieser Technik analysiert worden. Dabei kann man gut erkennen dass sich ein Spike in der Datenreihe ergibt wenn das Bild ein Stereogramm ist. Das größte Problem bei der Sache sind Bilder welche im vor hinein bereits größten Teil aus schwarz bestehen. Auch Signaturen von Bildern welche nur sehr wenige Farben beinhalten sind oft den Signaturen von Stereogrammen sehr ähnlich. Ein Beispiel dafür sind Bilder mit viel weißem Text auf schwarzem Hintergrund.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{images/L-stereogram-erkennung-vergleich.png}
+		\caption{Bei dem Stereogramm kann ein Spike in der Datenreihe erkannt werden}
+		\label{fig:L: Stereogramm Erkennung Vergleich}
+	\end{figure}
+
+	Stereogramme haben mit dieser Analyse immer einen Spike in der Datenreihe während normale Bilder einen eindeutigen Abwärtstrend haben. Lediglich Texte sind schwer zu unterscheiden und einzuordnen. Eine Möglichkeit wäre nun eine künstliche Intelligenz darauf zu trainieren, diese Datenreihen zu analysieren. Die hier generierten Daten eignen sich sehr gut für ein solches Verfahren weil sie Aufgrund der prozentuellen Angaben eine fixe Größe besitzen. Dafür wird jedoch sehr viel Rechenleistung benötigt, wodurch hier eine effizientere Methode gewählt wurde.
+	
+	Gesucht wird die größte Steigung zweier Punkte. Also $ d(j) - d(i) , i > j $ soll maximiert werden. Dazu wurde folgender sehr einfacher und schneller Algorithmus gewählt:
+	
+	\lstinputlisting[caption={Steigung},label={fig:L: Steigung Java}]{sources/Steigung.java}
+	
+	Das Problem was sich hier jedoch ergibt ist, dass wie in \ref{fig:L: Stereogramm Erkennung Vergleich} zu sehen ist, Texte eine recht hohes Ergebnis bei diesem Test erzielen, da sie einen steigenden Trend besitzen. Dies Ergibt sich aus dem hohen Schwarzanteil des Originalbild. Dadurch das bei der Berechnung auch der sich nicht mit dem verschobenen Bild überschneidende Teil miteinbezogen wird, führt das zu diesen sehr hohen Werten. 
+	
+	Wenn bei dem Algorithmus nur der Teil zur Berechnung herangezogen von dem das verschobenen Bild 
+	subtrahiert wurde verändern sich die Datenreihen deutlich: Die Spikes bei Stereogrammen vergrößern sich um ein vielfaches und der generelle Trend wird flacher. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{images/L-stereogram-erkennung-vergleich-besser.png}
+		\caption{Die verbesserte Variante erzielt deutlichere Ergebnisse}
+		\label{fig:L: Stereogramm Erkennung Vergleich Verbessert}
+	\end{figure}
+
+	Es ist aber auch zu beobachten das im letzten Viertel die Werte sehr stark zu schwanken anfangen. Das liegt daran dass der beobachtete Bereich immer kleiner wird und dadurch sehr wenige kleine Überschneidungen einen sehr großen Effekt auf das Ergebnis haben. Um noch bessere Ergebnisse zu erzielen kann also das letzte Viertel der Datenreihe vernachlässigt werden, da es bei einem Offset von mehr als 75\% sehr unwahrscheinlich ist das es sich hier noch um ein Stereogramm handelt.
+	
+	In der folgenden Grafik werden die drei Versionen miteinander Verglichen.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.8]{images/L-stereogram-erkennung-vergleich-ergebnisse.png}
+		\caption{Ein Wert von mehr als 25\% heißt, dass es sich Wahrscheinlich um ein Stereogramm handelt.}
+		\label{fig:L: Stereogramm Erkennung Vergleich Verbessert}
+	\end{figure}
+	
+	
+	Wie zu sehen ist erzielt das eben vorgestellte Verfahren bei vier von fünf Testfällen ein korrektes Ergebnis. Um eine 100\% korrekte Aussage treffen zu können werden kompliziertere Verfahren benötigt, wie die oben vorgeschlagene Verwendung von künstlicher Intelligenz.
+	
+	
+	\subsubsection{Bildfehler erkennen}
+	
+	Jeder kennt diese Suche den Fehler Bilder aus Tageszeitungen. Diese bestehen aus zwei beinahe identischen Bildern. Bei einem der beiden wurden jedoch einzelne Details entfernt. Das ist ähnlich wie bei herkömmlichen Stereogrammen, bei denen die einzelne Teile zwar nicht entfernt, sondern verschoben sind.
+	
+	
+	Dadurch das diese beiden Anwendungen so ähnlich sind, kann man sehr gut Hilfsmittel aus der Stereographie anwenden um die Bilfehlerspiele zu lösen. Wenn man die Blicktechniken von Stereogrammen auf diese Spiele anwendet, überlappen die beiden Bilder derart, dass auf der selben Stelle der entfernte Teil sichtbar und unsichtbar ist. Deshalb weiß das Gehirn nicht welches der beiden Augen recht hat, weil das linke Auge zum Beispiel eine Schornstein sieht und das Rechte nicht. Diese Teile des Bildes schauen dann aus als würden sie Flimmern.
+	
+	Wenn ein automatisches Hilfsmittel auf so ein derartiges Bildpaar angewendet wird, dann ergibt sich bei dem richtigen Offset ein schwarzes Bild auf dem nur die Fehler als Farbhaufen zu sehen sind. Im Sinne der Steganographie kann zum Beispiel der Sekundenteil einer Koordinate als Position auf einem Quadratischen Bild mit je 1000px Seitenlänge markiert werden, indem dort der Bildfehler platziert wird.
+	
+	\ltodo{Finde ein Beispiel für ein solches Suchbildrätsel und löse es mit GC-Tools}
 	
 	
 	
