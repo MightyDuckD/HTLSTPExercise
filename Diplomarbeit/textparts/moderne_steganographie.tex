@@ -73,7 +73,7 @@
 		\centering
 		\includegraphics[scale=1]{images/L-whitening-vergleich.png}
 		\caption{In diesem Vergleich ist gut zu sehen das nach Anwendung von diesem Verfahren der Datenstrom nicht mehr von zufälligen Werten unterscheidbar ist.}
-		\label{fig:L: Whitening Random}
+		\label{fig:L: Whitening Random Vergleich}
 	\end{figure}
 	
 	\subsubsection {AES-256 Verschlüsselung mit Key}
@@ -295,7 +295,138 @@
 	
 	
 	
-	\subsection{Stereogramm Verfahren}
+	\subsection{Stereoskopische Verfahren}
+	
+	Die Stereoskopie beschreibt Methoden um auf Bildern den Eindruck zu machen, dass diese drei Dimensional sind, obwohl physikalisch gar keine Tiefe vorhanden ist. Sie macht sich dabei zur Hilfe, dass das Gehirn eigentlich nur zwei 2D Aufnahmen der Umgebung bekommt und diese dann erst als 3D Gebilde interpretiert. 
+	
+	Um im Gehirn den Eindruck von räumlicher Tiefe zu erzeugen müssen beide Augen die selbe Szene aus zwei verschiedenen Blickwinkel zu sehen bekommen. Dies funktioniert normalerweise dadurch das beide Augen in einem Abstand von ungefähr 15cm voneinander entfernt sind. Wenn nun aber beide Blickwinkel mit einer Kamera aufgenommen und nebeneinander gelegt wurden muss man dem Gehirn etwas nachhelfen. Mit der richtigen Blicktechnik, \zb durch Schielen, können die beiden Teilbilder wieder übereinandergelegt werden und der gewünschte tiefen Effekt tritt auf.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1.5]{images/L-stereogram-example.jpg}
+		\caption{fig:L: Stereogramm Example}
+		\label{Beispiel fr ein Stereogramm}
+	\end{figure}
+	\ltodo{Quelle raus suchen oder eigenes Bild aufnehmen}
+	
+	Es gibt verschiedene Techniken um Stereogramme zu erstellen, die sich vor allem durch die Wahl des Trägermaterial unterscheiden
+	
+	\begin{itemize}
+		\item Classic stereogram
+		
+		Das klassiche Stereogramm aus 2 Bildern, welche mit der richtigen Blicktechnik oder einem Stereoskop dreidimensional gesehen werden können. 
+		
+		
+		\item Single image stereogram (SIS) 
+		
+		Einzelbildstereogramme, auch oft Autostereogramm genannt, verwenden wie der Name schon sagt nur ein einzelnes Trägerbild um die Formen zu beinhalten. Dazu benötigen sie ein sich wiederhohlendes Muster in welches mit Hilfe eines Programm und einer Depthmap die Formen hinzugefügt werden.
+		
+		Grundsätzlich kann jede der hier genannten Techniken auch Autostereogramme erzeugen.
+		
+		\item Random dot stereogram (RDS)
+		
+		Bei diesem werden Bilder bestehend aus zufälligen Punkten verwendet um dreidimensionale Formen darzustellen. Dadurch ist es oft auf den ersten Blick nicht gleich ersichtlich, dass es sich hier um ein Stereogramm handelt.
+		
+		\item Text stereogram
+		
+		Als Trägermaterial wird ausschließlich Text verwendet. Ein Beispiel dafür ist unter \ref{fig:L: Stereogramm Example ASCII} zu sehen.
+		
+		\item Map textured stereogram 
+		
+		Diese Technik ist sehr ähnlich wie RDS, nur das hier Texturen wie sie in etwa Videospielen vorkommen verwendet werden. Diese haben die Eigenschaft beliebig oft wiederholt werden zu können, ohne das sich Kanten im Bild ergeben. Dadurch lässt sich sehr gut ein Stereogramm daraus erzeugen.
+		
+		Die bekannte Buchserie ''Magic Eye'' beinhaltet vor allem solche Stereogramme, weil die Blicktechnik hier einfacher anzuwenden ist als \zb bei Text Stereogrammen.
+		
+		\item Wallpaper stereogram / object array stereogram
+		
+		Bei einem Objekt Array Stereogramm wird ein und dasselbe Bild mehrere male wiederholt. Dabei werden aber die Abstände von einzelnen Elementen des Bild unterschiedlich gewählt um den gewünschten 3D Effekt zu erzielen.
+		
+		
+	\end{itemize}
+	
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1.0]{images/L-stereogram-ascii.png}
+		\caption{fig:L: Stereogramm Example ASCII}
+		\label{Beispiel fr ein Text Stereogramm}
+	\end{figure}
+	\ltodo{Quelle: https://web.archive.org/web/20080517013244/archive.museophile.org/3d/ascii-3d.html}
+	
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.40]{images/L-stereogram-tree.jpg}
+		\caption{fig:L: Stereogramm Example Object Array}
+		\label{Beispiel fr ein Objekt-Array Stereogramm}
+	\end{figure}
+	\ltodo{Quelle: http://www.pakin.org/~scott/stereograms/}
+	
+	Aus diesen Techniken ergeben sich nun einige praktische Anwendungsmöglichkeiten, welche im folgenden genauer bearbeitet werden. Des weiteren werden Hilfmittel gezeigt mit deren Hilfe man Stereogramme automatisch entdecken und Entschlüsseln darstellen kann.
+	
+	
+	\subsubsection{Erzeugen von Stereogrammen mithilfe einer Depth Map}
+	
+	Zuerst benötigt man sowohl ein gutes Muster als Grundlage als auch eine sogenannte Depth Map. Depth-Maps sind im Grunde einfach Schwarz-Weiß Bilder bei denen der Weißwert jedes Pixels die Tiefe/Höhe der jeweiligen Position angibt.
+	Beide Teile gibt es zahlreich im Internet. Bei Bedarf können Depth Maps auch mit einer geeigneten 3D-Grafiksuite wie etwa Blender erzeugt werden. Aber auch einfache Bildbearbeitungsprogramme sind gut dazu geeignet vor allem Text als Depth Map abzuspeichern.
+	
+	Dabei gilt vor allem der Grundsatz: Je einfacher das dargestellte Objekt in der Depth Map, desto einfacher ist es auch das Stereogramm ohne technischer Hilfsmittel dreidimensional sehen zu können.
+	
+	
+	Um das Stereogramm nun zu erzeugen wird ein neues leeres Bild erzeugt mit der selben größe wie die Depth Map. Auf diesem Bild wird nun das gewählte Muster auf dem linken Rand hineinkopiert, so dass es von oben bis unten einen Streifen mit dem Muster bildet. Die Größe dieses Grundstreifen wird von nun an $N$ genannt gibt an um wie viel die Augen das Bild verschieben müssen um auf der Grundtiefe zu sein. 
+	
+	Die restlichen noch leeren Teile des Bildes werden nun erzeugt indem immer das Pixel auf der selben Höhe um $N$ nach links verschoben kopiert wird. Um den gewünschten Tiefeneffekt zu bekommen wird noch jeweils ein Offset hinzugefügt das dem Wert der aktuellen Position auf der Depth Map entspricht.
+	
+	
+	$$
+	E(x,y)=
+	\begin{cases}
+	M(x,y), & \text{if } x < N \\
+	E(x - N + (s * D(x,y)), & \text{else}
+	\end{cases}
+	$$
+
+	\begin{itemize}
+		\item \textbf{$E(x,y)$} das resultierende Stereogramm
+		\item \textbf{$M(x,y)$} das Muster welches als Grundlage verwendet werden soll.
+		\item \textbf{$D(x,y)$} die Depth Map $[0.0;1.0]$
+		\item \textbf{$s$} ein Faktor der Angibt wie groß der Tiefeneffekt sein soll $[0.0;N]$
+	\end{itemize}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=1]{images/L-stereogram-anleitung.png}
+		\caption{Die Pixel werden je nach Depth Map vom linken Strich + Offset zu dem rechten Kopiert.}
+		\label{fig:L: Stereogramm Anleitung}
+	\end{figure}
+
+	Wiederholt man diesen Vorgang über das gesamte Bild ergibt sich dann folgendes Stereogramm.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.4]{images/L-stereogram-selber.png}
+		\caption{Kaum zu erkennen sind die versteckten Formen.}
+		\label{fig:L: Stereogramm Anleitung}
+	\end{figure}
+	
+	Verwendet wurde dafür dieses Java-Programm:
+	\lstinputlisting[caption={StereogrammGenerator.java},label={fig:L: Stereogramm Generator in  Java}]{sources/StereogrammGenerator.java}
+	
+	
+	
+	\subsubsection{Steganographie mithilfe von Stereogrammen}
+	
+	
+	
+	
+	\subsubsection{Bildfehler erkennen}
+	
+	
+	\subsubsection{Automatische Erkennung von Stereogrammen}
+	
+	
+	\subsubsection{Grafisches Hilfsmittel zum Entschlüsseln von Stereogrammen}
 	
 	
 	
@@ -303,6 +434,7 @@
 	\ltodo{
 		Gemeint sind hier Verfahren welche direkt grafische Elemente zu einem Bild hinzufügen.
 		Zum Beispiel irgendwo im Bild einen Morsecode/Barcode/Blindenschrift indem zum Beispiel Grashalme hinzugefügt werden.
+		Vllt zu klassische Verfahren
 	}
 	
 	\subsection{Odd-Pixel Verfahren}
