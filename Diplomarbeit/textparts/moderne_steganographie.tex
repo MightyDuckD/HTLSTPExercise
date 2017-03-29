@@ -490,9 +490,9 @@
 	Jeder kennt diese Suche den Fehler Bilder aus Tageszeitungen. Diese bestehen aus zwei beinahe identischen Bildern. Bei einem der beiden wurden jedoch einzelne Details entfernt. Das ist ähnlich wie bei herkömmlichen Stereogrammen, bei denen die einzelne Teile zwar nicht entfernt, sondern verschoben sind.
 	
 	
-	Dadurch das diese beiden Anwendungen so ähnlich sind, kann man sehr gut Hilfsmittel aus der Stereographie anwenden um die Bilfehlerspiele zu lösen. Wenn man die Blicktechniken von Stereogrammen auf diese Spiele anwendet, überlappen die beiden Bilder derart, dass auf der selben Stelle der entfernte Teil sichtbar und unsichtbar ist. Deshalb weiß das Gehirn nicht welches der beiden Augen recht hat, weil das linke Auge zum Beispiel eine Schornstein sieht und das Rechte nicht. Diese Teile des Bildes schauen dann aus als würden sie Flimmern.
+	Dadurch das diese beiden Anwendungen so ähnlich sind, kann man sehr gut Hilfsmittel aus der Stereographie anwenden um die Bildfehlerspiele zu lösen. Wenn man die Blicktechniken von Stereogrammen auf diese Spiele anwendet, überlappen die beiden Bilder derart, dass auf der selben Stelle der entfernte Teil sichtbar und unsichtbar ist. Deshalb weiß das Gehirn nicht welches der beiden Augen recht hat, weil das linke Auge zum Beispiel eine Schornstein sieht und das Rechte nicht. Diese Teile des Bildes schauen dann aus als würden sie Flimmern.
 	
-	Wenn ein automatisches Hilfsmittel auf so ein derartiges Bildpaar angewendet wird, dann ergibt sich bei dem richtigen Offset ein schwarzes Bild auf dem nur die Fehler als Farbhaufen zu sehen sind. Im Sinne der Steganographie kann zum Beispiel der Sekundenteil einer Koordinate als Position auf einem Quadratischen Bild mit je 1000px Seitenlänge markiert werden, indem dort der Bildfehler platziert wird.
+	Wenn ein automatisches Hilfsmittel auf ein derartiges Bildpaar angewendet wird, dann ergibt sich bei dem richtigen Offset ein schwarzes Bild auf dem nur die Fehler als Farbhaufen zu sehen sind. Im Sinne der Steganographie kann zum Beispiel der Sekundenteil einer Koordinate als Position auf einem Quadratischen Bild mit je 1000px Seitenlänge markiert werden, indem dort der Bildfehler platziert wird.
 	
 	\ltodo{Finde ein Beispiel für ein solches Suchbildrätsel und löse es mit GC-Tools}
 	
@@ -506,15 +506,126 @@
 	}
 	
 	\subsection{Odd-Pixel Verfahren}
-	\ltodo{
-		Zum Beispiel ein bestimmtes Pixel komplett weiß in blauem Himmel
-	}
+	
+	Das Wort ''Odd'' kommt aus dem Englischen und bedeutet seltsam oder merkwürdig. Es handelt sich also um merkwürdige Pixel. Damit ist zum Beispiel gemeint wenn in einem fast komplett dunklen Bild irgendwo ein einzelnes Pixel Weiß, Grasgrün oder Rubinrot ist. So ein seltsames Pixel fällt einem sofort auf: Das passt da einfach nicht rein. 
+	
+	Man kann sich das zu Nutze machen indem man dem Odd-Pixel eine ganz bestimme Position oder eine spezielle Farbe gibt. Ein Beispiel: Ein grünes Odd-Pixel bedeutet ja und ein rotes nein oder die Position gibt die Koordinaten für einen Treffpunkt an. 
+	
+	Wenn man ein solches Odd-Pixel verstecken will muss man aber beachten dass die Wahrnehmungsschwelle eines Menschen nicht unterschritten wird. Sonst führt das unweigerlich dazu, dass niemand das Steganogramm entziffern kann. Jedoch ist es kaum beeinflussbar für wen das Pixel sichtbar ist, wessen Wahrnehmungsschwelle also ausreicht. 
+	
+	Eine große Herausforderung stellt hier vor allem die automatische Erkennung eines solchen Odd-Pixel dar. Weiß man wonach man sucht macht es die ganze Sache schon einfacher. Wird zum Beispiel ein komplett weißes Pixel gesucht, also mit den allen Werten der RGB-Skala auf 255, so muss das Programm nur eben dieses Pixel aufspüren. Es ist also das beste ein Programm zur Verfügung zu stellen welches diese Aufgabe zwar nicht von alleine lösen kann, jedoch einem Menschen bei der Arbeit unterstützt.
+	
+	Um das einfache Arbeiten zu ermöglichen sind folgende Funktionen nützlich:
+	\begin{itemize}
+		\item Eine Zoomfunktion
+		\item Markieren von Stellen mit einem Stift/Radierer Werkzeug
+		\item Filtern nach bestimmten Farben. Ähnlich dem Füllwerkzeug bei Bildbearbeitungsprogrammen, nur als einstellbarer Filter welcher Bereiche verdunkelt welche nicht dem Kriterium entsprechen.
+		\item Automatisches Markieren von gefundenen Stellen. Einzelne Pixel sind sehr schwer zu sehen, selbst wenn diese eingefärbt wurden. Eine Art bunte Umrandung ist dabei sehr hilfreich. 
+		\item Gruppieren von benachbarten Pixeln. Diese Pixelgruppen dann in einer auswählbaren Liste darstellen um Position, Farbe und weitere Eigenschaften abrufen zu können.
+	\end{itemize}
+	
+	Mithilfe diesen Funktionen sollte es nicht mehr allzu schwer sein Odd-Pixel zu finden.
+	
+	Erwähnenswert ist hier eine einfache Technik mit deren Hilfe einzelne Pixel sowie Pixelgruppen umrandet werden können. Es handelt sich um einen Filter und zwei Pinsel Operationen welche nacheinander auf die Auswahlmaske angewendet werden. 
+	
+	Ein Pinsel wird auf das ganze Bild angewendet indem für jeden Punkt auf dem Bild überprüft wird ob eine bestimmte Bedingung eintrifft und wenn ja wird ein Kreis in der angegebenen Größe mit einer bestimmten Farbe dort hin gezeichnet.
+	
+	Ein Filter bestehen aus einem sogenannten Kernel, ein zwei dimensionales Zahlenarray. Wie in \ref{fig:L: Odd Pixel Conv} dargestellt wird jeder Wert aus dem Kernel auf den Input mit einer festgelegten Operation verknüpft und die Ergebnisse summiert. Wenn nicht genauer definiert ist die verwendete Operation die Multiplikation. Zahlreiche bekannten Filter und Effekte aus Bildbearbeitungsprogrammen können auf diese Weise implementiert werden. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{images/L-odd-pixel-conv.png}
+		\caption{Kernel wird auf den Input angewendet um den Output zu erzeugen.}
+		\label{fig:L: Odd Pixel Conv}
+	\end{figure}
 	
 	
+	Einige Anwendungsbeispiele für Kernel sind:
+	\begin{itemize}
+		\item Laplacian Kantenerkennungs Kernel \\
+		$
+		K =\begin{bmatrix}
+			-1 & -1 & -1 \\
+			-1 & 8  & -1 \\
+			-1 & -1 & -1
+		\end{bmatrix}
+		$		
+		$
+		K = \begin{bmatrix}
+		0 &  1 & 0 \\
+		1 & -4 & 1 \\
+		0 &  1 & 0
+		\end{bmatrix}
+		$		
+		$
+		K_{H} = \begin{bmatrix}
+		0  & 0 &  0 \\
+		-1 & 2 & -1 \\
+		0  & 0 &  0
+		\end{bmatrix}
+		$			
+		$
+		K_{V} = \begin{bmatrix}
+		0 & -1 & 0 \\
+		0 &  2 & 0 \\
+		0 & -1 & 0
+		\end{bmatrix}
+		$				
+		
+		\item Gaußscher Weichzeichner Kernel\\
+		$
+		G = \frac{1}{16} \begin{bmatrix}
+		1 & 2 & 1 \\
+		2 & 4 & 2 \\
+		1 & 2 & 1
+		\end{bmatrix}
+		$			
+		
+		\item Sobel Operator Kernel\\
+		$ 
+		S_{H}=\begin{bmatrix}
+		1 & 2 & 1 \\
+		0 & 0 & 0 \\
+		-1 & -2 & -1
+		\end{bmatrix} 
+		$
+		$
+		S_{V}=\begin{bmatrix}
+		1 & 0 & -1 \\
+		2 & 0 & -2 \\
+		1 & 0 & -1
+		\end{bmatrix}
+		$			
+		
+		\item Emboss Kernel \\
+		$
+		E =\begin{bmatrix}
+		-2 & -1 & 0 \\
+		-1 &  1 & 1 \\
+		 0 &  1 & 2
+		\end{bmatrix}
+		$
+		
+	\end{itemize}
 	
 	
+	% Quelle http://colah.github.io/posts/2014-07-Understanding-Convolutions/
+	% http://matlabtricks.com/post-5/3x3-convolution-kernels-with-online-demo#demo
 	
+	Java stellt in seiner Standardbibliothek die beiden Klassen Namens ConvolveOp und Kernel zur Verfügung. Diese benötigen nur ein Double Array mit den Kernel Werten und können dann auf Objekte der Klasse BufferedImage angewendet werden.
 	
+	Um nun Details in einem Bild zu markieren wird zuerst ein Pinsel Operator angewendet welcher jeden Punkt der die Bedingung erfüllt mit einem großen Pinsel übermalt. Auf das Resultat wird dann ein Kantenerkennungsfilter angewendet. Dann wird erneut ein Pinsel verwendet, jedoch ein kleinerer. Die Größe des ersten Pinsel gibt an in welchem Abstand die Komponenten umrandet werden sollen. Die Größe des zweiten Pinsel gibt an wie dick der Rand sein soll.
+	
+	In \ref{fig:L: Mask} sind die einzelnen Schritte des Verfahren dargestellt.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{images/L-mask.png}
+		\caption{Selbst kleine Details sind groß Umrandet und gut Sichtbar}
+		\label{fig:L: Mask}
+	\end{figure}
+	
+	\lstinputlisting{sources/ConvolveOpCircleItExample.java}
 	
 	
 	

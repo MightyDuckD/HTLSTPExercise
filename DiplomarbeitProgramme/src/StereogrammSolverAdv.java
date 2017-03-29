@@ -65,17 +65,6 @@ public class StereogrammSolverAdv {
 
         ctx.dispose();
         return img;
-//        BufferedImage img = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
-//        for (int x = 0; x < source.getWidth(); x++) {
-//            for (int y = 0; y < source.getHeight(); y++) {
-//                int color = source.getRGB(x, y);
-//                if (x - offset >= 0) {
-//                    color = diff(color, source.getRGB(x - offset, y));
-//                }
-//                img.setRGB(x, y, color);
-//            }
-//        }
-//        return img;
     }
 
     public static double test(BufferedImage src, int treshold, int offset) {
