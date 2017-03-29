@@ -119,28 +119,7 @@
 	
 	
 
-	
-	Viele Dateiformate besitzen eine interne Angabe über wie lang die Datei sein sollte. Dies kann ausgenützt werden indem man eine Payload am Ende der Datei anfügt. Programme welche die Trägerdatei lesen wollen ignorieren den zusätzlich angehängten Teil. Die versteckte Datei kann schnell und einfach wieder aus der Trägerdatei extrahiert werden. \\
-	
-	Zu beachten ist hier vor allem das man eine geeignete Trägerdatei wählt. Denn bei einer Datei welche sich oft in der Länge ändert kann es passieren das sein Versteckter angehängter Teil einfach überschrieben wird. Außerdem sollte darauf geachtet werden dass die Datei eine fix definierte Länge besitzt. Eine Beispiel für geeignete Dateiformate sind Bild- und Videoformate, sofern man sie nicht noch weiter bearbeiten will. Diese besitzen eine im Header der Datei angegebene Länge und haben auch eine relativ große Größe, wodurch kleinere angehängte Dateien im Speicherplatzverbrauch nicht so stark auffallen. 
-	
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=0.8]{images/L-bmp.png}
-		\caption{Beispiel für das Verstecken einer Datei am Ende einer Bitmap}
-		\label{fig:L: Datei in Bitmap}
-	\end{figure}
-	% http://paulbourke.net/dataformats/bmp/
-	
-
-
-	
-	
-	
-	
-	sub
-	\section{Modifikation von Bilddateien} \ltodo{Die ganze Sache gibt es auch in der klassischen wo es darum geht z.B. in der Länge der Gartenzaunbretter Informationen zu verstecken}
+	\section{Modifikation von Bilddateien} 
 	
 	Bilder auf einem Computer sind nichts anderes als Matrizen welche Farbeinformationen für die einzelnen Pixel des Bildes beinhalten. Es gibt zahlreiche Verfahren in diesen Daten zu verstecken. Im den folgenden Kapitel werden einige dieser Verfahren vorgestellt. Dadurch dass alle Daten im Computer in Binärform als Zahl gespeichert sind, ist es vollkommen egal welche Datei als Payload eingebettet wird. 
 	
@@ -243,7 +222,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.3]{images/L-lsb-sichtbare-einbettung.png}
-		\caption{Auf der linken Seite befinden sich eingebettete Daten, auf der rechten Seite nicht.}
+		\caption{Auf der linken Seite befinden sich eingebettete Daten, auf der rechten Seite nicht. Innerhalb des Kreises wurde der Effekt verstärkt dargestellt.}
 		\label{fig:L: LSB No Padding}
 	\end{figure}
 	
@@ -252,6 +231,23 @@
 	
 	
 	\subsubsection{Varianten des Least Significant Bit Verfahren}
+	
+	Das LSB Verfahren gibt in zahlreichen Varianten und Abstufungen. Deswegen ist es durchaus eine Herausforderung automatische Erkennungsverfahren für diese Steganogramme zu entwickeln. Des weiteren kommt es häufig vor dass die eingebetteten Daten verschlüsselt wurden, was eine automatisch Erkennung beinahe unmöglich macht. 
+	
+	Selbstverständlich kann das LSB Verfahren nicht nur auf verlustfreie Bildformate wie PNG Dateien angewendet werden. Es gibt auch Implementierungen welche Musikdateien oder verlustbehaftete Bildformate wie JPEG als Trägerdatei verwenden. 
+	
+	Der bekannteste Algorithmus dafür ist JSteg. Bei jedem verlustbehafteten Format gibt es irgendwann einen Teil wo Daten, auch wenn bereits komprimiert, verlustfrei gespeichert werden. Das nützt JSteg aus und wendet dort das LSB Verfahren an. Bei dem JPEG Format geschieht dies wie in \ref{} gezeig nach dem verlustbehafteten Teil des JPEG Algorithmus.  Es wird dabei darauf geachtet dass nur Bits verändert werden welche eine möglichst geringe Auswirkung auf das originale Bild haben. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.9]{images/L-jsteg.png}
+		\caption{Die Daten werden im verlustfreien Teil des JPEG Algorithmus hinzugefügt.}
+		\label{fig:L: LSB No Padding}
+	\end{figure}
+	%Quelle http://www-i6.informatik.rwth-aachen.de/web/Misc/Coding/365/li/material/notes/Chap4/Chap4.2/Chap4.2.html
+	
+	% http://cise.ufl.edu/~makumar/proposalppt.pdf
+	% http://www.guillermito2.net/stegano/jsteg/
 	
 	\subsection{Barcode Verfahren}
 	
@@ -265,7 +261,7 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.02]{images/L-earth.png}
+		\includegraphics[scale=0.08]{images/L-earth.png}
 		\includegraphics[scale=0.3]{images/L-barcode-example.png}
 		\caption{}
 		\label{fig:L: Barcode Example}
@@ -304,8 +300,8 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1.5]{images/L-stereogram-example.jpg}
-		\caption{fig:L: Stereogramm Example}
-		\label{Beispiel fr ein Stereogramm}
+		\caption{Beispiel fr ein Stereogramm}
+		\label{fig:L: Stereogramm Example}
 	\end{figure}
 	\ltodo{Quelle raus suchen oder eigenes Bild aufnehmen}
 	
@@ -349,8 +345,8 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1.0]{images/L-stereogram-ascii.png}
-		\caption{fig:L: Stereogramm Example ASCII}
-		\label{Beispiel fr ein Text Stereogramm}
+		\caption{Beispiel für ein Text Stereogramm}
+		\label{fig:L: Stereogramm Example ASCII}
 	\end{figure}
 	\ltodo{Quelle: https://web.archive.org/web/20080517013244/archive.museophile.org/3d/ascii-3d.html}
 	
@@ -359,8 +355,8 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.40]{images/L-stereogram-tree.jpg}
-		\caption{fig:L: Stereogramm Example Object Array}
-		\label{Beispiel fr ein Objekt-Array Stereogramm}
+		\caption{Beispiel für ein Objekt-Array Stereogramm}
+		\label{fig:L: Stereogramm Example Object Array}
 	\end{figure}
 	\ltodo{Quelle: http://www.pakin.org/~scott/stereograms/}
 	
@@ -498,12 +494,6 @@
 	
 	
 	
-	\subsection{Grafische Verfahren}
-	\ltodo{
-		Gemeint sind hier Verfahren welche direkt grafische Elemente zu einem Bild hinzufügen.
-		Zum Beispiel irgendwo im Bild einen Morsecode/Barcode/Blindenschrift indem zum Beispiel Grashalme hinzugefügt werden.
-		Vllt zu klassische Verfahren
-	}
 	
 	\subsection{Odd-Pixel Verfahren}
 	
