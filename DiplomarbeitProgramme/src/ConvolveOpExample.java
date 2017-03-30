@@ -53,10 +53,10 @@ public class ConvolveOpExample {
         BufferedImage mask3 = new BufferedImage(mask.getWidth(), mask.getHeight(), mask.getType());
         BufferedImage result = convert(mask, mask.getType());
         
-        pinsel(10, Color.white, mask, mask1);
+        pinsel(15, Color.white, mask, mask1);
         apply3x3(laplacian8, mask1,mask2);
-        pinsel(5, Color.red, mask2,mask3);
-        pinsel(5, Color.red, mask2,result);
+        pinsel(2, Color.red, mask2,mask3);
+        pinsel(2, Color.red, mask2,result);
         
         ImageIO.write(mask1, "png", new File("mask1-pinsel10.png"));
         ImageIO.write(mask2, "png", new File("mask2-edges.png"));

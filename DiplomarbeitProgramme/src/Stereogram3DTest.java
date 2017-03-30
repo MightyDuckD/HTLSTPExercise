@@ -162,20 +162,29 @@ public class Stereogram3DTest {
     public static void main(String[] args) throws Exception {
         
         
-        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/test.jpg")), BufferedImage.TYPE_INT_RGB);
+//        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/test.jpg")), BufferedImage.TYPE_INT_RGB);
 //        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/stereo.jpg")), BufferedImage.TYPE_INT_RGB);
-        int max = 120;
-        int min = 80;
+//        int max = 100;
+//        int min = 60;
+//        int max = 120;
+//        int min = 80;
         
 //        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png")), BufferedImage.TYPE_INT_RGB);
 //        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/city.jpg")), BufferedImage.TYPE_INT_RGB);
+        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/large.gif")), BufferedImage.TYPE_INT_RGB);
         BufferedImage result = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
 //        ImageIO.write(oilpainting(original, 20,3), "png", new File("output-3d-oil.png"));
         
+//        int max = 280;
+//        int min = 240;
 //        int max = 630;
 //        int min = 530;
+        int max = 170;
+        int min = 80;
 //        int max = 300;
 //        int min = 200;
+//        int max = 560;
+//        int min = 320;
         System.out.println("stage 1");
         doit(original, result,min,max,20);
         System.out.println("stage 2");

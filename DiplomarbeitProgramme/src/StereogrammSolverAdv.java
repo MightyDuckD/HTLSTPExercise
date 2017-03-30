@@ -1,13 +1,9 @@
 
 import blend.BlendComposite;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import org.jtransforms.fft.DoubleFFT_1D;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -62,7 +58,6 @@ public class StereogrammSolverAdv {
         ctx.drawImage(source, 0, 0, null);
         ctx.setComposite(BlendComposite.Difference);
         ctx.drawImage(source, offset, 0, null);
-
         ctx.dispose();
         return img;
     }
@@ -82,7 +77,9 @@ public class StereogrammSolverAdv {
 //        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/heart.png"));
 //        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/wagram-bigger.png"));
 //        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/ost-smaller.jpg"));
-        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png"));
+//        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png"));
+//        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/test.jpg"));
+        BufferedImage original = ImageIO.read(new URL("http://localhost:8080/geoui/res/city.jpg"));
         //resize image for performance reasons
         BufferedImage convertedImg = new BufferedImage(400, (int) (400.0 * original.getHeight() / original.getWidth()), BufferedImage.TYPE_INT_RGB);
         convertedImg.getGraphics().drawImage(original, 0, 0, convertedImg.getWidth(), convertedImg.getHeight(), null);
@@ -103,8 +100,8 @@ public class StereogrammSolverAdv {
     public static double getBiggestDiff(double[] data) {
         double mn = data[0];
         double biggest = Double.MIN_VALUE;
-//        for (int i = 0; i < data.length * 3 / 4; i++) {
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < data.length * 3 / 4; i++) {
+//        for (int i = 0; i < data.length; i++) {
             biggest = Math.max(biggest, data[i] - mn);
             mn = Math.min(mn, data[i]);
         }

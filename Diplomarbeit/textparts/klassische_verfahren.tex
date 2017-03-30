@@ -1,9 +1,9 @@
-\chapter{Klassiche Verfahren der Steganographie}
+\section{Klassiche Verfahren der Steganographie}
 	Mit klassischen Steganographie-Verfahren sind Techniken gemeint, welche größtenteils oder gänzlich ohne Computersysteme funktionieren und somit nicht zwingend auf das ''digitale Zeitalter'' angewiesen sind. 
 	Das nachfolgenden Kapitel soll mit praxisnahen Beispielen einen Überblick darüber verschaffen, was genau der Grundgedanke von Steganographie ist.
 	
 
-	\section{Spreu und Weizen Verfahren}
+	\subsection{Spreu und Weizen Verfahren}
 	
 	Das Spreu und Weizen-Verfahren\footnote{eng.: Chaffing and Winnowing} stellt eine Mischform zwischen Steganographie und Kryptographie da und können daher nicht wirklich eindeutig zugeordnet werden. Trotzdem enthält es sehr viele Elemente der Steganographie und eignet sich gut als Einstieg in diesen Thema. Die Idee des Verfahrens ist es, die zu versteckenden Daten in einem Haufen nicht-relevanter Information zu verstecken, wie die Nadel im Heuhaufen. 
 	
@@ -16,9 +16,9 @@
 	
 	--- Ronald L. Rivest, 1998
 	\end{quote}
+	\cite{L-Confidentiality without Encryption}
 
-
-	\subsection{Sender-Seite}
+	\subsubsection{Sender-Seite}
 	
 	Der Sender muss seine Nachricht in Pakete unterteilen. Ihre Größe kann beliebig gewählt werden. Er muss die Pakete außerdem in irgendeiner Weise durchnummerieren, um sie auf der Empfängerseite wieder in der richtigen Reihenfolge zusammensetzen zu können.
 	
@@ -42,7 +42,7 @@
 
 	Als MAC wird hier eine vier stellige Zahl eingesetzt, welche als gültig angesehen wird, wenn sie durch zwei teilbar - also eine gerade Zahl - ist. 
 	
-	\subsection{Die Spreu}
+	\subsubsection{Die Spreu}
 	Dieser Schritt kann auch von einer dritten unwissenden Person erfolgen. 
 	Vorteilhaft ist hier, wenn Nachrichten erzeugt werden, welche ...
 	\begin{itemize}
@@ -73,7 +73,7 @@
 	\end{tabular}
 
 	Hier deutlich zu erkennen die ungültigen MAC's, nämlich ungerade Zahlen.
-	\subsection{Empfänger-Seite}
+	\subsubsection{Empfänger-Seite}
 	
 	Der Empfänger sortiert nun die Pakete nach der ID und überprüft deren MAC's. Für ihn ist nun gut ersichtlich, welche Pakete die ursprüngliche Nachricht enthalten. Wie man in dem Beispiel gut sehen kann, ist es für einen eingeweihten Empfänger sehr leicht, die ursprüngliche Nachricht zu erkennen. Für einen unwissenden Dritten kann es sich jedoch äußerst schwierig gestalten, die richtigen Nachrichtenfragmente zusammenzusetzen. 
 	
@@ -108,7 +108,7 @@
 	\ltodo{Statt einer langen unübersichtlichen Tabelle ein Diagramm mit den möglichen Lösungswegen welches man selber durchgehen kann.}
 
 
-	\subsection{Sicherheitsaspekte}
+	\subsubsection{Sicherheitsaspekte}
 	
 	In dem obigen Beispiel gibt es $3 * 2 * 2 * 3 = 36$ verschiedene Lösungswege, eine Nachricht zusammenzusetzen. Wenn man den Text verlängert und in noch mehr Pakete aufspaltet, ergeben sich dadurch auch mehr Kombinationen. Angenommen man sendet für jedes Paket ein ungültiges alternatives Spreupaket, hätte man nach $n$ Paketen $ 2^{n}$ mögliche Ergebnisse. 
 	
@@ -116,13 +116,7 @@
 	
 
 
-\section{Semagramme}
-\ltodo{
-	Gemeint sind hier Verfahren, welche direkt grafische Elemente zu einem Bild hinzufügen.
-	Zum Beispiel irgendwo im Bild einen Morsecode/Barcode/Blindenschrift indem zum Beispiel Grashalme hinzugefügt werden.
-	Vllt zu klassische Verfahren
-}
-
+\subsection{Semagramme}
 
 Eine einfache Variante für klassische Steganographie in Bildern ist das kodieren von Text in Form von Morsecode oder ähnlichem. Dieser kann zum Beispiel in der Länge von Grashalmen auf einem gemalten Bild kodiert sein, wie es in dem bekannten Beispiel \ref{fig:L: Stego Example} gemacht wurde.
 

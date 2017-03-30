@@ -1,12 +1,15 @@
-\chapter{Moderne Steganographie}
+
+
+
+\section{Moderne Steganographie}
 	
 	Mit moderner Steganographie sind Verfahren gemeint, welche nur mit Hilfsmittel der elektronischen Datenverarbeitung funktionieren. Sie verlassen sich meist darauf, das in riesigen Zahlenmengen kleine Hinweise versteckt sind. Solch große Datenmengen lassen sich per Hand nicht mehr berechnen, wie etwa die vielen Millionen Bildpunkte auf einer digitalen Fotografie. 
 	
-	In dem nachfolgenden Kapitel werden einige dieser Verfahren erklärt und etwaige Fehler und Schwierigkeiten, die damit verbunden sind, aufgezeigt. Außerdem werden einige Implementierungen vorgestellt, verglichen und auf die Verwendbarkeit im Alltag getestet. 
 	
-	\section{Allgemein}
+	Bilder auf einem Computer sind nichts anderes als Matrizen, welche Farbeinformationen für die einzelnen Pixel des Bildes beinhalten. Es gibt zahlreiche Verfahren in diesen Matrizen Daten zu verstecken. Im den folgenden Kapitel werden einige dieser Verfahren vorgestellt. Dadurch, dass alle Daten im Computer in Binärform als Zahl gespeichert sind, ist es vollkommen egal, welche Datei als Payload eingebettet wird. 
 	
-	In dem folgenden Abschnitt wird der Begriff Whitening erklärt und auf die Möglichkeit von Fehlerkorrekturmaßnahmen bei der Übertragung von Daten eingegangen.
+	In dem nachfolgenden Abschnitten werden einige dieser Verfahren erklärt und etwaige Fehler und Schwierigkeiten, die damit verbunden sind, aufgezeigt. Außerdem werden einige Implementierungen vorgestellt.
+	
 	
 	\subsection{Whitening}
 	
@@ -50,6 +53,9 @@
 	\\
 	In dem nachfolgenden Beispiel wird als Whitening der Datenstrom mit Hilfe der XOR-Operation mit einem Pseudozufallszahlengeneratordatenstrom verknüpft. Zum Einsatz kommt hier ein Kongruenzgenerator, wie er auch in der Standard Java Klasse java.lang.Random verwendet wird.  
 	
+	\cite{L-Kongruenzgenerator}
+	
+	
 	\begin{figure}[H]
 	\begin{tabular}{|l|l|c|c|c|c|c|c|}
 		\hline 
@@ -91,6 +97,7 @@
 		\label{fig:L: Whitening AES}
 	\end{figure}
 
+	\cite{L-AES-Encryption-Standard}
 	
 	\subsection{Fehlerkorrekturverfahren}
 	
@@ -129,10 +136,8 @@
 	Mit diesem Verfahren können nicht nur Fehler entdeckt, sondern im besten Fall sogar ausgebessert werden.
 	
 	
-
-	\section{Modifikation von Bilddateien} 
+	\cite{L-Fehlererkennung}
 	
-	Bilder auf einem Computer sind nichts anderes als Matrizen, welche Farbeinformationen für die einzelnen Pixel des Bildes beinhalten. Es gibt zahlreiche Verfahren in diesen Matrizen Daten zu verstecken. Im den folgenden Kapitel werden einige dieser Verfahren vorgestellt. Dadurch, dass alle Daten im Computer in Binärform als Zahl gespeichert sind, ist es vollkommen egal, welche Datei als Payload eingebettet wird. 
 	
 	Aus diesem Grund wird in den Beispielen die Kodierung aus \ref{L: Kodierung Payload} für die Payload verwendet.
 	\begin{table}[]
@@ -255,8 +260,10 @@
 		\caption{Die Daten werden im verlustfreien Teil des JPEG Algorithmus hinzugefügt.}
 		\label{fig:L: LSB No Padding}
 	\end{figure}
+
+	\cite{L-Jpeg-Algorithm}
 	%Quelle http://www-i6.informatik.rwth-aachen.de/web/Misc/Coding/365/li/material/notes/Chap4/Chap4.2/Chap4.2.html
-	
+	\cite{L-JSteg}
 	% http://cise.ufl.edu/~makumar/proposalppt.pdf
 	% http://www.guillermito2.net/stegano/jsteg/
 	
@@ -391,7 +398,7 @@
 	E(x,y)=
 	\begin{cases}
 	M(x,y), & \text{if } x < N \\
-	E(x - N + (s * D(x,y)), & \text{else}
+	E(x - N + (s \cdot D(x,y)), & \text{else}
 	\end{cases}
 	$$
 
@@ -464,7 +471,7 @@
 
 	Stereogramme haben mit dieser Analyse immer einen Spike in der Datenreihe, während normale Bilder einen eindeutigen Abwärtstrend haben. Lediglich Texte sind schwer zu unterscheiden und einzuordnen. Eine Möglichkeit wäre nun eine künstliche Intelligenz darauf zu trainieren, diese Datenreihen zu analysieren. Die hier generierten Daten eignen sich sehr gut für ein solches Verfahren, weil sie aufgrund der prozentuellen Angaben eine fixe Größe besitzen. Dafür wird jedoch sehr viel Rechenleistung benötigt, wodurch hier eine effizientere Methode gewählt wurde.
 	
-	Gesucht wird aus der Menge $D$ die größte Steigung zwischen zwei Punkten, $ D_{j} -D_{i} , i > j $ soll also maximiert werden. Dazu wurde folgender sehr einfacher und schneller Algorithmus gewählt:
+	Gesucht wird aus der Menge $D$ die größte Steigung zwischen zwei Punkten, $ D_{j} - D_{i} , i > j $ soll also maximiert werden. Dazu wurde folgender sehr einfacher und schneller Algorithmus gewählt:
 	
 	\lstinputlisting[caption={Steigung},label={fig:L: Steigung Java}]{sources/Steigung.java}
 	
@@ -577,7 +584,7 @@
 		
 		\item Gaußscher Weichzeichner Kernel\\
 		$
-		G = \frac{1}{16} \begin{bmatrix}
+		G = \frac{1}{16} \cdot \begin{bmatrix}
 		1 & 2 & 1 \\
 		2 & 4 & 2 \\
 		1 & 2 & 1
@@ -619,6 +626,7 @@
 	
 	Um nun Details in einem Bild zu markieren, wird zuerst eine Pinselfunktion angewendet, welche jeden Punkt, der die Bedingung erfüllt, mit einem großen Pinsel übermalt. Auf das Resultat wird dann ein Kantenerkennungsfilter angewendet. Dann wird erneut ein Pinsel verwendet, jedoch ein kleinerer. Die Größe des ersten Pinsels gibt an, in welchem Abstand die Komponenten umrandet werden sollen. Die Größe des zweiten Pinsel gibt an wie dick der Rand sein soll.
 	
+	\cite{L-Convolution}
 	In \ref{fig:L: Mask} sind die einzelnen Schritte des Verfahrens dargestellt.
 	
 	\begin{figure}[H]
@@ -627,6 +635,8 @@
 		\caption{Selbst kleine Details sind groß Umrandet und gut Sichtbar}
 		\label{fig:L: Mask}
 	\end{figure}
+
+	\cite{L-Convolution-Kernels}
 	
 	\lstinputlisting{sources/ConvolveOpCircleItExample.java}
 	
