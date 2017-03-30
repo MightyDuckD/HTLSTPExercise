@@ -160,20 +160,33 @@ public class Stereogram3DTest {
         }
     }
     public static void main(String[] args) throws Exception {
-        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png")), BufferedImage.TYPE_INT_RGB);
+        
+        
+        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/test.jpg")), BufferedImage.TYPE_INT_RGB);
+//        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/stereo.jpg")), BufferedImage.TYPE_INT_RGB);
+        int max = 120;
+        int min = 80;
+        
+//        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png")), BufferedImage.TYPE_INT_RGB);
 //        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/city.jpg")), BufferedImage.TYPE_INT_RGB);
         BufferedImage result = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
 //        ImageIO.write(oilpainting(original, 20,3), "png", new File("output-3d-oil.png"));
         
 //        int max = 630;
 //        int min = 530;
-        int max = 300;
-        int min = 200;
+//        int max = 300;
+//        int min = 200;
+        System.out.println("stage 1");
         doit(original, result,min,max,20);
+        System.out.println("stage 2");
         doit(original, result,min,max,5);
+        System.out.println("stage 3");
         doit(original, result,min,max,2);
+        System.out.println("stage 4");
         doit(original, result,min,max,1);
+        System.out.println("saving");
 
+        
         ImageIO.write(result, "png", new File("output-3d.png"));
         ImageIO.write(oilpainting(gaussian(result), 60,2), "png", new File("output-3d-oil.png"));
     }
