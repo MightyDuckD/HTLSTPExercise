@@ -143,15 +143,13 @@ public class Stereogram3DTest {
     }
 
     
-    public static void doit(BufferedImage original, BufferedImage result, int tresh) {
-        int max = 630;
-        int min = 530;
+    public static void doit(BufferedImage original, BufferedImage result,int min, int max, int tresh) {
         for (int i = max; i >= min; i--) {
 //        for (int i = min; i <= max; i++) {
 //            BufferedImage other = gaussian(gaussian(diff(original, i)));
 //            BufferedImage other = gaussian(diff(original, i));
             BufferedImage other = diff(original, i);
-            Color color = new Color((float) (i - min) / (max - min), 0.3f, 0.3f);
+            Color color = new Color((float) (i - min) / (max - min),0,0);//, 0.3f, 0.3f);
             for (int x = i; x < result.getWidth(); x++) {
                 for (int y = 0; y < result.getHeight(); y++) {
                     if (avg(other.getRGB(x, y)) < tresh) {
@@ -162,17 +160,21 @@ public class Stereogram3DTest {
         }
     }
     public static void main(String[] args) throws Exception {
-//        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png")), BufferedImage.TYPE_INT_RGB);
-        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/city.jpg")), BufferedImage.TYPE_INT_RGB);
+        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/what.png")), BufferedImage.TYPE_INT_RGB);
+//        BufferedImage original = convert(ImageIO.read(new URL("http://localhost:8080/geoui/res/city.jpg")), BufferedImage.TYPE_INT_RGB);
         BufferedImage result = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
 //        ImageIO.write(oilpainting(original, 20,3), "png", new File("output-3d-oil.png"));
         
-        doit(original, result,20);
-        doit(original, result,5);
-        doit(original, result,2);
-        doit(original, result,1);
+//        int max = 630;
+//        int min = 530;
+        int max = 300;
+        int min = 200;
+        doit(original, result,min,max,20);
+        doit(original, result,min,max,5);
+        doit(original, result,min,max,2);
+        doit(original, result,min,max,1);
 
         ImageIO.write(result, "png", new File("output-3d.png"));
-        ImageIO.write(oilpainting(gaussian(result), 30,5), "png", new File("output-3d-oil.png"));
+        ImageIO.write(oilpainting(gaussian(result), 60,2), "png", new File("output-3d-oil.png"));
     }
 }
