@@ -146,9 +146,9 @@ public class Stereogram3DTest {
     public static void doit(BufferedImage original, BufferedImage result,int min, int max, int tresh) {
         for (int i = max; i >= min; i--) {
 //        for (int i = min; i <= max; i++) {
-//            BufferedImage other = gaussian(gaussian(diff(original, i)));
+            BufferedImage other = gaussian(gaussian(diff(original, i)));
 //            BufferedImage other = gaussian(diff(original, i));
-            BufferedImage other = diff(original, i);
+//            BufferedImage other = diff(original, i);
             Color color = new Color((float) (i - min) / (max - min),0,0);//, 0.3f, 0.3f);
             for (int x = i; x < result.getWidth(); x++) {
                 for (int y = 0; y < result.getHeight(); y++) {
