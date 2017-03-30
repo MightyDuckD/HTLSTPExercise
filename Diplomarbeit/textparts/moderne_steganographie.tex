@@ -464,7 +464,7 @@
 
 	Stereogramme haben mit dieser Analyse immer einen Spike in der Datenreihe, während normale Bilder einen eindeutigen Abwärtstrend haben. Lediglich Texte sind schwer zu unterscheiden und einzuordnen. Eine Möglichkeit wäre nun eine künstliche Intelligenz darauf zu trainieren, diese Datenreihen zu analysieren. Die hier generierten Daten eignen sich sehr gut für ein solches Verfahren, weil sie aufgrund der prozentuellen Angaben eine fixe Größe besitzen. Dafür wird jedoch sehr viel Rechenleistung benötigt, wodurch hier eine effizientere Methode gewählt wurde.
 	
-	Gesucht wird die größte Steigung zwischen zwei Punkten. Also $ d(j) - d(i) , i > j $ soll maximiert werden. Dazu wurde folgender sehr einfacher und schneller Algorithmus gewählt:
+	Gesucht wird aus der Menge $D$ die größte Steigung zwischen zwei Punkten, $ D_{j} -D_{i} , i > j $ soll also maximiert werden. Dazu wurde folgender sehr einfacher und schneller Algorithmus gewählt:
 	
 	\lstinputlisting[caption={Steigung},label={fig:L: Steigung Java}]{sources/Steigung.java}
 	
