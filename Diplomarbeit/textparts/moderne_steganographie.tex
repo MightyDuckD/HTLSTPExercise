@@ -27,14 +27,14 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1]{images/L-whitening-clear.png}
-		\caption{Hier deutlich zu erkennen die verwendeten ASCII Zeichen.}
+		\caption[Streudiagramm ASCII Text]{Hier deutlich zu erkennen die verwendeten ASCII Zeichen.}
 		\label{fig:L: Whitening Clear}
 	\end{figure}
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1]{images/L-whitening-random.png}
-		\caption{In diesen zufälligen Daten kann kein Muster erkannt werden.}
+		\caption[Streudiagramm zufällige Daten]{In diesen zufälligen Daten kann kein Muster erkannt werden.}
 		\label{fig:L: Whitening Random}
 	\end{figure}
 	
@@ -69,16 +69,16 @@
 		\hline 
 		Datenstrom XOR Random & 247 & 187 & 79 & 254 & 206 & 111 \\ 
 		\hline 
-	\end{tabular} 	
-    \caption{Wenn der Inhalt wiederhergestellt werden soll, muss nur von unten nach oben alles wieder rückgängig gemacht werden.}
-	\label{fig:L: Whitening Random Tabelle}
+	\end{tabular} 
+\label{fig:L: Whitening Random Tabelle}	
 \end{figure}
 	
+	Wenn der Inhalt wiederhergestellt werden soll, muss nur von unten nach oben alles wieder rückgängig gemacht werden.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1]{images/L-whitening-vergleich.png}
-		\caption{In diesem Vergleich ist gut zu sehen, dass nach Anwendung von diesem Verfahren der Datenstrom nicht mehr von zufälligen Werten unterscheidbar ist.}
+		\caption[Streudiagramm Vergleich Random/ASCII]{In diesem Vergleich ist gut zu sehen, dass nach Anwendung von diesem Verfahren der Datenstrom nicht mehr von zufälligen Werten unterscheidbar ist.}
 		\label{fig:L: Whitening Random Vergleich}
 	\end{figure}
 	
@@ -93,7 +93,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1]{images/L-whitening-aes.png}
-		\caption{Vergleich zwischen AES verschlüsselten Daten und zufälligen Werten.}
+		\caption[Streudiagramm Vergleich Random/AES]{Vergleich zwischen AES verschlüsselten Daten und zufälligen Werten.}
 		\label{fig:L: Whitening AES}
 	\end{figure}
 
@@ -187,8 +187,6 @@
 	Ein große Rolle spielt, wieviel Trägermaterial zur Verfügung steht und wie viele Daten darin eingebettet werden. Je nachdem kann man die einzelnen Bits weiter verteilen oder muss sogar mehrere Bits auf ein Pixel legen.
 	Es ist auch durchaus sinnvoll diverse Prüfsummen in die eingebetteten Daten einzubauen um sicher zu stellen das die extrahierten Daten auch keine Fehler enthalten. Wenn genug Platz zur Verfügung steht ist es auch möglich die Daten redundant zu speichern.
 	
-	\ltodo{Tabelle mit Vergleich wie viele Bit Farbe / wie viele Bit Daten und wie viel Prozent das ausmacht + Bildbeispiele für den Farbunterschied den das ausmacht}
-	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.7]{images/L-lsb-entwurf.png}
@@ -226,7 +224,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.3]{images/L-schoene-neue-earth.png}
-		\caption{In diesem Bild wurde ein ganzes Buch versteckt, und es ist trotzdem nicht zu erkennen.}
+		\caption[LSB Beispiel]{In diesem Bild wurde ein ganzes Buch versteckt, trotzdem ist es nicht vom Original zu unterscheiden.}
 		\label{fig:L: LSB Earth}
 	\end{figure}
 
@@ -238,7 +236,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.3]{images/L-lsb-sichtbare-einbettung.png}
-		\caption{Auf der linken Seite befinden sich eingebettete Daten, auf der rechten Seite nicht. Innerhalb des Kreises wurde der Effekt verstärkt dargestellt.}
+		\caption[LSB Vergleich mit und ohne Daten]{Auf der linken Seite befinden sich eingebettete Daten, auf der rechten Seite nicht. Innerhalb des Kreises wurde der Effekt verstärkt dargestellt.}
 		\label{fig:L: LSB No Padding}
 	\end{figure}
 	
@@ -257,7 +255,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.9]{images/L-jsteg.png}
-		\caption{Die Daten werden im verlustfreien Teil des JPEG Algorithmus hinzugefügt.}
+		\caption[JPEG Algorithmus]{Die Daten werden im verlustfreien Teil des JPEG Algorithmus hinzugefügt.}
 		\label{fig:L: LSB No Padding}
 	\end{figure}
 
@@ -266,6 +264,11 @@
 	\cite{L-JSteg}
 	% http://cise.ufl.edu/~makumar/proposalppt.pdf
 	% http://www.guillermito2.net/stegano/jsteg/
+	
+	\subsubsection {OpenStego}
+	
+	Die bekannte Steganographie App hat eine Variante des LSB-Verfahren implementiert. Zusätzlich unterstützt sie auch noch die Verwendung eines Passwort zum schützen des Inhalt. 
+	Es gibt sowohl Vorteile als auch Nachteile bei dieser Implementierung. Der Vorteil ist: Jeder kann sich die App herunterladen und verwenden, ohne viel über Programmieren und Kryptographie wissen zu müssen. Außerdem ist das Verfahren standardisiert, wodurch sich keine Probleme bei Fehlimplementierungen ergeben kann. Der große Nachteil ist die Tatsache das dieses Programm sehr bekannt ist und wenn jemand vermutet das sich in einem Bild versteckte Informationen befinden, wird er als erstes Verfahren OpenStego überprüfen.
 	
 	\subsection{Barcode Verfahren}
 	
@@ -279,9 +282,9 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.08]{images/L-earth.png}
-		\includegraphics[scale=0.3]{images/L-barcode-example.png}
-		\caption{}
+		\includegraphics[scale=0.13]{images/L-earth.png}
+		\includegraphics[scale=0.4]{images/L-barcode-example.png}
+		\caption{Histogramm eines Bildes}
 		\label{fig:L: Barcode Example}
 	\end{figure}
 	
@@ -293,17 +296,11 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1.5]{images/L-histogram-viewer-output.png}
-		\caption{fig:L: Barcode Histogram Example}
+		\caption{Barcode Histogramm Beispiel}
 		\label{fig:L: Barcode Histogram Example}
 	\end{figure}
 	
-	\ltodo {Einfach nur den link zum git repo reintun?}
 	\lstinputlisting[caption={HistogramViewer.java},label={fig:L: HistogramViewer}]{sources/HistogramViewer.java}
-	
-	
-	
-	
-	
 	
 	
 	
@@ -318,10 +315,10 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1.5]{images/L-stereogram-example.jpg}
-		\caption{Beispiel fr ein Stereogramm}
+		\caption[Stereogramm Beispiel]{Beispiel für ein Stereogramm \footnote{\url{[http://www.deviantart.com/art/stereogram-V-U-D-04-435056014]}}}
 		\label{fig:L: Stereogramm Example}
 	\end{figure}
-	\ltodo{Quelle raus suchen oder eigenes Bild aufnehmen}
+
 	
 	Es gibt verschiedene Techniken, um Stereogramme zu erstellen, die sich vor allem durch die Wahl des Trägermaterials unterscheiden.
 	
@@ -363,7 +360,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1.0]{images/L-stereogram-ascii.png}
-		\caption{Beispiel für ein Text Stereogramm}
+		\caption[Text Stereogramm]{Beispiel für ein Text Stereogramm}
 		\label{fig:L: Stereogramm Example ASCII}
 	\end{figure}
 	\ltodo{Quelle: https://web.archive.org/web/20080517013244/archive.museophile.org/3d/ascii-3d.html}
@@ -373,7 +370,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.40]{images/L-stereogram-tree.jpg}
-		\caption{Beispiel für ein Objekt-Array Stereogramm}
+		\caption[Objekt-Array Stereogramm]{Beispiel für ein Objekt-Array Stereogramm}
 		\label{fig:L: Stereogramm Example Object Array}
 	\end{figure}
 	\ltodo{Quelle: http://www.pakin.org/~scott/stereograms/}
@@ -412,7 +409,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=1]{images/L-stereogram-anleitung.png}
-		\caption{Die Pixel werden je nach Depth Map vom linken Strich + Offset zu dem rechten Kopiert.}
+		\caption[Autostereogramm Generierung Erklärung]{Die Pixel werden je nach Depth Map vom linken Strich + Offset zu dem rechten Kopiert.}
 		\label{fig:L: Stereogramm Anleitung}
 	\end{figure}
 
@@ -420,7 +417,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.4]{images/L-stereogram-selber.png}
-		\caption{Kaum zu erkennen sind die versteckten Formen.}
+		\caption[Autostereogramm Generierung Ergebnis]{Kaum zu erkennen sind die versteckten Formen.}
 		\label{fig:L: Stereogramm Anleitung}
 	\end{figure}
 	
@@ -465,7 +462,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.5]{images/L-stereogram-erkennung-vergleich.png}
-		\caption{Bei dem Stereogramm kann ein Spike in der Datenreihe erkannt werden}
+		\caption[Analyse verschiedener Stereogrammtypen]{Bei dem Stereogramm kann ein Spike in der Datenreihe erkannt werden}
 		\label{fig:L: Stereogramm Erkennung Vergleich}
 	\end{figure}
 
@@ -482,7 +479,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.5]{images/L-stereogram-erkennung-vergleich-besser.png}
-		\caption{Die verbesserte Variante erzielt deutlichere Ergebnisse}
+		\caption[Verbesserte Analyse verschiedener Stereogrammtypen]{Die verbesserte Variante erzielt deutlichere Ergebnisse}
 		\label{fig:L: Stereogramm Erkennung Vergleich Verbessert}
 	\end{figure}
 
@@ -492,7 +489,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.8]{images/L-stereogram-erkennung-vergleich-ergebnisse.png}
-		\caption{Ein Wert von mehr als 25\% heißt, dass es sich Wahrscheinlich um ein Stereogramm handelt.}
+		\caption[Vergleich der Analyseverfahren]{Ein Wert von mehr als 25\% heißt, dass es sich Wahrscheinlich um ein Stereogramm handelt.}
 		\label{fig:L: Stereogramm Erkennung Vergleich Verbessert}
 	\end{figure}
 	
@@ -545,7 +542,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.5]{images/L-odd-pixel-conv.png}
-		\caption{Kernel wird auf den Input angewendet um den Output zu erzeugen.}
+		\caption[Kernel Beispiel]{Kernel wird auf den Input angewendet um den Output zu erzeugen.}
 		\label{fig:L: Odd Pixel Conv}
 	\end{figure}
 	
@@ -627,12 +624,14 @@
 	Um nun Details in einem Bild zu markieren, wird zuerst eine Pinselfunktion angewendet, welche jeden Punkt, der die Bedingung erfüllt, mit einem großen Pinsel übermalt. Auf das Resultat wird dann ein Kantenerkennungsfilter angewendet. Dann wird erneut ein Pinsel verwendet, jedoch ein kleinerer. Die Größe des ersten Pinsels gibt an, in welchem Abstand die Komponenten umrandet werden sollen. Die Größe des zweiten Pinsel gibt an wie dick der Rand sein soll.
 	
 	\cite{L-Convolution}
+	
+	
 	In \ref{fig:L: Mask} sind die einzelnen Schritte des Verfahrens dargestellt.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.7]{images/L-mask.png}
-		\caption{Selbst kleine Details sind groß Umrandet und gut Sichtbar}
+		\caption[Markierungsverfahren]{Selbst kleine Details sind groß Umrandet und gut Sichtbar}
 		\label{fig:L: Mask}
 	\end{figure}
 
