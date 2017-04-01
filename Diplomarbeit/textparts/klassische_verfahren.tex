@@ -1,17 +1,17 @@
 \section{Klassiche Verfahren der Steganographie}
 	Mit klassischen Steganographie-Verfahren sind Techniken gemeint, welche größtenteils oder gänzlich ohne Computersysteme funktionieren und somit nicht zwingend auf das ''digitale Zeitalter'' angewiesen sind. 
-	Das nachfolgenden Kapitel soll mit praxisnahen Beispielen einen Überblick darüber verschaffen, was genau der Grundgedanke von Steganographie ist.
+	Das nachfolgende Kapitel soll mit praxisnahen Beispielen einen Überblick darüber verschaffen, was genau der Grundgedanke von Steganographie ist.
 	
 
 	\subsection{Spreu und Weizen Verfahren}
 	
-	Das Spreu und Weizen-Verfahren\footnote{eng.: Chaffing and Winnowing} stellt eine Mischform zwischen Steganographie und Kryptographie da und können daher nicht wirklich eindeutig zugeordnet werden. Trotzdem enthält es sehr viele Elemente der Steganographie und eignet sich gut als Einstieg in diesen Thema. Die Idee des Verfahrens ist es, die zu versteckenden Daten in einem Haufen nicht-relevanter Information zu verstecken, wie die Nadel im Heuhaufen. 
+	Das Spreu und Weizen-Verfahren\footnote{eng.: Chaffing and Winnowing} stellt eine Mischform zwischen Steganographie und Kryptographie dar und kann daher nicht wirklich eindeutig zugeordnet werden. Trotzdem enthält es sehr viele Elemente der Steganographie und eignet sich gut als Einstieg in dieses Thema. Die Idee des Verfahrens ist es, die zu versteckenden Daten in einem Haufen nicht-relevanter Information zu verstecken, wie die Nadel im Heuhaufen. 
 	
 	Es handelt sich bei diesem Verfahren deswegen um eine Mischform, weil es sich genau genommen lediglich um das Authentifizieren von gesendeten Paketen handelt. Das Hinzufügen der Spreu kann auch von einer dritten unwissenden Person geschehen. Dadurch können sowohl Sender als auch Empfänger sämtliche Verantwortung abstreiten und argumentieren, sie wollen nur die Authentizität ihrer Nachrichten sicherstellen. Deshalb können auch Gesetze, welche Kryptographie beschränken oder sogar verbieten, nicht auf das Spreu und Weizen Verfahren angewandt werden.
 	
 	\begin{quote}
 	% http://people.csail.mit.edu/rivest/chaffing-980701.txt
-	The power to authenticate is in many cases the power to control, and handing all authentication power to the government is beyond all reason 
+	The power to authenticate is in many cases the power to control, and handing all authentication power to the government is beyond all reason.
 	
 	--- Ronald L. Rivest, 1998
 	\end{quote}
@@ -71,41 +71,19 @@
 		\hline 
 	\end{tabular}
 
-	Hier deutlich zu erkennen die ungültigen MAC's, nämlich ungerade Zahlen.
+	Hier deutlich zu erkennen sind die ungültigen MAC's, nämlich ungerade Zahlen.
 	\subsubsection{Empfänger-Seite}
 	
 	Der Empfänger sortiert nun die Pakete nach der ID und überprüft deren MAC's. Für ihn ist nun gut ersichtlich, welche Pakete die ursprüngliche Nachricht enthalten. Wie man in dem Beispiel gut sehen kann, ist es für einen eingeweihten Empfänger sehr leicht, die ursprüngliche Nachricht zu erkennen. Für einen unwissenden Dritten kann es sich jedoch äußerst schwierig gestalten, die richtigen Nachrichtenfragmente zusammenzusetzen. 
 	
 	Es könnten durchaus auch Texte wie ''Hallo Alice, wir telefonieren am 27. Jan um 18 Uhr am Westbahnhof'' oder ''Hallo Bob, wir treffen uns am 24. Jan um 18 Uhr am Bahnhof Meidling'' als mögliche Lösungen gesehen werden.
 	
-	
-	\begin{tabular}{|c|l|c|}
-		\hline 
-		ID & Nachrichtenfragment & MAC \\ 
-		\hline 
-		1 & Hallo Alice, & 2373 \\ 
-		\hline 
-		1 & \textbf{Hallo Hans,} & 9192 \\ 
-		\hline 
-		1 & Hallo Bob, & 5323 \\ 
-		\hline 
-		2 & \textbf{wir treffen uns am 24. Jan}  & 3766 \\ 
-		\hline 
-		2 & wir telefonieren am 27. Jan  & 5847 \\ 
-		\hline 
-		3 & um 10 Uhr & 7881 \\ 
-		\hline 
-		3 & \textbf{um 18 Uhr} & 2816 \\ 
-		\hline 
-		4 & \textbf{am Hauptbahnhof} & 8370 \\  
-		\hline 
-		4 & am Westbahnhof & 9821 \\ 
-		\hline 
-		4 & am Bahnhof Meidling & 1155 \\ 
-		\hline 
-	\end{tabular} 
-	\ltodo{Statt einer langen unübersichtlichen Tabelle ein Diagramm mit den möglichen Lösungswegen welches man selber durchgehen kann.}
-
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.8\linewidth]{images/L-spreu-und-weizen.png}
+		\caption[Wege für Spreu und Weizen]{Es gibt viele mögliche Wege, doch nur einer ist der Richtige.}
+		\label{fig:L: Spreu und Weizen}
+	\end{figure}
 
 	\subsubsection{Sicherheitsaspekte}
 	
@@ -117,28 +95,26 @@
 
 \subsection{Semagramme}
 
-Eine einfache Variante für klassische Steganographie in Bildern ist das kodieren von Text in Form von Morsecode oder ähnlichem. Dieser kann zum Beispiel in der Länge von Grashalmen auf einem gemalten Bild kodiert sein, wie es in dem bekannten Beispiel \ref{fig:L: Stego Example} gemacht wurde.
+Eine einfache Variante für klassische Steganographie in Bildern ist das Kodieren von Text in Form von Morsecode oder ähnlichem. Dieser kann zum Beispiel in der Länge von Grashalmen auf einem gemalten Bild kodiert sein, wie es in dem bekannten Beispiel \autoref{fig:L: Stego Example} gemacht wurde.
 
-Der Fantasie sind hier keine Grenzen gesetzt. Um ein bisschen einen Eindruck zu vermitteln, wie kreativ man beim Verstecken von Nachrichten sein kann, sind hier einige Beispiele angeführt.
+Der Fantasie sind hier keine Grenzen gesetzt. Um ein bisschen einen Eindruck zu vermitteln, wie kreativ man beim Verstecken von Nachrichten sein kann, sind hier einige Beispiele\footnote{Quelle: \url{https://www.apprendre-en-ligne.net/crypto/stegano/semagrammes.html}} angeführt.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.6]{images/L-stego-example.png}
-	\caption[Morsecode in Bild Beispiel 1]{Hier wurde mit den Grashalmen links von der Brücke, auf der kleinen Mauer und entlang des Wasser Morsecode hinzugefügt}
+	\caption[Morsecode in Bild Beispiel 1]{Hier wurde mit den Grashalmen links von der Brücke, auf der kleinen Mauer und entlang des Wassers Morsecode hinzugefügt.}
 	\label{fig:L: Stego Example}
 \end{figure}
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=1.2]{images/L-stego-example2.png}
-	\caption[Versteckter Text in Bild]{Wenn das grüne Band zum dekodieren verwendet wird ergibt sich die Nachricht ''Renseignements arrivent'', auf Deutsch: ''Informationen angekommen''}
+	\caption[Versteckter Text in Bild]{Wenn das grüne Band zum Dekodieren verwendet wird, ergibt sich die Nachricht ''Renseignements arrivent'', auf Deutsch: ''Informationen angekommen''.}
 	\label{fig:L: Stego Example 1}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 \includegraphics[scale=1.2]{images/L-stego-example3.png}
-\caption[Morsecode in Bild Beispiel 2]{In diesem Beispiel wurde Morsecode in Form der Größe der Vögel, der Zaunstangen und der Blumen kodiert. Dekodiert ergeben sich die Namen der drei Automarken VW, Buick und Volvo }
+\caption[Morsecode in Bild Beispiel 2]{In diesem Beispiel wurde Morsecode in Form der Größe der Vögel, der Zaunstangen und der Blumen kodiert. Dekodiert ergeben sich die Namen der drei Automarken VW, Buick und Volvo. }
 \label{fig:L: Stego Example 2}
 \end{figure}
 

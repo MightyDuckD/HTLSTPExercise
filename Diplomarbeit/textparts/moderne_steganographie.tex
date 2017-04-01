@@ -3,10 +3,10 @@
 
 \section{Moderne Steganographie}
 	
-	Mit moderner Steganographie sind Verfahren gemeint, welche nur mit Hilfsmittel der elektronischen Datenverarbeitung funktionieren. Sie verlassen sich meist darauf, das in riesigen Zahlenmengen kleine Hinweise versteckt sind. Solch große Datenmengen lassen sich per Hand nicht mehr berechnen, wie etwa die vielen Millionen Bildpunkte auf einer digitalen Fotografie. 
+	Mit moderner Steganographie sind Verfahren gemeint, welche nur mit Hilfsmittel der elektronischen Datenverarbeitung funktionieren. Sie verlassen sich meist darauf, dass in riesigen Zahlenmengen kleine Hinweise versteckt sind. Solch große Datenmengen lassen sich per Hand nicht mehr berechnen, wie etwa die vielen Millionen Bildpunkte auf einer digitalen Fotografie. 
 	
 	
-	Bilder auf einem Computer sind nichts anderes als Matrizen, welche Farbeinformationen für die einzelnen Pixel des Bildes beinhalten. Es gibt zahlreiche Verfahren in diesen Matrizen Daten zu verstecken. Im den folgenden Kapitel werden einige dieser Verfahren vorgestellt. Dadurch, dass alle Daten im Computer in Binärform als Zahl gespeichert sind, ist es vollkommen egal, welche Datei als Payload eingebettet wird. 
+	Bilder auf einem Computer sind nichts anderes als Matrizen, welche Farbinformationen für die einzelnen Pixel des Bildes beinhalten. Es gibt zahlreiche Verfahren, um in solchen Matrizen Daten zu verstecken. In den folgenden Kapitel werden einige dieser Verfahren vorgestellt. Dadurch, dass alle Daten im Computer in Binärform als Zahl gespeichert sind, ist es vollkommen egal, welche Datei als Payload eingebettet wird. 
 	
 	In dem nachfolgenden Abschnitten werden einige dieser Verfahren erklärt und etwaige Fehler und Schwierigkeiten, die damit verbunden sind, aufgezeigt. Außerdem werden einige Implementierungen vorgestellt.
 	
@@ -14,11 +14,11 @@
 	\subsection{Whitening}
 	
 	
-	Als Whitening werden Prozesse und Techniken mit dem Ziel bezeichnet, Daten jegliche Ordnung und Regelmäßigkeit zu entziehen. Je besser ein Whitening-Verfahren funktioniert, desto weniger ist der Datenstrom von generierten Zufallswerten unterscheidbar. \\
+	Als Whitening werden Prozesse und Techniken mit dem Ziel bezeichnet, Daten jeglicher Ordnung und Regelmäßigkeit zu entziehen. Je besser ein Whitening-Verfahren funktioniert, desto weniger ist der Datenstrom von generierten Zufallswerten unterscheidbar. 
 	
-	Dies hat den Vorteil, dass die Daten nach der Transformation in dem einzubettenden Medium nicht so stark auffallen wie zuvor. \\
+	Dies hat den Vorteil, dass die Daten nach der Transformation in dem einzubettenden Medium nicht so stark auffallen wie zuvor. 
 	
-	Whitening-Verfahren wandeln auf deterministische Weise Datenströme, welche in etwa wie \ref{fig:L: Whitening Clear} aussehen können, um, damit sie dem Profil von \ref{fig:L: Whitening Random} ähneln. Dies muss auf eine Art und Weise geschehen, dass beim Extrahieren der Daten die angewandte Operation wieder rückgängig gemacht werden kann. Es können also keine wirklich zufälligen generierten Daten zum Einsatz kommen. 
+	Whitening-Verfahren wandeln auf deterministische Weise Datenströme, welche in etwa wie \autoref{fig:L: Whitening Clear} aussehen können, um, damit sie dem Profil von \autoref{fig:L: Whitening Random} ähneln. Dies muss auf eine Art und Weise geschehen, dass beim Extrahieren der Daten die angewandte Operation wieder rückgängig gemacht werden kann. Es können also keine wirklich zufälligen generierten Daten zum Einsatz kommen. 
 	
 	Man verwendet hier vor allem sogenannte Pseudozufallsgeneratoren, welche lediglich die Eigenschaften von echten zufälligen Ereignissen nachahmen, bei Bedarf aber beliebig oft wiederholt werden können. Dadurch ist sichergestellt, dass sich die angewandten Operationen auch wieder rückgängig machen lassen. Es werden auch oft Methoden aus der Kryptologie verwendet, welche nicht nur herausragende Ergebnisse in Hinsicht auf Zufälligkeit erzielen, sondern zugleich auch die Daten mit Hilfe eines Schlüssel schützen.
 	 
@@ -26,20 +26,17 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1]{images/L-whitening-clear.png}
+		\includegraphics[width=.8\linewidth]{images/L-whitening-clear.png}
 		\caption[Streudiagramm ASCII Text]{Hier deutlich zu erkennen die verwendeten ASCII Zeichen.}
 		\label{fig:L: Whitening Clear}
 	\end{figure}
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1]{images/L-whitening-random.png}
+		\includegraphics[width=.8\linewidth]{images/L-whitening-random.png}
 		\caption[Streudiagramm zufällige Daten]{In diesen zufälligen Daten kann kein Muster erkannt werden.}
 		\label{fig:L: Whitening Random}
 	\end{figure}
-	
-	\ltodo{Höhere Auflösung für Whitening Diagramme https://docs.google.com/spreadsheets/d/1xDMWNJa9r2ggmzPAmDgE8qYJ5hk-8Hh9ZFuKrGrx7Gw}
-	
 	
 	
 	
@@ -49,42 +46,43 @@
 	
 	Bei Verfahren, welche auf Pseudozufallsgeneratoren bauen, ist die größte Stärke auch gleich die größte Schwäche: ''Sie sind vorhersehbar''. Sie schützen zwar das Steganogramm vor unwissenden Dritten, wie so oft aber nicht, wenn jemand gezielt danach sucht. Ihre sehr beschränkte Anzahl an Seeds und die Reproduzierbarkeit führen dazu, dass ein Angreifer sehr einfach auf die gängigsten Generatoren testen kann. 
 	\\
-	Das hier zur Anwendung kommende Prinzip ''Security through obscurity'' war bereits zu Beginn des 20. Jahrhunderts bekannt und auch als nicht sicher eingestuft. Das bekannteste Beispiel für Security through obscurity ist, einen nicht standardisierten Port für eine Webanwendung zu verwenden. Dies schützt zwar vor automatisierten Bots, ein gezielter Angriff hebelt diesen ''Sicherheitsmechanismus'' jedoch innerhalb von Minuten aus. Genauso ist es mit schwachen Whitening-Verfahren welche auf dieses Prinzip setzen.
+	Das hier zur Anwendung kommende Prinzip ''Security through obscurity'' war bereits zu Beginn des 20. Jahrhunderts bekannt und auch als nicht sicher eingestuft. Das bekannteste Beispiel für Security through obscurity ist, einen nicht standardisierten Port für eine Webanwendung zu verwenden. Dies schützt zwar vor automatisierten Bots, ein gezielter Angriff hebelt diesen ''Sicherheitsmechanismus'' jedoch innerhalb von Minuten aus. Genauso ist es mit schwachen Whitening-Verfahren, welche auf dieses Prinzip setzen.
 	\\
 	In dem nachfolgenden Beispiel wird als Whitening der Datenstrom mit Hilfe der XOR-Operation mit einem Pseudozufallszahlengeneratordatenstrom verknüpft. Zum Einsatz kommt hier ein Kongruenzgenerator, wie er auch in der Standard Java Klasse java.lang.Random verwendet wird.  
 	
 	\cite{L-Kongruenzgenerator}
 	
 	
-	\begin{figure}[H]
-	\begin{tabular}{|l|l|c|c|c|c|c|c|}
-		\hline 
-		& Byte 1 & Byte 2 & Byte 3 & Byte 4 & Byte 5 & Byte 6 \\ 
-		\hline 
-		Inhalt  & L & o & r & e & m &   \\ 
-		\hline 
-		Datenstrom & 76 & 111 & 114 & 101 & 109 & 32 \\ 
-		\hline 
-		Random (Seed=0) & 187 & 212 & 61 & 155 & 163 & 79 \\ 
-		\hline 
-		Datenstrom XOR Random & 247 & 187 & 79 & 254 & 206 & 111 \\ 
-		\hline 
-	\end{tabular} 
-\label{fig:L: Whitening Random Tabelle}	
-\end{figure}
+	\begin{table}[H]
+		\begin{tabular}{|l|l|c|c|c|c|c|c|}
+			\hline 
+			& Byte 1 & Byte 2 & Byte 3 & Byte 4 & Byte 5 & Byte 6 \\ 
+			\hline 
+			Inhalt  & L & o & r & e & m &   \\ 
+			\hline 
+			Datenstrom & 76 & 111 & 114 & 101 & 109 & 32 \\ 
+			\hline 
+			Random (Seed=0) & 187 & 212 & 61 & 155 & 163 & 79 \\ 
+			\hline 
+			Datenstrom XOR Random & 247 & 187 & 79 & 254 & 206 & 111 \\ 
+			\hline 
+		\end{tabular} 
+		\label{fig:L: Whitening Random Tabelle}	
+		\caption{Whitening Beispiel}
+	\end{table}
 	
 	Wenn der Inhalt wiederhergestellt werden soll, muss nur von unten nach oben alles wieder rückgängig gemacht werden.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1]{images/L-whitening-vergleich.png}
+		\includegraphics[width=.8\linewidth]{images/L-whitening-vergleich.png}
 		\caption[Streudiagramm Vergleich Random/ASCII]{In diesem Vergleich ist gut zu sehen, dass nach Anwendung von diesem Verfahren der Datenstrom nicht mehr von zufälligen Werten unterscheidbar ist.}
 		\label{fig:L: Whitening Random Vergleich}
 	\end{figure}
 	
 	\subsubsection {AES-256 Verschlüsselung mit Key}
 	
-	Es kann auch die Eigenschaft von Verschlüsselung genutzt werden, Daten derart zu verarbeiten, dass sie nicht mehr von zufälligen Werten unterscheidbar ist. In dem nachfolgenden Beispiel wird die zurzeit als sicher geltende AES-256 Verschlüsselung verwendet. 
+	Es kann auch die Eigenschaft von Verschlüsselung genutzt werden, Daten derart zu verarbeiten, dass sie nicht mehr von zufälligen Werten unterscheidbar sind. In dem nachfolgenden Beispiel wird die zurzeit als sicher geltende AES-256 Verschlüsselung verwendet. 
 	
 	Folgende Java Funktion wurde für die Verschlüsselung des Plaintext verwendet:
 	\lstinputlisting[firstline=30,lastline=42,caption={AESVerfahren.java},label={fig:L: AES Java}]{sources/AESVerfahren.java}
@@ -92,7 +90,7 @@
 	Wenn man die daraus resultierenden Daten auswertet, lässt sich wieder der gewünschte Whitening-Effekt beobachten. 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1]{images/L-whitening-aes.png}
+		\includegraphics[width=.8\linewidth]{images/L-whitening-aes.png}
 		\caption[Streudiagramm Vergleich Random/AES]{Vergleich zwischen AES verschlüsselten Daten und zufälligen Werten.}
 		\label{fig:L: Whitening AES}
 	\end{figure}
@@ -129,7 +127,7 @@
 	Die zyklische Redundanzprüfung basiert auf Polynomdivison. Es wird ein CRC-Polynom gewählt,  dessen Koeffizienten entweder 1 oder 0 sind. So entspricht etwa die Bitfolge 110101 dem Polynom $ x^{5} + x^{4} + x^{2} + 1$. 
 	
 	
-	Die zu prüfende Bitfolge wird nun mit einem Padding aus $n$ Nullen versehen, wobei $n$ dem Grad es Polynoms entspricht. Das Ergebnis wird durch das CRC-Polynom dividiert, der Rest der Division an die ursprüngliche Bitfolge ohne Padding angehängt und das Ganze dann übertragen. Dabei muss beachtet werden, dass bei der Division ausschließlich der XOR-Operator verwendet wird.
+	Die zu prüfende Bitfolge wird nun mit einem Padding aus $n$ Nullen versehen, wobei $n$ dem Grad des Polynoms entspricht. Das Ergebnis wird durch das CRC-Polynom dividiert, der Rest der Division an die ursprüngliche Bitfolge ohne Padding angehängt und das Ganze dann übertragen. Dabei muss beachtet werden, dass bei der Division ausschließlich der XOR-Operator verwendet wird.
 	
 	
 	Auf der Empfängerseite wird die gesamte übertragene Bitfolge erneut durch das CRC-Polynom dividiert. Beträgt der Rest Null, dann ist entweder kein Fehler aufgetreten oder ein sehr unwahrscheinlicher. 
@@ -139,62 +137,31 @@
 	\cite{L-Fehlererkennung}
 	
 	
-	Aus diesem Grund wird in den Beispielen die Kodierung aus \ref{L: Kodierung Payload} für die Payload verwendet.
-	\begin{table}[]
+	Aus diesem Grund wird in den Beispielen die Kodierung aus \autoref{L: Kodierung Payload} für die Payload verwendet.
+	\begin{figure}
 		\centering
+		\includegraphics[width=.8\linewidth]{images/L-Koding.png}
 		\caption{Kodierungstabelle der Payload}
 		\label{L: Kodierung Payload}
-		\begin{tabular}{|lll|lll|lll|lll|}
-			\hline
-			\textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} \\ \hline
-			A                & 0            & 000000        & I                & 8            & 001000        & Q                & 16           & 010000        & Y                & 24           & 011000        \\
-			B                & 1            & 000001        & J                & 9            & 001001        & R                & 17           & 010001        & Z                & 25           & 011001        \\
-			C                & 2            & 000010        & K                & 10           & 001010        & S                & 18           & 010010        & Leerzeichen      & 26           & 011010        \\
-			D                & 3            & 000011        & L                & 11           & 001011        & T                & 19           & 010011        & .                & 27           & 011011        \\
-			E                & 4            & 000100        & M                & 12           & 001100        & U                & 20           & 010100        & ,                & 28           & 011100        \\
-			F                & 5            & 000101        & N                & 13           & 001101        & V                & 21           & 010101        & ?                & 29           & 011101        \\
-			G                & 6            & 000110        & O                & 14           & 001110        & W                & 22           & 010110        & !                & 30           & 011110        \\
-			H                & 7            & 000111        & P                & 15           & 001111        & X                & 23           & 010111        & ''               & 31           & 011111        \\
-			\hline
-		\end{tabular}
-	\end{table}
-%	\begin{table}[]
-%		\centering
-%		\caption{Kodierungstabelle der Payload}
-%		\label{L: Kodierung Payload}
-%		\begin{tabular}{|lll|lll|lll|lll|}
-%			\hline
-%			\textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} & \textbf{Zeichen} & \textbf{DEC} & \textbf{BIN} \\ \hline
-%			A                & 32            & 100000        & I                & 40           & 101000        & Q                & 48           & 110000        & Y                & 56           & 111000        \\
-%			B                & 33            & 100001        & J                & 41           & 101001        & R                & 49           & 110001        & Z                & 57           & 111001        \\
-%			C                & 34            & 100010        & K                & 42           & 101010        & S                & 50           & 110010        & Zeilenumbruch    & 58           & 111010        \\
-%			D                & 35            & 100011        & L                & 43           & 101011        & T                & 51           & 110011        & >                & 59           & 111011        \\
-%			E                & 36            & 100100        & M                & 44           & 101100        & U                & 52           & 110100        & <                & 60           & 111100        \\
-%			F                & 37            & 100101        & N                & 45           & 101101        & V                & 53           & 110101        & (                & 61           & 111101        \\
-%			G                & 38            & 100110        & O                & 46           & 101110        & W                & 54           & 110110        & )                & 62           & 111110        \\
-%			H                & 39            & 100111        & P                & 47           & 101111        & X                & 55           & 110111        & End of Message   & 63           & 111111        \\
-%			\hline
-%		\end{tabular}
-%	\end{table}
-	
+	\end{figure}
 	
 	\subsection{Least Significant Bit Verfahren}
 	
 	Das Least Significant Bit (LSB) Verfahren nützt die Tatsache aus, dass der Farbraum einer modernen Bilddatei sehr groß ist\footnote{Bei den meisten Formaten 24-Bit, wodurch 16,777,216 Farben dargestellt werden können}. Dadurch ist es für das menschliche Auge  schwierig, sehr ähnliche Farbtöne zu unterscheiden. Computerprogramme können nun gezielt einzelne Farben manipulieren, um Informationen in den Pixel des Bildes zu kodieren. 
 	
-	Bei einem 24-Bit RGB Bild besteht jeder Farbkanal aus 8 Bit. Um die Nachricht zu kodieren, wird das LSB von einem oder mehreren der Farbkanäle des Pixel auf den jeweiligen Wert aus der kodierten Nachricht gesetzt. Da das LSB nur einen wertmäßigen Unterschied von +/-1 ausmacht wenn es verändert wird, fällt diese Änderung kaum auf. Wenn wir bei einem Pixel einen der Farbkanäle bearbeiten, verändern wir den Farbwert des Kanals um $\frac{1}{256} = 0.39\% $. Der Farbwert des Pixel ändert sich sogar nur um $ \frac{1}{16777216} = 0.00000596\% $. Es ist so gut wie unmöglich, mit dem freien Auge hier noch einen Unterschied zu erkennen.
+	Bei einem 24-Bit RGB Bild besteht jeder Farbkanal aus 8 Bit. Um die Nachricht zu kodieren, wird das LSB von einem oder mehreren der Farbkanäle des Pixel auf den jeweiligen Wert aus der kodierten Nachricht gesetzt. Da das LSB nur einen wertmäßigen Unterschied von +/-1 ausmacht, wenn es verändert wird, fällt diese Änderung kaum auf. Wenn wir bei einem Pixel einen der Farbkanäle bearbeiten, verändern wir den Farbwert des Kanals um $\frac{1}{256} = 0.39\% $. Der Farbwert des Pixel ändert sich sogar nur um $ \frac{1}{16777216} = 0.00000596\% $. Es ist so gut wie unmöglich, mit dem freien Auge hier noch einen Unterschied zu erkennen.
 	
 	Ein große Rolle spielt, wieviel Trägermaterial zur Verfügung steht und wie viele Daten darin eingebettet werden. Je nachdem kann man die einzelnen Bits weiter verteilen oder muss sogar mehrere Bits auf ein Pixel legen.
-	Es ist auch durchaus sinnvoll diverse Prüfsummen in die eingebetteten Daten einzubauen um sicher zu stellen das die extrahierten Daten auch keine Fehler enthalten. Wenn genug Platz zur Verfügung steht ist es auch möglich die Daten redundant zu speichern.
+	Es ist auch durchaus sinnvoll diverse Prüfsummen in die eingebetteten Daten einzubauen, um sicher zu stellen, dass die extrahierten Daten auch keine Fehler enthalten. Wenn genug Platz zur Verfügung steht, ist es auch möglich die Daten redundant zu speichern.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.7]{images/L-lsb-entwurf.png}
+		\includegraphics[width=.8\linewidth]{images/L-lsb-entwurf.png}
 		\caption{LSB Verfahren Erklärung}
 		\label{fig:L: LSB in Bitmap}
 	\end{figure}
 	
-	In dem Beispiel aus \ref{fig:L: LSB Tabelle} wurde eine Datendichte von einem Zeichen pro Pixel gewählt. Bei einem Bild mit 2  Megapixel lassen sich bis zu 2 Millionen Zeichen abspeichern. Das Buch ''Schöne neue Welt'' von Aldous Huxley hat rund 430.000 Zeichen, geht sich also bereits vier Mal in einem doch recht kleinen Bild aus. Das setzt aber voraus, dass die in \ref{L: Kodierung Payload} angeführte Kodierungstabelle verwendet wird. Diese unterstützt aber weder Kleinbuchstaben noch Zeilenumbrüche, Umlaute oder Zahlen. Das Buch wäre durchaus noch lesbar, aber eben doch recht umständlich. In der ASCII Kodierung hat das Buch eine Größe von 449.414 Bytes, also 3.595.312 Bits. Bei einer Datendichte von 6 Bit / Pixel geht sich das Buch dennoch in einem 2 Megapixel großen Bild aus.
+	In dem Beispiel aus \autoref{fig:L: LSB Tabelle} wurde eine Datendichte von einem Zeichen pro Pixel gewählt. Bei einem Bild mit 2  Megapixel lassen sich bis zu 2 Millionen Zeichen abspeichern. Das Buch ''Schöne neue Welt'' von Aldous Huxley hat rund 430.000 Zeichen, geht sich also bereits vier Mal in einem doch recht kleinen Bild aus. Das setzt aber voraus, dass die in \autoref{L: Kodierung Payload} angeführte Kodierungstabelle verwendet wird. Diese unterstützt aber weder Kleinbuchstaben noch Zeilenumbrüche, Umlaute oder Zahlen. Das Buch wäre durchaus noch lesbar, aber eben doch recht umständlich. In der ASCII Kodierung hat das Buch eine Größe von 449.414 Bytes, also 3.595.312 Bits. Bei einer Datendichte von 6 Bit / Pixel geht sich das Buch dennoch in einem 2 Megapixel großen Bild aus.
 	
 	\begin{figure}[H]
 		\centering
@@ -219,11 +186,11 @@
 		\label{fig:L: LSB Tabelle}
 	\end{figure}
 	
-	In dem in \ref{fig:L: LSB Earth} gezeigten Beispiel wurde das Buch ''Schöne neue Welt'' in ein Bild der Erde integriert. Verwendet wurde das in \ref{fig:L: LSB Java} gezeigte Java-Programm. Die kurze Länge des Programms zeigt, dass dieses Verfahren sehr einfach zu implementieren ist. Man kann durchaus, egal wo man sich gerade befindet, mit Hilfe eines Computers ein Programm schreiben und geheime Nachrichten versenden. Durch den  zusätzlichen Einsatz von Whitening kann also von überall aus eine steganografisch sichere Datenübermittlung stattfinden. 
+	In dem in \autoref{fig:L: LSB Earth} gezeigten Beispiel wurde das Buch ''Schöne neue Welt'' in ein Bild der Erde integriert. Verwendet wurde das in \autoref{fig:L: LSB Java} gezeigte Java-Programm. Die kurze Länge des Programms zeigt, dass dieses Verfahren sehr einfach zu implementieren ist. Man kann durchaus, egal wo man sich gerade befindet, mit Hilfe eines Computers ein Programm schreiben und geheime Nachrichten versenden. Durch den  zusätzlichen Einsatz von Whitening kann also von überall aus eine steganografisch sichere Datenübermittlung stattfinden. 
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.3]{images/L-schoene-neue-earth.png}
+		\includegraphics[width=.8\linewidth]{images/L-earth.png}
 		\caption[LSB Beispiel]{In diesem Bild wurde ein ganzes Buch versteckt, trotzdem ist es nicht vom Original zu unterscheiden.}
 		\label{fig:L: LSB Earth}
 	\end{figure}
@@ -231,11 +198,11 @@
 	\lstinputlisting[caption={LSBVerfahren.java},label={fig:L: LSB Java}]{sources/LSBVerfahren.java}
 
 	
-	Wenn die einzubettenden Daten nicht den gesamten verfügbaren ''Speicherplatz'' innerhalb des Steganogramms verwenden, sollte unbedingt ein Padding aus zufälligen Daten hinzugefügt werden. Sonst können sich deutliche Unterschiede in dem Aussehen des Bildes ergeben, wenn es große, einfarbige Flächen besitzt. Diesen Effekt kann man in \ref{fig:L: LSB No Padding} deutlich erkennen.
+	Wenn die einzubettenden Daten nicht den gesamten verfügbaren ''Speicherplatz'' innerhalb des Steganogramms verwenden, sollte unbedingt ein Padding aus zufälligen Daten hinzugefügt werden. Sonst können sich deutliche Unterschiede in dem Aussehen des Bildes ergeben, wenn es große, einfarbige Flächen besitzt. Diesen Effekt kann man in \autoref{fig:L: LSB No Padding} deutlich erkennen.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.3]{images/L-lsb-sichtbare-einbettung.png}
+		\includegraphics[width=.8\linewidth]{images/L-lsb-sichtbare-einbettung.png}
 		\caption[LSB Vergleich mit und ohne Daten]{Auf der linken Seite befinden sich eingebettete Daten, auf der rechten Seite nicht. Innerhalb des Kreises wurde der Effekt verstärkt dargestellt.}
 		\label{fig:L: LSB No Padding}
 	\end{figure}
@@ -246,17 +213,17 @@
 	
 	\subsubsection{Varianten des Least Significant Bit Verfahren}
 	
-	Das LSB Verfahren gibt es in zahlreichen Varianten und Abstufungen. Deswegen ist es durchaus eine Herausforderung, automatische Erkennungsverfahren für diese Steganogramme zu entwickeln. Des weiteren kommt es häufig vor, dass die eingebetteten Daten verschlüsselt wurden, was eine automatisch Erkennung beinahe unmöglich macht. 
+	Das LSB Verfahren gibt es in zahlreichen Varianten und Abstufungen. Deswegen ist es durchaus eine Herausforderung, automatische Erkennungsverfahren für diese Steganogramme zu entwickeln. Des Weiteren kommt es häufig vor, dass die eingebetteten Daten verschlüsselt wurden, was eine automatische Erkennung beinahe unmöglich macht. 
 	
 	Selbstverständlich kann das LSB Verfahren nicht nur auf verlustfreie Bildformate wie PNG Dateien angewendet werden. Es gibt auch Implementierungen, welche Musikdateien oder verlustbehaftete Bildformate wie JPEG als Trägerdatei verwenden. 
 	
-	Der bekannteste Algorithmus dafür ist JSteg. Bei jedem verlustbehafteten Format gibt es irgendwann einen Teil, wo Daten, auch wenn bereits komprimiert, verlustfrei gespeichert werden. Das nützt JSteg aus und wendet dort das LSB Verfahren an. Bei dem JPEG Format geschieht dies wie in \ref{} gezeigt, nach dem verlustbehafteten Teil des JPEG Algorithmus.  Es wird dabei darauf geachtet, dass nur Bits verändert werden, welche eine möglichst geringe Auswirkung auf das originale Bild haben. 
+	Der bekannteste Algorithmus dafür ist JSteg. Bei jedem verlustbehafteten Format gibt es irgendwann einen Teil, wo Daten, auch wenn bereits komprimiert, verlustfrei gespeichert werden. Das nützt JSteg aus und wendet dort das LSB Verfahren an. Bei dem JPEG Format geschieht dies wie in \autoref{fig:L: LSB Jpeg-Algorithm} gezeigt, nach dem verlustbehafteten Teil des JPEG Algorithmus.  Es wird dabei darauf geachtet, dass nur Bits verändert werden, welche eine möglichst geringe Auswirkung auf das originale Bild haben. 
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.9]{images/L-jsteg.png}
+		\includegraphics[width=.8\linewidth]{images/L-jsteg.png}
 		\caption[JPEG Algorithmus]{Die Daten werden im verlustfreien Teil des JPEG Algorithmus hinzugefügt.}
-		\label{fig:L: LSB No Padding}
+		\label{fig:L: LSB Jpeg-Algorithm}
 	\end{figure}
 
 	\cite{L-Jpeg-Algorithm}
@@ -267,14 +234,14 @@
 	
 	\subsubsection {OpenStego}
 	
-	Die bekannte Steganographie App hat eine Variante des LSB-Verfahren implementiert. Zusätzlich unterstützt sie auch noch die Verwendung eines Passwort zum schützen des Inhalt. 
-	Es gibt sowohl Vorteile als auch Nachteile bei dieser Implementierung. Der Vorteil ist: Jeder kann sich die App herunterladen und verwenden, ohne viel über Programmieren und Kryptographie wissen zu müssen. Außerdem ist das Verfahren standardisiert, wodurch sich keine Probleme bei Fehlimplementierungen ergeben kann. Der große Nachteil ist die Tatsache das dieses Programm sehr bekannt ist und wenn jemand vermutet das sich in einem Bild versteckte Informationen befinden, wird er als erstes Verfahren OpenStego überprüfen.
+	Die bekannte Steganographie App hat eine Variante des LSB-Verfahren implementiert. Zusätzlich unterstützt sie auch noch die Verwendung eines Passwort zum Schützen des Inhalts. 
+	Es gibt sowohl Vorteile als auch Nachteile bei dieser Implementierung. Der Vorteil ist: Jeder kann sich die App herunterladen und verwenden, ohne viel über Programmieren und Kryptographie wissen zu müssen. Außerdem ist das Verfahren standardisiert, wodurch sich keine Probleme bei Fehlimplementierungen ergeben kann. Der große Nachteil ist die Tatsache, dass dieses Programm sehr bekannt ist und wenn jemand vermutet, dass sich in einem Bild versteckte Informationen befinden, wird er als erstes Verfahren OpenStego überprüfen.
 	
 	\subsection{Barcode Verfahren}
 	
 	Das Barcodeverfahren ist ein selbsterfundenes Verfahren, welches einen Barcode in einem Bild versteckt. Dies geschieht, indem das Bild zuerst in ein 8-Bit Graustufenbild konvertiert und anschließend das Histogramm des Bildes generiert wird. 
 	
-	Ein Histogramm ist eine grafische Abbildung der Anzahl einzelner Farbwerte. In das  \ref{fig:L: Barcode Example}  wurde das Bild zuerst in ein 8-Bit Graustufenbild umgewandelt, die entstehenden 256 verschiedenen Werte gezählt und grafisch dargestellt. 
+	Ein Histogramm ist eine grafische Abbildung der Anzahl einzelner Farbwerte. In das  \autoref{fig:L: Barcode Example}  wurde das Bild zuerst in ein 8-Bit Graustufenbild umgewandelt, die entstehenden 256 verschiedenen Werte gezählt und grafisch dargestellt. 
 	
 	Wenn man nun das Bild gezielt so bearbeitet, dass bestimmte Farbwerte nicht mehr vorkommen, dann ergeben sich dadurch auch im Histogramm entsprechende Spalten. Mit dieser Hilfe kann nun jedes beliebige eindimensionale Barcodeformat eingebettet werden.
 	
@@ -282,8 +249,8 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.13]{images/L-earth.png}
-		\includegraphics[scale=0.4]{images/L-barcode-example.png}
+		\includegraphics[width=.3\linewidth]{images/L-earth.png}
+		\includegraphics[width=.65\linewidth]{images/L-barcode-example.png}
 		\caption{Histogramm eines Bildes}
 		\label{fig:L: Barcode Example}
 	\end{figure}
@@ -291,11 +258,11 @@
 	
 	Damit gängige Barcodescanner jedoch den Barcode wahrnehmen können, muss das Histogramm grafisch gewisse Anforderungen erfüllen. Die meisten vorhandenen Histogramm-Generatoren stellen das Resultat in einer schönen ansprechenden Form dar, \zb wird der Graph geglättet und in Farbe hinterlegt. Barcodescanner brauchen aber schwarze Striche, welche deutlich voneinander unterscheidbar sind. Deshalb muss ein spezieller Barcodegenerator verwendet werden.
 	
-	 Ein Beispiel für einen solchen Generator findet sich in \ref{fig:L: HistogramViewer}. Dieses Programm generiert dann für Barcodescanner verwendbare Histogramme, wie in \ref{fig:L: Barcode Histogram Example} gezeigt wird. In diesem Beispiel wurde das gängige Barcodeformat CODE\_128 verwendet und der Text ''Simon Lehner-D.'' damit kodiert.
+	 Ein Beispiel für einen solchen Generator findet sich in \autoref{fig:L: HistogramViewer}. Dieses Programm generiert dann für Barcodescanner verwendbare Histogramme, wie in \autoref{fig:L: Barcode Histogram Example} gezeigt wird. In diesem Beispiel wurde das gängige Barcodeformat CODE\_128 verwendet und der Text ''Simon Lehner-D.'' damit kodiert.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1.5]{images/L-histogram-viewer-output.png}
+		\includegraphics[width=.8\linewidth]{images/L-histogram-viewer-output.png}
 		\caption{Barcode Histogramm Beispiel}
 		\label{fig:L: Barcode Histogram Example}
 	\end{figure}
@@ -314,12 +281,11 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1.5]{images/L-stereogram-example.jpg}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-example.jpg}
 		\caption[Stereogramm Beispiel]{Beispiel für ein Stereogramm \footnote{\url{[http://www.deviantart.com/art/stereogram-V-U-D-04-435056014]}}}
 		\label{fig:L: Stereogramm Example}
 	\end{figure}
 
-	
 	Es gibt verschiedene Techniken, um Stereogramme zu erstellen, die sich vor allem durch die Wahl des Trägermaterials unterscheiden.
 	
 	\begin{itemize}
@@ -330,17 +296,17 @@
 		
 		\item Single image stereogram (SIS) 
 		
-		Einzelbildstereogramme, auch oft Autostereogramm genannt, verwenden, wie der Name schon sagt, nur ein einzelnes Trägerbild, um die Formen zu beinhalten. Dazu benötigen sie ein sich wiederholendes Muster, in welches mit Hilfe eines Programms und einer Depthmap die Formen hinzugefügt werden.\ltodo{was ist eine Dephtmap wir leben in der Vergangenheit}
+		Einzelbildstereogramme, auch oft Autostereogramm genannt, verwenden, wie der Name schon sagt, nur ein einzelnes Trägerbild, um die Formen zu beinhalten. Dazu benötigen sie ein sich wiederholendes Muster, in welches mit Hilfe eines Programms und einer Depthmap\footnote{Eine Depthmap ist ein Schwarz-/Weißbild dessen Grauwerte Höhen-/Tiefenwerte angeben.} die Formen hinzugefügt werden.
 		
 		Grundsätzlich kann jede der hier genannten Techniken auch Autostereogramme erzeugen.
 		
 		\item Random dot stereogram (RDS)
 		
-		Bei diesem werden Bilder verwendet, die aus zufälligen Punkten bestehen, um dreidimensionale Formen darzustellen. Dadurch ist es oft auf den ersten Blick nicht gleich ersichtlich, dass es sich hier um ein Stereogramm handelt.
+		Bei diesem werden Bilder verwendet, die aus zufälligen Punkten bestehen, um dreidimensionale Formen darzustellen. Dadurch ist es oft auf dem ersten Blick nicht gleich ersichtlich, dass es sich hier um ein Stereogramm handelt.
 		
 		\item Text stereogram
 		
-		Als Trägermaterial wird ausschließlich Text verwendet. Ein Beispiel dafür ist unter \ref{fig:L: Stereogramm Example ASCII} zu sehen.
+		Als Trägermaterial wird ausschließlich Text verwendet. Ein Beispiel dafür ist unter \autoref{fig:L: Stereogramm Example ASCII} zu sehen.
 		
 		\item Map textured stereogram 
 		
@@ -350,7 +316,7 @@
 		
 		\item Wallpaper stereogram / object array stereogram
 		
-		Bei einem Objekt Array Stereogramm wird ein und dasselbe Bild mehrere Male wiederholt. Dabei werden aber die Abstände von einzelnen Elementen des Bild unterschiedlich gewählt um den gewünschten 3D Effekt zu erzielen.
+		Bei einem Objekt Array Stereogramm wird ein und dasselbe Bild mehrere Male wiederholt. Dabei werden aber die Abstände von einzelnen Elementen des Bildes unterschiedlich gewählt, um den gewünschten 3D Effekt zu erzielen.
 		
 		
 	\end{itemize}
@@ -359,34 +325,35 @@
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1.0]{images/L-stereogram-ascii.png}
-		\caption[Text Stereogramm]{Beispiel für ein Text Stereogramm}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-ascii.png}
+		\caption[Text Stereogramm]{Beispiel für ein Text Stereogramm\protect\footnotemark}
 		\label{fig:L: Stereogramm Example ASCII}
 	\end{figure}
-	\ltodo{Quelle: https://web.archive.org/web/20080517013244/archive.museophile.org/3d/ascii-3d.html}
+	\footnotetext{\url{https://web.archive.org/web/20080517013244/archive.museophile.org/3d/ascii-3d.html}}
+
 	
 	
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.40]{images/L-stereogram-tree.jpg}
-		\caption[Objekt-Array Stereogramm]{Beispiel für ein Objekt-Array Stereogramm}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-tree.jpg}
+		\caption[Objekt-Array Stereogramm]{Beispiel für ein Objekt-Array Stereogramm\protect\footnotemark}
 		\label{fig:L: Stereogramm Example Object Array}
 	\end{figure}
-	\ltodo{Quelle: http://www.pakin.org/~scott/stereograms/}
+	\footnotetext{\url{http://www.pakin.org/~scott/stereograms/}}
 	
-	Aus diesen Techniken ergeben sich nun einige praktische Anwendungsmöglichkeiten, welche im Folgenden genauer bearbeitet werden. Des weiteren werden Hilfmittel gezeigt, mit deren Hilfe man Stereogramme automatisch entdecken und entschlüsselt darstellen kann.
+	Aus diesen Techniken ergeben sich nun einige praktische Anwendungsmöglichkeiten, welche im Folgenden genauer bearbeitet werden. Des Weiteren werden Hilfsmittel gezeigt, mit deren Hilfe man Stereogramme automatisch entdecken und entschlüsselt darstellen kann.
 	
 	
 	\subsubsection{Erzeugen von Stereogrammen mithilfe einer Depth Map}
 	
-	Zuerst benötigt man sowohl ein gutes Muster als Grundlage, als auch eine sogenannte Depth Map. Depth-Maps sind im Grunde einfach Schwarz-Weiß Bilder bei denen der Weißwert jedes Pixels die Tiefe/Höhe der jeweiligen Position angibt.
-	Beide Teile gibt es zahlreich im Internet. Bei Bedarf können Depth Maps auch mit einer geeigneten 3D-Grafiksuite wie etwa Blender erzeugt werden. Aber auch einfache Bildbearbeitungsprogramme sind gut dazu geeignet,vor allem Text als Depth Map abzuspeichern.
+	Zuerst benötigt man sowohl ein gutes Muster als Grundlage, als auch eine sogenannte Depth Map. Depth Maps sind im Grunde einfach Schwarz-Weiß Bilder bei denen der Weißwert jedes Pixels die Tiefe/Höhe der jeweiligen Position angibt.
+	Beide Teile gibt es zahlreich im Internet,bei Bedarf können Depth Maps auch mit einer geeigneten 3D-Grafiksuite, wie etwa Blender. erzeugt werden. Aber auch einfache Bildbearbeitungsprogramme sind gut dazu geeignet,vor allem Text als Depth Map abzuspeichern.
 	
-	Dabei gilt der Grundsatz: Je einfacher das dargestellte Objekt in der Depth Map, desto einfacher ist es auch, das Stereogramm ohne technische Hilfsmittel dreidimensional sehen zu können.
+	Dabei gilt der Grundsatz: Je einfacher das dargestellte Objekt in der Depth Map, desto einfacher ist es auch das Stereogramm ohne technische Hilfsmittel dreidimensional sehen zu können.
 	
 	
-	Um das Stereogramm nun zu erzeugen, wird ein neues, leeres Bild erzeugt mit derselben Größe wie die Depth Map. Auf diesem Bild wird nun das gewählte Muster auf dem linken Rand hineinkopiert, sodass es von oben bis unten einen Streifen mit dem Muster bildet. Die Größe dieses Grundstreifens wird von nun an $N$ genannt, und gibt an, um wie viel die Augen das Bild verschieben müssen, um den dreidimensionalen Effekt sehen zu können. 
+	Um das Stereogramm nun zu erzeugen, wird ein neues, leeres Bild mit derselben Größe wie die Depth Map erzeugt. Auf diesem Bild wird nun das gewählte Muster auf dem linken Rand hineinkopiert, sodass es von oben bis unten einen Streifen mit dem Muster bildet. Die Größe dieses Grundstreifens wird von nun an $N$ genannt und gibt an, um wie viel die Augen das Bild verschieben müssen, um den dreidimensionalen Effekt sehen zu können. 
 	
 	Die restlichen noch leeren Teile des Bildes werden nun erzeugt, indem immer das Pixel auf derselben Höhe um $N$ nach links verschoben kopiert wird. Um den gewünschten Tiefeneffekt zu bekommen, wird noch jeweils ein Offset hinzugefügt, das dem Wert der aktuellen Position auf der Depth Map entspricht.
 	
@@ -400,23 +367,23 @@
 	$$
 
 	\begin{itemize}
-		\item \textbf{$E(x,y)$} das resultierende Stereogramm
-		\item \textbf{$M(x,y)$} das Muster welches als Grundlage verwendet werden soll.
-		\item \textbf{$D(x,y)$} die Depth Map $[0.0;1.0]$
-		\item \textbf{$s$} ein Faktor der Angibt wie groß der Tiefeneffekt sein soll $[0.0;N]$
+		\item \textbf{$E(x,y)$}: das resultierende Stereogramm
+		\item \textbf{$M(x,y)$}: das Muster, welches als Grundlage verwendet werden soll.
+		\item \textbf{$D(x,y)$}: die Depth Map $[0.0;1.0]$
+		\item \textbf{$s$}: ein Faktor der Angibt wie groß der Tiefeneffekt sein soll $[0.0;N]$
 	\end{itemize}
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=1]{images/L-stereogram-anleitung.png}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-anleitung.png}
 		\caption[Autostereogramm Generierung Erklärung]{Die Pixel werden je nach Depth Map vom linken Strich + Offset zu dem rechten Kopiert.}
 		\label{fig:L: Stereogramm Anleitung}
 	\end{figure}
 
-	Wiederholt man diesen Vorgang über das gesamte Bild ergibt sich dann folgendes Stereogramm.
+	Wiederholt man diesen Vorgang über das gesamte Bild, ergibt sich dann folgendes Stereogramm.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.4]{images/L-stereogram-selber.png}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-selber.png}
 		\caption[Autostereogramm Generierung Ergebnis]{Kaum zu erkennen sind die versteckten Formen.}
 		\label{fig:L: Stereogramm Anleitung}
 	\end{figure}
@@ -428,7 +395,7 @@
 	
 	\subsubsection{Steganographie mithilfe von Stereogrammen}
 	
-	Ein Autostereogramm ist eigentlich schon ein Steganogramm, da ja der eigentliche Inhalt auf den ersten Blick nicht ersichtlich ist. Wenn man ein Schwarz/Weiß Bild mit Text drauf als Depth Map verwendet, ergibt das ein Stereogramm welches einen geheimen Text enthält. 
+	Ein Autostereogramm ist eigentlich schon ein Steganogramm, da ja der eigentliche Inhalt auf dem ersten Blick nicht ersichtlich ist. Wenn man ein Schwarz/Weiß Bild mit Text drauf als Depth Map verwendet, ergibt das ein Stereogramm, welches einen geheimen Text enthält. 
 	
 	
 	\subsubsection{Grafisches Hilfsmittel zum Entschlüsseln von Stereogrammen}
@@ -439,29 +406,35 @@
 	
 	Das Wort Composite kommt aus dem Englischen und bedeutet so viel wie Zusammensetzung oder Gemisch. Im Sinne von Bildbearbeitung ist damit gemeint, auf welche Art und Weise die Pixel miteinander verbunden werden sollen. Für Stereogramme müssen die Pixel voneinander subtrahiert werden, es wird also die Differenz der Pixel benötigt. Daher auch die entsprechende Einstellung. 
 	
-	Wenn der Bedarf da ist, des öfteren Stereogramme zu entschlüsseln, dann ist es oft hilfreich, ein kleines Programm dafür zu verwenden. Es gibt zum Beispiel eine Implementierung eines solchen Programms unter \url{http://magiceye.ecksdee.co.uk/}. Diese verwendet jedoch Low-Level Javascript Array Operationen, wodurch die Anwendung bei sehr großen Dateien zu langsam und damit unbrauchbar ist.
+	Wenn der Bedarf da ist, des Öfteren Stereogramme zu entschlüsseln, dann ist es oft hilfreich, ein kleines Programm dafür zu verwenden. Es gibt zum Beispiel eine Implementierung eines solchen Programms unter \url{http://magiceye.ecksdee.co.uk/}. Diese verwendet jedoch Low-Level Javascript Array Operationen, wodurch die Anwendung bei sehr großen Dateien zu langsam und damit unbrauchbar ist.
 	
 	 Moderne Browser unterstützen für die Rendering Kontexte in Javascript die oben erwähnten Composite-Operationen. Daher kann eine eigene kleine Funktion als Solver in nicht mehr als 5 Lines of Code geschrieben werden. Diese verwendet Hardwarebeschleunigung und ist somit selbst bei riesigen Dateien noch ausreichend schnell. Diese Funktion muss nur noch in eine kleine Oberfläche verpackt werden und ist schon einsatzbereit.
 	 
-	 \lstinputlisting[caption={Einfacher Stereogramm Solver},label={fig:L: Stereogramm Solver}]{sources/StereogrammSolverShort.js}
-	 \ltodo{Javascript wird nicht unterstuetzt}
-	 
-	 
+	\lstdefinelanguage{JavaScript}{
+		morekeywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+		morecomment=[s]{/*}{*/},
+		morecomment=[l]//,
+		morestring=[b]",
+		morestring=[b]'
+	}
+	 \lstinputlisting[language=JavaScript,caption={Einfacher Stereogramm Solver},label={fig:L: Stereogramm Solver}]{sources/StereogrammSolverShort.js}
+
+
 	 \ltodo{Stereogramme mit verlaufenden 3D Bildern sind etwas komplizierter zum schoen darstellen, muss ich nur implementieren, hab da schon ne idee}
 	
 	\subsubsection{Automatische Erkennung von Stereogrammen}
 	
-	Es gibt noch kein Standardverfahren zur Erkennung, ob es sich bei einem Bild um ein Stereogramm handelt. Deswegen wurde im Rahmen des Projekts Geocaching-Tools und für diese Diplomarbeit ein eigenes Verfahren entwickelt. 
+	Es gibt noch kein Standardverfahren zur Erkennung, ob es sich bei einem Bild um ein Stereogramms handelt. Deswegen wurde im Rahmen des Projekts Geocaching-Tools und für diese Diplomarbeit ein eigenes Verfahren entwickelt. 
 	
 	Wie bereits bei den grafischen Hilfsmitteln zum Entschlüsseln von Stereogrammen gezeigt, kann man den versteckten Inhalt eines Stereogramm sichtbar machen, indem man eine Kopie von dem Bild verschiebt und von dem Original subtrahiert. Die Herausforderung und das Ziel des Verfahrens ist es also, das richtige Offset, falls vorhanden, zu erkennen. 
 	
-	Zuerst werden alle möglichen Verschiebungen generiert. Zwei identische Farben voneinander subtrahiert ergeben die Farbe Schwarz. Es wird also nach einem Offset gesucht bei dem ein möglichst großer Teil des Bildes schwarz wird. Damit ist auch schon der größte Teil der Arbeit getan. Aus den prozentualen Schwarzanteilen vom Gesamtbild über die verschiedenen Verschiebungen ergibt sich für jedes Bild eine Datenserie. Diese muss nur noch analysiert werden. 
+	Zuerst werden alle möglichen Verschiebungen generiert. Zwei identische Farben voneinander subtrahiert ergeben die Farbe Schwarz. Es wird also nach einem Offset gesucht, bei dem ein möglichst großer Teil des Bildes schwarz wird. Damit ist auch schon der größte Teil der Arbeit getan. Aus den prozentualen Schwarzanteilen vom Gesamtbild über die verschiedenen Verschiebungen ergibt sich für jedes Bild eine Datenserie. Diese muss nur noch analysiert werden. 
 	
-	In \ref{fig:L: Stereogramm Erkennung Vergleich} sind fünf Bilder mit dieser Technik analysiert worden. Dabei kann man gut erkennen, dass sich ein Spike in der Datenreihe ergibt, wenn das Bild ein Stereogramm ist. Das größte Problem bei der Sache sind Bilder, welche im Vorhinein bereits größtenteils aus schwarz bestehen. Auch Signaturen von Bildern welche nur sehr wenige Farben beinhalten, sind oft den Signaturen von Stereogrammen sehr ähnlich. Ein Beispiel dafür sind Bilder mit viel weißem Text auf schwarzem Hintergrund.
+	In \autoref{fig:L: Stereogramm Erkennung Vergleich} sind fünf Bilder mit dieser Technik analysiert worden. Dabei kann man gut erkennen, dass sich ein Spike in der Datenreihe ergibt, wenn das Bild ein Stereogramm ist. Es ergeben sich große Schwierigkeiten bei Bildern, welche im Vorhinein bereits größtenteils aus schwarz bestehen. Auch Signaturen von Bildern, welche nur sehr wenige Farben beinhalten, sind oft den Signaturen von Stereogrammen sehr ähnlich. Ein Beispiel dafür sind Bilder mit viel weißem Text auf schwarzem Hintergrund.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{images/L-stereogram-erkennung-vergleich.png}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-erkennung-vergleich.png}
 		\caption[Analyse verschiedener Stereogrammtypen]{Bei dem Stereogramm kann ein Spike in der Datenreihe erkannt werden}
 		\label{fig:L: Stereogramm Erkennung Vergleich}
 	\end{figure}
@@ -472,23 +445,23 @@
 	
 	\lstinputlisting[caption={Steigung},label={fig:L: Steigung Java}]{sources/Steigung.java}
 	
-	Hier ergibt sich das Problem, dass - wie in \ref{fig:L: Stereogramm Erkennung Vergleich} zu sehen ist - Texte ein recht hohes Ergebnis bei diesem Test erzielen, da sie einen steigenden Trend besitzen. Dies ergibt sich aus dem hohen Schwarzanteil des Originalbildes. Dadurch, dass bei der Berechnung auch der sich nicht mit dem verschobenen Bild überschneidende Teil miteinbezogen wird, führt das zu diesen sehr hohen Werten. 
+	Hier ergibt sich das Problem, dass - wie in \autoref{fig:L: Stereogramm Erkennung Vergleich} zu sehen ist - Texte ein recht hohes Ergebnis bei diesem Test erzielen, da sie einen steigenden Trend besitzen. Dies ergibt sich aus dem hohen Schwarzanteil des Originalbildes. Dadurch, dass bei der Berechnung auch der sich nicht mit dem verschobenen Bild überschneidende Teil miteinbezogen wird, führt das zu diesen sehr hohen Werten. 
 	
-	Wenn bei dem Algorithmus nur der Teil zur Berechnung herangezogen wird, von dem das verschobenen Bild subtrahiert wurde, verändern sich die Datenreihen deutlich: Die Spikes bei Stereogrammen vergrößern sich um ein Vielfaches und der generelle Trend wird flacher. 
+	Wenn bei dem Algorithmus nur der Teil zur Berechnung herangezogen wird, von dem das verschobene Bild subtrahiert wurde, verändern sich die Datenreihen deutlich: Die Spikes bei Stereogrammen vergrößern sich um ein Vielfaches und der generelle Trend wird flacher. 
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{images/L-stereogram-erkennung-vergleich-besser.png}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-erkennung-vergleich-besser.png}
 		\caption[Verbesserte Analyse verschiedener Stereogrammtypen]{Die verbesserte Variante erzielt deutlichere Ergebnisse}
 		\label{fig:L: Stereogramm Erkennung Vergleich Verbessert}
 	\end{figure}
 
-	Es ist aber auch zu beobachten, dass im letzten Viertel die Werte sehr stark zu schwanken anfangen. Das liegt daran, dass der beobachtete Bereich immer kleiner wird und dadurch sehr wenige kleine Überschneidungen einen sehr großen Effekt auf das Ergebnis haben. Um noch bessere Ergebnisse zu erzielen kann also das letzte Viertel der Datenreihe vernachlässigt werden, da es bei einem Offset von mehr als 75\% sehr unwahrscheinlich ist, dass es sich hier noch um ein Stereogramm handelt.
+	Es ist aber auch zu beobachten, dass im letzten Viertel die Werte sehr stark zu schwanken anfangen. Das liegt daran, dass der beobachtete Bereich immer kleiner wird und dadurch sehr wenige kleine Überschneidungen einen sehr großen Effekt auf das Ergebnis haben. Um noch bessere Ergebnisse zu erzielen, kann also das letzte Viertel der Datenreihe vernachlässigt werden, da es bei einem Offset von mehr als 75\% sehr unwahrscheinlich ist, dass es sich hier noch um ein Stereogramm handelt.
 	
 	In der folgenden Grafik werden die drei Versionen miteinander verglichen.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.8]{images/L-stereogram-erkennung-vergleich-ergebnisse.png}
+		\includegraphics[width=.8\linewidth]{images/L-stereogram-erkennung-vergleich-ergebnisse.png}
 		\caption[Vergleich der Analyseverfahren]{Ein Wert von mehr als 25\% heißt, dass es sich Wahrscheinlich um ein Stereogramm handelt.}
 		\label{fig:L: Stereogramm Erkennung Vergleich Verbessert}
 	\end{figure}
@@ -496,56 +469,70 @@
 	
 	Wie man sehen kann, erzielt das eben vorgestellte Verfahren bei vier von fünf Testfällen ein korrektes Ergebnis. Um eine annähernd 100\% korrekte Aussage treffen zu können, werden kompliziertere Verfahren benötigt, wie die oben vorgeschlagene Verwendung von künstlicher Intelligenz.
 	
+	\newpage
 	
 	\subsubsection{Bildfehler erkennen}
 	
 	Jeder kennt diese "Suche den Fehler"-Bilder aus Tageszeitungen. Diese bestehen aus zwei beinahe identischen Bildern. Bei einem der beiden wurden jedoch einzelne Details entfernt. Das ist ähnlich wie bei herkömmlichen Stereogrammen, bei denen die einzelnen Teile zwar nicht entfernt, sondern verschoben sind.
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.8\linewidth]{images/L-suchbild.png}
+		\caption[Ein Fehlersuchbild]{In diesem Fehlersuchbild\protect\footnotemark wurden sechs Fehler versteckt.}
+		\label{fig:L: Suchbild Original}
+	\end{figure}
+	\footnotetext{\url{http://www.ikz.de/ikz-praxis-archiv/p0107/010713.php}}
 	
 	Dadurch, dass diese beiden Anwendungen so ähnlich sind, kann man sehr gut Hilfsmittel aus der Stereographie anwenden, um die Bildfehlerspiele zu lösen. Wenn man die Blicktechniken von Stereogrammen auf diese Spiele anwendet, überlappen die beiden Bilder derart, dass auf derselben Stelle der entfernte Teil sichtbar und unsichtbar ist. Deshalb weiß das Gehirn nicht, welches der beiden Augen recht hat, weil das linke Auge zum Beispiel einen Schornstein sieht und das rechte nicht. Diese Teile des Bildes schauen dann aus, als würden sie flimmern.
 	
 	Wenn ein automatisches Hilfsmittel auf ein derartiges Bildpaar angewendet wird, ergibt sich bei dem richtigen Offset ein schwarzes Bild, auf dem nur die Fehler als Farbhaufen zu sehen sind. Im Sinne der Steganographie kann zum Beispiel der Sekundenteil einer Koordinate als Position auf einem quadratischen Bild mit je 1000px Seitenlänge markiert werden, indem dort der Bildfehler platziert wird.
+	\newpage
+	Hier ein kleines Beispiel wie mit stereographischen Lösungshilfen ein Suchbild gelöst werden kann.
+	% http://www.ikz.de/ikz-praxis-archiv/p0107/010713.php
 	
-	\ltodo{Finde ein Beispiel für ein solches Suchbildrätsel und löse es mit GC-Tools}
-	
-	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.8\linewidth]{images/L-suchbild-loesung.png}
+		\caption[Ein Fehlersuchbild mit Lösung]{Deutlich zu erkennen die sechs vorhandenen Fehler.}
+		\label{fig:L: Suchbild Loesung}
+	\end{figure}
 	
 	
 	\subsection{Odd-Pixel Verfahren}
 	
 	Das Wort ''Odd'' kommt aus dem Englischen und bedeutet seltsam oder merkwürdig. Es handelt sich also um merkwürdige Pixel. Damit ist zum Beispiel gemeint, wenn in einem fast komplett dunklen Bild irgendwo ein einzelnes Pixel Weiß, Grasgrün oder Rubinrot ist. So ein seltsames Pixel fällt einem sofort auf: Das passt da einfach nicht hinein. 
 	
-	Man kann sich das zu Nutze machen, indem man dem Odd-Pixel eine ganz bestimme Position oder eine spezielle Farbe gibt. Ein Beispiel: Ein grünes Odd-Pixel bedeutet ja und ein rotes nein, oder die Position gibt die Koordinaten für einen Treffpunkt an. 
+	Man kann sich das zu Nutze machen, indem man dem Odd-Pixel eine ganz bestimmte Position oder eine spezielle Farbe gibt. Ein Beispiel: Ein grünes Odd-Pixel bedeutet ja und ein rotes nein, oder die Position gibt die Koordinaten für einen Treffpunkt an. 
 	
 	Wenn man ein solches Odd-Pixel verstecken will, muss man aber beachten, dass die Wahrnehmungsschwelle eines Menschen nicht unterschritten wird. Sonst führt das unweigerlich dazu, dass niemand das Steganogramm entziffern kann. Jedoch ist es kaum beeinflussbar für wen das Pixel sichtbar ist, wessen Wahrnehmungsschwelle also ausreicht. 
 	
-	Eine große Herausforderung stellt hier vor allem die automatische Erkennung eines solchen Odd-Pixel dar. Weiß man, wonach man sucht, macht es die ganze Sache schon einfacher. Wird zum Beispiel ein komplett weißes Pixel gesucht, also mit den allen Werten der RGB-Skala auf 255, so muss das Programm nur eben dieses Pixel aufspüren. Es ist also das beste, ein Programm zur Verfügung zu stellen, welches diese Aufgabe zwar nicht von alleine lösen kann, jedoch einen Menschen bei der Arbeit unterstützt.
-	
+	Eine große Herausforderung stellt hier vor allem die automatische Erkennung eines solchen Odd-Pixel dar. Weiß man, wonach man sucht, macht es die ganze Sache schon einfacher. Wird zum Beispiel ein komplett weißes Pixel gesucht, also mit allen Werten der RGB-Skala auf 255, so muss das Programm nur eben dieses Pixel aufspüren. Es ist also das beste, ein Programm zur Verfügung zu stellen, welches diese Aufgabe zwar nicht von alleine lösen kann, jedoch einen Menschen bei der Arbeit unterstützt.
+	\newpage
 	Um das einfache Arbeiten zu ermöglichen, sind folgende Funktionen nützlich:
 	\begin{itemize}
 		\item Eine Zoomfunktion
 		\item Markieren von Stellen mit einem Stift/Radierer Werkzeug
-		\item Filtern nach bestimmten Farben. Ähnlich dem Füllwerkzeug bei Bildbearbeitungsprogrammen, nur als einstellbarer Filter welcher Bereiche verdunkelt, die nicht dem Kriterium entsprechen.
+		\item Filtern nach bestimmten Farben. Ähnlich dem Füllwerkzeug bei Bildbearbeitungsprogrammen, nur als einstellbarer Filter, welcher Bereiche verdunkelt, die nicht dem Kriterium entsprechen.
 		\item Automatisches Markieren von gefundenen Stellen. Einzelne Pixel sind sehr schwer zu sehen, selbst wenn diese eingefärbt wurden. Eine Art bunte Umrandung ist dabei sehr hilfreich. 
-		\item Gruppieren von benachbarten Pixeln. Diese Pixelgruppen dann in einer auswählbaren Liste darstellen um Position, Farbe und weitere Eigenschaften abrufen zu können.
+		\item Gruppieren von benachbarten Pixeln. Diese Pixelgruppen dann in einer auswählbaren Liste darstellen, um Position, Farbe und weitere Eigenschaften abrufen zu können.
 	\end{itemize}
 	
 	Mithilfe dieser Funktionen sollte es nicht mehr allzu schwer sein, Odd-Pixel zu finden.
 	
-	Erwähnenswert ist hier eine Technik, mit deren Hilfe einzelne Pixel sowie Pixelgruppen umrandet werden können. Es handelt sich um einen Filter und zwei Pinsel Operationen welche nacheinander auf die Auswahlmaske angewendet werden. 
+	Erwähnenswert ist hier eine Technik, mit deren Hilfe einzelne Pixel sowie Pixelgruppen umrandet werden können. Es handelt sich um einen Filter und zwei Pinsel Operationen, welche nacheinander auf die Auswahlmaske angewendet werden. 
 	
-	Ein Pinsel wird auf das ganze Bild angewendet, indem für jeden Punkt auf dem Bild überprüft wird, ob eine bestimmte Bedingung eintrifft, und wenn ja wird ein Kreis in der angegebenen Größe mit einer bestimmten Farbe dort hin gezeichnet.
+	Ein Pinsel wird auf das ganze Bild angewendet, indem für jeden Punkt auf dem Bild überprüft wird, ob eine bestimmte Bedingung eintrifft, und wenn ja, dann wird ein Kreis in der angegebenen Größe mit einer bestimmten Farbe dort hin gezeichnet.
 
 	
-	Ein Filter besteht aus einem sogenannten Kernel, das ist ein zweidimensionales Zahlenarray. Wie in \ref{fig:L: Odd Pixel Conv} dargestellt, wird jeder Wert aus dem Kernel auf den Input mit einer festgelegten Operation verknüpft und die Ergebnisse summiert. Wenn nicht genauer definiert, ist die verwendete Operation die Multiplikation. Zahlreiche bekannte Filter und Effekte aus Bildbearbeitungsprogrammen können auf diese Weise implementiert werden. 
+	Ein Filter besteht aus einem sogenannten Kernel, das ist ein zweidimensionales Zahlenarray. Wie in \autoref{fig:L: Odd Pixel Conv} dargestellt, wird jeder Wert aus dem Kernel auf den Input mit einer festgelegten Operation verknüpft und die Ergebnisse summiert. Wenn nicht genauer definiert, ist die verwendete Operation die Multiplikation. Zahlreiche bekannte Filter und Effekte aus Bildbearbeitungsprogrammen können auf diese Weise implementiert werden. 
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{images/L-odd-pixel-conv.png}
-		\caption[Kernel Beispiel]{Kernel wird auf den Input angewendet um den Output zu erzeugen.}
+		\includegraphics[width=.8\linewidth]{images/L-odd-pixel-conv.png}
+		\caption[Kernel Beispiel]{Kernel wird auf den Input angewendet um den Output zu erzeugen\protect\footnotemark.}
 		\label{fig:L: Odd Pixel Conv}
 	\end{figure}
-	
+	\footnotetext{\url{http://colah.github.io/posts/2014-07-Understanding-Convolutions/}}
 	
 	Einige Anwendungsbeispiele für Kernel sind:
 	\begin{itemize}
@@ -619,18 +606,18 @@
 	% Quelle http://colah.github.io/posts/2014-07-Understanding-Convolutions/
 	% http://matlabtricks.com/post-5/3x3-convolution-kernels-with-online-demo#demo
 	
-	Java stellt in seiner Standardbibliothek die beiden Klassen Namens ConvolveOp und Kernel zur Verfügung. Diese benötigen nur ein Double Array mit den Kernel-Werten und können dann auf Objekte der Klasse BufferedImage angewendet werden.
+	Java stellt in seiner Standardbibliothek die beiden Klassen namens ConvolveOp und Kernel zur Verfügung. Diese benötigen nur ein Double Array mit den Kernel-Werten und können dann auf Objekte der Klasse BufferedImage angewendet werden.
 	
 	Um nun Details in einem Bild zu markieren, wird zuerst eine Pinselfunktion angewendet, welche jeden Punkt, der die Bedingung erfüllt, mit einem großen Pinsel übermalt. Auf das Resultat wird dann ein Kantenerkennungsfilter angewendet. Dann wird erneut ein Pinsel verwendet, jedoch ein kleinerer. Die Größe des ersten Pinsels gibt an, in welchem Abstand die Komponenten umrandet werden sollen. Die Größe des zweiten Pinsel gibt an wie dick der Rand sein soll.
 	
 	\cite{L-Convolution}
 	
 	
-	In \ref{fig:L: Mask} sind die einzelnen Schritte des Verfahrens dargestellt.
+	In \autoref{fig:L: Mask} sind die einzelnen Schritte des Verfahrens dargestellt.
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.7]{images/L-mask.png}
+		\includegraphics[width=.8\linewidth]{images/L-mask.png}
 		\caption[Markierungsverfahren]{Selbst kleine Details sind groß Umrandet und gut Sichtbar}
 		\label{fig:L: Mask}
 	\end{figure}
